@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Map
+  - Enemy
+  - NPC
+  - Store
+  - Boss
+  - Spawnpoint
+  - StoreDoor
+  - HealthPotion
+  - Sword
+  - Bow
+  - Object
+  - CoinSpawner
+  - Spell
+  - FullGameController
+  - XMapFinalBoss
+  - Wall
+  - Coin
+  - ReturnLobby
+  - RoomBounds
+  - Final
+  - Final2
+  - Final3
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - RoomBounds
+  - Water
+  - UI
+  - Minimap
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

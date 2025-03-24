@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2199505000292733033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 451871609395459662}
+  - component: {fileID: 360712653660794222}
+  m_Layer: 0
+  m_Name: FullGameController
+  m_TagString: FullGameController
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &451871609395459662
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2199505000292733033}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &360712653660794222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2199505000292733033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f22eedde702764abb0ea922f5bbbb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: 100
+  currentItem: 
+  coins: 0
+  levelsCompleted: 00000000000000000000000000000000
+  gameVolume: 1
+  lvl1Object: {fileID: 8516433589206932334, guid: b4cf4bd74b5ac1b4ab84297023dc5640, type: 3}
+  lvl2Object: {fileID: 3445193511183362490, guid: d8573128d632ba441900a607611f13e6, type: 3}
+  lvl3Object: {fileID: 6265250611880117001, guid: 4e62eeb9ab97a6843b0438a45500d46e, type: 3}
+  finalBossObject: {fileID: 6909633405364998479, guid: a4745a4dfc15f824696682ec255c59d2, type: 3}
+  saveFileName: gameData.json
