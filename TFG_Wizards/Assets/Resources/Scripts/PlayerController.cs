@@ -10,23 +10,14 @@ public class PlayerController : MonoBehaviour
     private float defaultMoveSpeed;
     private Rigidbody2D rb;
     private Vector2 movement;
-    private Vector2 shootDirection;
 
     // Health and Damage variables
-    public int maxHp = 100;
+    public int maxHp = 1000;
     private int currentHp;
     public float flickerInterval = 0.1f;
     public float invincibilityDuration = 1.0f;
     private bool isInvincible = false;
     private Coroutine invincibilityCoroutine;
-
-    // Shooting variables
-    public GameObject bulletPrefab;
-    public float bulletSpeed = 10f;
-    private bool canShoot = true;
-    public float shootCooldown = 0.2f;
-    private float defaultShootCooldown;
-    private int attackDamage = 10;
 
     // Boost limits
     private const int maxBoostPurchases = 4;
@@ -46,10 +37,7 @@ public class PlayerController : MonoBehaviour
 
         // Load initial values from PlayerPrefs
         currentHp = PlayerPrefs.GetInt("PlayerHealth", maxHp);
-        attackDamage = PlayerPrefs.GetInt("PlayerAttackDamage", attackDamage);
-        shootCooldown = PlayerPrefs.GetFloat("PlayerShootCooldown", shootCooldown);
         defaultMoveSpeed = moveSpeed;
-        defaultShootCooldown = shootCooldown;
 
         UpdateHealthUI();
         UpdateCoinsUI();
@@ -58,8 +46,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         HandleMovement();
-        HandleShooting();
-        HandleExit(); // Check for the Escape key
+        HandleExit();
         FlipSprite();
     }
 
@@ -70,34 +57,24 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (!IsShooting())
-        {
-            movement.x = Input.GetAxisRaw("Horizontal");
-            movement.y = Input.GetAxisRaw("Vertical");
-            movement = movement.normalized;
+        // Reiniciar el movimiento
+        movement = Vector2.zero;
 
-            animator.SetBool("isWalking", movement != Vector2.zero);
-        }
-        else
-        {
-            movement = Vector2.zero;
-            animator.SetBool("isWalking", false);
-        }
-    }
+        // Detectar entrada solo de WASD
+        if (Input.GetKey(KeyCode.W))
+            movement.y = 1;
+        if (Input.GetKey(KeyCode.S))
+            movement.y = -1;
+        if (Input.GetKey(KeyCode.A))
+            movement.x = -1;
+        if (Input.GetKey(KeyCode.D))
+            movement.x = 1;
 
-    private void HandleShooting()
-    {
-        shootDirection = Vector2.zero;
+        // Normalizar el movimiento para evitar velocidad diagonal mayor
+        movement = movement.normalized;
 
-        if (Input.GetKey(KeyCode.UpArrow)) shootDirection = Vector2.up;
-        else if (Input.GetKey(KeyCode.DownArrow)) shootDirection = Vector2.down;
-        else if (Input.GetKey(KeyCode.LeftArrow)) shootDirection = Vector2.left;
-        else if (Input.GetKey(KeyCode.RightArrow)) shootDirection = Vector2.right;
-
-        if (shootDirection != Vector2.zero && canShoot)
-        {
-            StartCoroutine(Shoot(shootDirection));
-        }
+        // Activar la animación si el personaje se mueve
+        animator.SetBool("isWalking", movement != Vector2.zero);
     }
 
     private void HandleExit()
@@ -110,25 +87,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator Shoot(Vector2 direction)
-    {
-        canShoot = false;
-        animator.SetBool("isAttacking", true);
-
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-        SpellPlayerScript spell = bullet.GetComponent<SpellPlayerScript>();
-
-        if (spell != null)
-        {
-            spell.Initialize(direction, attackDamage);
-        }
-
-        yield return new WaitForSeconds(shootCooldown);
-
-        animator.SetBool("isAttacking", false);
-        canShoot = true;
-    }
-
     private void FlipSprite()
     {
         if (movement.x < 0)
@@ -139,11 +97,6 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
-    }
-
-    private bool IsShooting()
-    {
-        return Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow);
     }
 
     public void Damage(int damage)
@@ -240,12 +193,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        shootCooldown /= 2f;
         PlayerPrefs.SetInt("SpeedBoosts", speedBoosts + 1);
-        PlayerPrefs.SetFloat("PlayerShootCooldown", shootCooldown);
         PlayerPrefs.Save();
 
-        Debug.Log($"Shoot cooldown reduced to: {shootCooldown}");
+        Debug.Log("Shoot cooldown reduced.");
     }
 
     public void DoubleDamage()
@@ -257,12 +208,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        attackDamage *= 2;
         PlayerPrefs.SetInt("AttackBoosts", attackBoosts + 1);
-        PlayerPrefs.SetInt("PlayerAttackDamage", attackDamage);
         PlayerPrefs.Save();
 
-        Debug.Log($"Attack damage doubled: {attackDamage}");
+        Debug.Log("Attack damage doubled.");
     }
 
     private void OnApplicationQuit()

@@ -45,6 +45,7 @@ public class MenuSceneControllerScript : MonoBehaviour
     {
         // Resetear los valores de la partida
         PlayerPrefs.SetInt("PlayerHealth", 100);
+        PlayerPrefs.SetInt("PlayerEnergy", 100); // Reiniciar la energía a 100
         PlayerPrefs.SetString("CurrentItem", "");
         PlayerPrefs.SetInt("Coins", 0);
         PlayerPrefs.SetInt("Level1Completed", 0);

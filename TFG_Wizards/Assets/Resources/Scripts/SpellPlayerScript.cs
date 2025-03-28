@@ -49,11 +49,33 @@ public class SpellPlayerScript : MonoBehaviour
         // Comprueba si la bala golpea a un enemigo o jefe
         if (collider.CompareTag("Enemy") || collider.CompareTag("Boss"))
         {
-            // Intenta obtener un script que tenga el método Damage
-            var damageable = collider.GetComponent<EnemyShooterControllerScript>();
-            if (damageable != null)
+            // Verifica si el objeto tiene uno de los scripts que manejan daño
+            var enemyShooter = collider.GetComponent<EnemyShooterControllerScript>();
+            var enemyMele = collider.GetComponent<EnemyMeleControllerScript>();
+            var boss = collider.GetComponent<Boss>();
+            var enemyShooterDroop = collider.GetComponent<EnemyShooterControllerDroopScript>();
+            var enemyShooterTeleport = collider.GetComponent<EnemyShooterControllerTeleportScript>();
+
+
+            if (enemyShooter != null)
             {
-                damageable.Damage(damage); // Aplica daño al enemigo o jefe
+                enemyShooter.Damage(damage);
+            }
+            else if (enemyMele != null)
+            {
+                enemyMele.Damage(damage);
+            }
+            else if (boss != null)
+            {
+                boss.Damage(damage);
+            }
+            else if (enemyShooterDroop != null)
+            {
+                enemyShooterDroop.Damage(damage);
+            }
+            else if (enemyShooterTeleport != null)
+            {
+                enemyShooterTeleport.Damage(damage);
             }
 
             // Destruye la bala tras impactar

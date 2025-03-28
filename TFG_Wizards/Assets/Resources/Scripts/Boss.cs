@@ -24,6 +24,9 @@ public class Boss : MonoBehaviour
     [Header("Auto-detection")]
     public LayerMask roomBoundsLayer; // Capa para detectar los límites de la sala
 
+    [Header("Drop Item")]
+    public GameObject dropPrefab; // Prefab que soltará el boss al morir
+
     private Transform playerTransform;
     private int currentHp;
     private bool isPlayerDetected;
@@ -175,6 +178,13 @@ public class Boss : MonoBehaviour
     private void Die()
     {
         Debug.Log("Boss defeated.");
+
+        // Si hay un dropPrefab asignado, instanciarlo en la posición del jefe
+        if (dropPrefab != null)
+        {
+            Instantiate(dropPrefab, transform.position, Quaternion.identity);
+        }
+
         Destroy(gameObject);
     }
 }
