@@ -45,12 +45,16 @@ public class SpellPlayerSecondary : MonoBehaviour
             var boss = collider.GetComponent<Boss>();
             var enemyShooterDroop = collider.GetComponent<EnemyShooterControllerDroopScript>();
             var enemyShooterTeleport = collider.GetComponent<EnemyShooterControllerTeleportScript>();
+            var enemyMeleIce = collider.GetComponent<EnemyMeleControllerIceScript>();
+            var enemyMeleAcid = collider.GetComponent<EnemyMeleControllerAcidScript>();
 
             if (enemy != null) enemy.Damage(damage);
             if (enemyMele != null) enemyMele.Damage(damage);
             if (boss != null) boss.Damage(damage);
             if (enemyShooterDroop != null) enemyShooterDroop.Damage(damage);
             if (enemyShooterTeleport != null) enemyShooterTeleport.Damage(damage);
+            if (enemyMeleIce != null) enemyMeleIce.Damage(damage);
+            if (enemyMeleAcid != null) enemyMeleAcid.Damage(damage);
 
             Destroy(gameObject);
         }

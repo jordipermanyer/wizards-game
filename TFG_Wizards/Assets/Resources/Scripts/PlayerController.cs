@@ -14,10 +14,12 @@ public class PlayerController : MonoBehaviour
     // Health and Damage variables
     public int maxHp = 1000;
     private int currentHp;
-    public float flickerInterval = 0.1f;
     public float invincibilityDuration = 1.0f;
     private bool isInvincible = false;
     private Coroutine invincibilityCoroutine;
+
+    // Damage over time
+    private Coroutine damageOverTimeCoroutine;
 
     // Boost limits
     private const int maxBoostPurchases = 4;
@@ -57,10 +59,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        // Reiniciar el movimiento
         movement = Vector2.zero;
 
-        // Detectar entrada solo de WASD
         if (Input.GetKey(KeyCode.W))
             movement.y = 1;
         if (Input.GetKey(KeyCode.S))
@@ -70,16 +70,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
             movement.x = 1;
 
-        // Normalizar el movimiento para evitar velocidad diagonal mayor
         movement = movement.normalized;
 
-        // Activar la animación si el personaje se mueve
         animator.SetBool("isWalking", movement != Vector2.zero);
     }
 
     private void HandleExit()
     {
-        // Close the application when "Esc" is pressed
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("Exiting the application...");
@@ -111,45 +108,30 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.Save();
         UpdateHealthUI();
 
-        animator.SetTrigger("isHit");
+        StartCoroutine(FlashRed());
 
         if (currentHp <= 0)
         {
             Die();
         }
-        else
-        {
-            if (invincibilityCoroutine != null)
-                StopCoroutine(invincibilityCoroutine);
-            invincibilityCoroutine = StartCoroutine(InvincibilityTimer());
-        }
     }
 
-    private IEnumerator InvincibilityTimer()
+    private IEnumerator FlashRed()
     {
-        isInvincible = true;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < invincibilityDuration)
-        {
-            playerSprite.enabled = !playerSprite.enabled;
-            yield return new WaitForSeconds(flickerInterval);
-            elapsedTime += flickerInterval;
-        }
-
-        playerSprite.enabled = true;
-        isInvincible = false;
+        playerSprite.color = Color.red;
+        animator.SetTrigger("isHit");
+        yield return new WaitForSeconds(0.5f);
+        playerSprite.color = Color.white;
+        animator.ResetTrigger("isHit");
     }
 
     private void Die()
     {
         Debug.Log("Player has died.");
 
-        // Reset PlayerPrefs
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
 
-        // Go to GameOverScene with losing text
         SceneManager.LoadScene("GameOverScene");
     }
 
@@ -184,19 +166,37 @@ public class PlayerController : MonoBehaviour
             coinsText.text = PlayerPrefs.GetInt("Coins", 0).ToString();
     }
 
-    public void ReduceShootCooldown()
+    public void ApplyDamageOverTime(int damagePerSecond, float duration)
     {
-        int speedBoosts = PlayerPrefs.GetInt("SpeedBoosts", 0);
-        if (speedBoosts >= maxBoostPurchases)
+        if (damageOverTimeCoroutine != null)
         {
-            Debug.Log("Maximum speed boosts reached!");
-            return;
+            StopCoroutine(damageOverTimeCoroutine);
         }
+        damageOverTimeCoroutine = StartCoroutine(DamageOverTimeRoutine(damagePerSecond, duration));
+    }
 
-        PlayerPrefs.SetInt("SpeedBoosts", speedBoosts + 1);
-        PlayerPrefs.Save();
+    private IEnumerator DamageOverTimeRoutine(int damagePerSecond, float duration)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            yield return new WaitForSeconds(1f);
+            Damage(damagePerSecond);
+            elapsedTime += 1f;
+        }
+        damageOverTimeCoroutine = null;
+    }
 
-        Debug.Log("Shoot cooldown reduced.");
+    public void ApplySlowdown(float factor, float duration)
+    {
+        moveSpeed *= factor;
+        StartCoroutine(RestoreSpeedAfterDelay(duration));
+    }
+
+    private IEnumerator RestoreSpeedAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        moveSpeed = defaultMoveSpeed;
     }
 
     public void DoubleDamage()
@@ -212,6 +212,21 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.Save();
 
         Debug.Log("Attack damage doubled.");
+    }
+
+    public void ReduceShootCooldown()
+    {
+        int speedBoosts = PlayerPrefs.GetInt("SpeedBoosts", 0);
+        if (speedBoosts >= maxBoostPurchases)
+        {
+            Debug.Log("Maximum speed boosts reached!");
+            return;
+        }
+
+        PlayerPrefs.SetInt("SpeedBoosts", speedBoosts + 1);
+        PlayerPrefs.Save();
+
+        Debug.Log("Shoot cooldown reduced.");
     }
 
     private void OnApplicationQuit()

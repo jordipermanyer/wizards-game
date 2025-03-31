@@ -55,6 +55,8 @@ public class SpellPlayerScript : MonoBehaviour
             var boss = collider.GetComponent<Boss>();
             var enemyShooterDroop = collider.GetComponent<EnemyShooterControllerDroopScript>();
             var enemyShooterTeleport = collider.GetComponent<EnemyShooterControllerTeleportScript>();
+            var enemyMeleIce = collider.GetComponent<EnemyMeleControllerIceScript>();
+            var enemyMeleAcid = collider.GetComponent<EnemyMeleControllerAcidScript>();
 
 
             if (enemyShooter != null)
@@ -76,6 +78,14 @@ public class SpellPlayerScript : MonoBehaviour
             else if (enemyShooterTeleport != null)
             {
                 enemyShooterTeleport.Damage(damage);
+            }
+            else if (enemyMeleIce != null)
+            {
+                enemyMeleIce.Damage(damage);
+            }
+            else if (enemyMeleAcid != null)
+            {
+                enemyMeleAcid.Damage(damage);
             }
 
             // Destruye la bala tras impactar

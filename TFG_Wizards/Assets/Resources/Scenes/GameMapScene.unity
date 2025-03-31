@@ -5161,6 +5161,18 @@ PrefabInstance:
       propertyPath: shootingModeText
       value: 
       objectReference: {fileID: 657783757}
+    - target: {fileID: 7587383989959780267, guid: 9cc64aeecd31fa54dad176d79c39b1fb, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587383989959780267, guid: 9cc64aeecd31fa54dad176d79c39b1fb, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7587383989959780267, guid: 9cc64aeecd31fa54dad176d79c39b1fb, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9172286419888416963, guid: 9cc64aeecd31fa54dad176d79c39b1fb, type: 3}
       propertyPath: coinsText
       value: 

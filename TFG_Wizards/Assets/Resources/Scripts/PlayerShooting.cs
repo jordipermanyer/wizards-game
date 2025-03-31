@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -17,9 +18,12 @@ public class PlayerShooting : MonoBehaviour
     public TextMeshProUGUI energyText;
 
     private bool isUsingPrimaryAttack = true;
+    private Animator animator; // Referencia al Animator
 
     private void Start()
     {
+        animator = GetComponent<Animator>(); // Obtener el Animator del jugador
+
         // Cargar energía guardada o iniciar con 100 si es la primera vez
         if (!PlayerPrefs.HasKey("PlayerEnergy"))
         {
@@ -80,15 +84,25 @@ public class PlayerShooting : MonoBehaviour
             else
             {
                 Debug.Log("No tienes suficiente energía para disparar el ataque secundario.");
+                return;
             }
         }
+
+        // Activar la animación de ataque
+        StartCoroutine(TriggerAttackAnimation());
     }
 
-    // Método corregido para añadir energía
+    private IEnumerator TriggerAttackAnimation()
+    {
+        animator.SetBool("isAttacking", true);
+        yield return new WaitForSeconds(0.1f); // Espera un instante para que la animación se reproduzca
+        animator.SetBool("isAttacking", false);
+    }
+
+    // Método corregido para añadir energía SIN LÍMITE
     public void AddEnergy(int amount)
     {
         currentEnergy += amount;
-        currentEnergy = Mathf.Clamp(currentEnergy, 0, 100); // Limita la energía a 100
         SaveEnergy();
         UpdateUI();
     }
