@@ -1,0 +1,1040 @@
+Using pre-set license
+Built from '2022.3/staging' branch; Version is '2022.3.46f1 (8e9b8558c41a) revision 9345925'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.22631) 64bit Professional' Language: 'es' Physical Memory: 15713 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2022.3.46f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker2
+-projectPath
+C:/Users/Jordi/Desktop/wizards-game/TFG_Wizards
+-logFile
+Logs/AssetImportWorker2.log
+-srvPort
+63602
+Successfully changed project path to: C:/Users/Jordi/Desktop/wizards-game/TFG_Wizards
+C:/Users/Jordi/Desktop/wizards-game/TFG_Wizards
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [18828]  Target information:
+
+Player connection [18828]  * "[IP] 172.23.0.1 [Port] 0 [Flags] 2 [Guid] 1319815120 [EditorId] 1319815120 [Version] 1048832 [Id] WindowsEditor(7,HP-Jordi-Permanyer) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [18828]  * "[IP] 172.29.128.1 [Port] 0 [Flags] 2 [Guid] 1319815120 [EditorId] 1319815120 [Version] 1048832 [Id] WindowsEditor(7,HP-Jordi-Permanyer) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [18828]  * "[IP] 172.22.208.1 [Port] 0 [Flags] 2 [Guid] 1319815120 [EditorId] 1319815120 [Version] 1048832 [Id] WindowsEditor(7,HP-Jordi-Permanyer) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [18828]  * "[IP] 192.168.1.44 [Port] 0 [Flags] 2 [Guid] 1319815120 [EditorId] 1319815120 [Version] 1048832 [Id] WindowsEditor(7,HP-Jordi-Permanyer) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [18828] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [18828] Host joined alternative multi-casting on [225.0.0.222:34997]...
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+Refreshing native plugins compatible for Editor in 18.42 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.3.46f1 (8e9b8558c41a)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.46f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Jordi/Desktop/wizards-game/TFG_Wizards/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1650 (ID=0x1f99)
+    Vendor:   NVIDIA
+    VRAM:     3937 MB
+    Driver:   32.0.15.5613
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.46f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.46f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.46f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56444
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.46f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.46f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.46f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll
+Registered in 0.012052 seconds.
+- Loaded All Assemblies, in  0.420 seconds
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 276 ms
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.628 seconds
+Domain Reload Profiling: 1045ms
+	BeginReloadAssembly (131ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (40ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (71ms)
+	LoadAllAssembliesAndSetupDomain (165ms)
+		LoadAssemblies (129ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (163ms)
+			TypeCache.Refresh (161ms)
+				TypeCache.ScanAssembly (145ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (1ms)
+	FinalizeReload (628ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (577ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (379ms)
+			SetLoadedEditorAssemblies (5ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (2ms)
+			ProcessInitializeOnLoadAttributes (141ms)
+			ProcessInitializeOnLoadMethodAttributes (50ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.147 seconds
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Package Manager log level set to [2]
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.005 seconds
+Domain Reload Profiling: 2149ms
+	BeginReloadAssembly (233ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (6ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (36ms)
+	RebuildCommonClasses (44ms)
+	RebuildNativeTypeToScriptingClass (17ms)
+	initialDomainReloadingComplete (56ms)
+	LoadAllAssembliesAndSetupDomain (793ms)
+		LoadAssemblies (570ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (360ms)
+			TypeCache.Refresh (309ms)
+				TypeCache.ScanAssembly (276ms)
+			ScanForSourceGeneratedMonoScriptInfo (41ms)
+			ResolveRequiredComponents (9ms)
+	FinalizeReload (1006ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (814ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (21ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (74ms)
+			ProcessInitializeOnLoadAttributes (662ms)
+			ProcessInitializeOnLoadMethodAttributes (45ms)
+			AfterProcessingInitializeOnLoad (8ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (8ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
+Refreshing native plugins compatible for Editor in 15.34 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4121 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 32 unused Assets / (57.1 KB). Loaded Objects now: 4594.
+Memory consumption went from 146.8 MB to 146.8 MB.
+Total: 8.452800 ms (FindLiveObjects: 1.040700 ms CreateObjectMapping: 0.779800 ms MarkObjects: 6.360900 ms  DeleteObjects: 0.270100 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 65445.099821 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up_Down.prefab
+  artifactKey: Guid(56988ab280182f74992de191040fa805) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up_Down.prefab using Guid(56988ab280182f74992de191040fa805) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '3f182a162b06095c8808f6b8784387b7') in 0.132151 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 87
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up.prefab
+  artifactKey: Guid(e53031ae570738b4ab67d912858073a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up.prefab using Guid(e53031ae570738b4ab67d912858073a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '196329d134d4d047b4541da37aa53be8') in 0.026644 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 87
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right.prefab
+  artifactKey: Guid(11d94f2397b77ed42a19477268ded0d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right.prefab using Guid(11d94f2397b77ed42a19477268ded0d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '9ea19813e8fe0d4218b889dbdf1268e5') in 0.025130 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 87
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left.prefab
+  artifactKey: Guid(52c265c91f5130e4883af33fba289873) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left.prefab using Guid(52c265c91f5130e4883af33fba289873) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '51cbc04b47f57e5046addd348d1664db') in 0.022536 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 87
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab
+  artifactKey: Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab using Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '596aa255b1fb5200be8b927f52c2121b') in 0.023501 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 87
+========================================================================
+Received Import Request.
+  Time since last request: 7.728278 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Coins_Right_Left.prefab
+  artifactKey: Guid(463e0814643e4ea4592c3333c2f4297e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Coins_Right_Left.prefab using Guid(463e0814643e4ea4592c3333c2f4297e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '8760de1bb6ad67fdfe1592eac5c89c88') in 0.014168 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 87
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Coins_Up_Down.prefab
+  artifactKey: Guid(b56ab2db3f916f142b8b24d57ed4b5b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Coins_Up_Down.prefab using Guid(b56ab2db3f916f142b8b24d57ed4b5b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '48faf1b1419c989466b89d8e006fa58d') in 0.014442 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 87
+========================================================================
+Received Import Request.
+  Time since last request: 1.134259 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Coins_Left_Up.prefab
+  artifactKey: Guid(d5ffd0e7401297048822472caf0b81ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Coins_Left_Up.prefab using Guid(d5ffd0e7401297048822472caf0b81ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '7114e136a451eb8b421ad234aaff18e3') in 0.015392 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 87
+========================================================================
+Received Import Request.
+  Time since last request: 0.017960 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Coins_Down.prefab
+  artifactKey: Guid(3329e2d98c713554ba60b1c5e3c20922) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Coins_Down.prefab using Guid(3329e2d98c713554ba60b1c5e3c20922) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'aa07605c094c0fd0978d9c5fb14b55b8') in 0.013901 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 87
+========================================================================
+Received Import Request.
+  Time since last request: 54.566551 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab
+  artifactKey: Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab using Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '6732cf3a28a592bf45b0d63b08f71e8a') in 0.019339 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 4.191730 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab
+  artifactKey: Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab using Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '56d4f1e7b6044789a1dc475ad8dafc9c') in 0.017749 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 27.108133 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab
+  artifactKey: Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab using Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '68ca8f5dd3fbc6475e81213d89edee7f') in 0.017797 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 42
+========================================================================
+Received Import Request.
+  Time since last request: 0.378096 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab
+  artifactKey: Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab using Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'cf0ab0921d869c5c4d660634ca15a259') in 0.020197 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 42
+========================================================================
+Received Import Request.
+  Time since last request: 0.783005 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab
+  artifactKey: Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab using Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'b6019bbe57a32121554effdd1f397c75') in 0.019027 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 42
+========================================================================
+Received Import Request.
+  Time since last request: 0.181645 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab
+  artifactKey: Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab using Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'bcccb6394bb892088d37f81c5d6de63a') in 0.017421 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 42
+========================================================================
+Received Import Request.
+  Time since last request: 0.786872 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab
+  artifactKey: Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab using Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'c73ed95e8b9d7b0e77c356a76884c0a4') in 0.018918 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 42
+========================================================================
+Received Import Request.
+  Time since last request: 0.182796 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab
+  artifactKey: Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab using Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'b4d007cbbc9bed4796236c5341154b93') in 0.019801 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 42
+========================================================================
+Received Import Request.
+  Time since last request: 10.697215 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab
+  artifactKey: Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab using Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'd96b529884736f794dcd30bd146df8e3') in 0.018047 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 42
+========================================================================
+Received Import Request.
+  Time since last request: 1.390669 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab
+  artifactKey: Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab using Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '7274866919fbd03be11815f31bedbaf0') in 0.023319 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 42
+========================================================================
+Received Import Request.
+  Time since last request: 0.972143 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab
+  artifactKey: Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Down.prefab using Guid(621de1b5d493cb24980f3cf44d095f54) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '1f646e5ee0e2d090e2d05c4a6d5c1dda') in 0.018346 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 6.671075 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left.prefab
+  artifactKey: Guid(52c265c91f5130e4883af33fba289873) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left.prefab using Guid(52c265c91f5130e4883af33fba289873) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'ef166570e076a7a4be4bae46d66078f6') in 0.019624 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 1.212028 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left.prefab
+  artifactKey: Guid(52c265c91f5130e4883af33fba289873) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left.prefab using Guid(52c265c91f5130e4883af33fba289873) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '91b0e4a85f177d9f8b992345d45fb0cf') in 0.017421 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 4.819653 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left.prefab
+  artifactKey: Guid(52c265c91f5130e4883af33fba289873) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left.prefab using Guid(52c265c91f5130e4883af33fba289873) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '4f32c667b7797f3bae266eee35eb34f4') in 0.017897 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 42
+========================================================================
+Received Import Request.
+  Time since last request: 0.178987 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left.prefab
+  artifactKey: Guid(52c265c91f5130e4883af33fba289873) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left.prefab using Guid(52c265c91f5130e4883af33fba289873) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '7a549d5fa2f6f71cc8798856815f885e') in 0.017417 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 42
+========================================================================
+Received Import Request.
+  Time since last request: 1.209569 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left.prefab
+  artifactKey: Guid(52c265c91f5130e4883af33fba289873) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left.prefab using Guid(52c265c91f5130e4883af33fba289873) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '698baa0451e6a837ef5672534f02eb5b') in 0.020583 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 3.025316 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Down.prefab
+  artifactKey: Guid(d8897459918381247983bd546e471cb7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Down.prefab using Guid(d8897459918381247983bd546e471cb7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '90c578351ba34412a6db9f343eabeeca') in 0.021416 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 0.998590 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Down.prefab
+  artifactKey: Guid(d8897459918381247983bd546e471cb7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Down.prefab using Guid(d8897459918381247983bd546e471cb7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'ea68168bf1b2fe66645569f089ef507a') in 0.018080 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 4.400490 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Down.prefab
+  artifactKey: Guid(d8897459918381247983bd546e471cb7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Down.prefab using Guid(d8897459918381247983bd546e471cb7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '4990267bbe62ee5302bfa32ee78c060a') in 0.034469 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 6.050318 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up.prefab
+  artifactKey: Guid(e53031ae570738b4ab67d912858073a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up.prefab using Guid(e53031ae570738b4ab67d912858073a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'cd7088d3baf466bcb9315cc710f09933') in 0.018942 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 1.388229 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up.prefab
+  artifactKey: Guid(e53031ae570738b4ab67d912858073a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up.prefab using Guid(e53031ae570738b4ab67d912858073a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'c7c7053ba16262e6af89e98f8bd2b5f2') in 0.021309 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 4.818765 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up.prefab
+  artifactKey: Guid(e53031ae570738b4ab67d912858073a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up.prefab using Guid(e53031ae570738b4ab67d912858073a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '9f38ddde3d76704da60c84871413736e') in 0.017624 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 9.302319 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up_Down.prefab
+  artifactKey: Guid(4595da4a5c2483e47b0f8aeea79e326f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up_Down.prefab using Guid(4595da4a5c2483e47b0f8aeea79e326f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '89e153c81077c845fe9fcf14a5a7afa9') in 0.020411 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 0.785563 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up_Down.prefab
+  artifactKey: Guid(4595da4a5c2483e47b0f8aeea79e326f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up_Down.prefab using Guid(4595da4a5c2483e47b0f8aeea79e326f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'd3aaf3346f4e5cd772bed170411e2f2e') in 0.020720 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 4.223713 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up_Down.prefab
+  artifactKey: Guid(4595da4a5c2483e47b0f8aeea79e326f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Left_Up_Down.prefab using Guid(4595da4a5c2483e47b0f8aeea79e326f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '48452383dea7e923582a7152624fb2c8') in 0.019926 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 3.662048 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right.prefab
+  artifactKey: Guid(11d94f2397b77ed42a19477268ded0d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right.prefab using Guid(11d94f2397b77ed42a19477268ded0d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'bdc17f34b086b6a9ea298ab7069e46ef') in 0.018438 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 1.194107 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right.prefab
+  artifactKey: Guid(11d94f2397b77ed42a19477268ded0d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right.prefab using Guid(11d94f2397b77ed42a19477268ded0d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'c80513f12efc9ac21e6fcbf45642ff59') in 0.016929 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 4.421810 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right.prefab
+  artifactKey: Guid(11d94f2397b77ed42a19477268ded0d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right.prefab using Guid(11d94f2397b77ed42a19477268ded0d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '775189730d04f8cee6758e5caee37113') in 0.020085 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 6.427541 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Down.prefab
+  artifactKey: Guid(fa273099924aa9c48b37047a746c8185) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Down.prefab using Guid(fa273099924aa9c48b37047a746c8185) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '1e7ddedda704f99ed20b2eeb13938b7e') in 0.018427 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 0.775983 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Down.prefab
+  artifactKey: Guid(fa273099924aa9c48b37047a746c8185) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Down.prefab using Guid(fa273099924aa9c48b37047a746c8185) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'add8d0c8b672f8981c5f3f284defa803') in 0.019962 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 4.623057 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Down.prefab
+  artifactKey: Guid(fa273099924aa9c48b37047a746c8185) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Down.prefab using Guid(fa273099924aa9c48b37047a746c8185) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '6e1f9d50fb854ec78591c50b84a483da') in 0.017891 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 6.287019 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left.prefab
+  artifactKey: Guid(b6b456ca4a17c5b4dba43bb49c2efe7f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left.prefab using Guid(b6b456ca4a17c5b4dba43bb49c2efe7f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'fd31467c2237d495c17155451facd293') in 0.019789 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 0.773634 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left.prefab
+  artifactKey: Guid(b6b456ca4a17c5b4dba43bb49c2efe7f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left.prefab using Guid(b6b456ca4a17c5b4dba43bb49c2efe7f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '98bbe14510ee20bdd35742bf40da482b') in 0.018082 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 5.035615 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left.prefab
+  artifactKey: Guid(b6b456ca4a17c5b4dba43bb49c2efe7f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left.prefab using Guid(b6b456ca4a17c5b4dba43bb49c2efe7f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'a9f7c7f20e4e14806b90a330e921dfc8') in 0.019542 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 11.485685 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Down.prefab
+  artifactKey: Guid(52423514dc65ee446ba899f41f83e20d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Down.prefab using Guid(52423514dc65ee446ba899f41f83e20d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'b2b3dc0395a71cfe4cff1ee4abb90d78') in 0.020087 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 0.973827 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Down.prefab
+  artifactKey: Guid(52423514dc65ee446ba899f41f83e20d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Down.prefab using Guid(52423514dc65ee446ba899f41f83e20d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'd0d03aab743077fe503b346f4f28e992') in 0.018640 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 3.614797 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Down.prefab
+  artifactKey: Guid(52423514dc65ee446ba899f41f83e20d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Down.prefab using Guid(52423514dc65ee446ba899f41f83e20d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '8c354e8daa6586a27c6308cb9065edc6') in 0.017023 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 3.288847 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up.prefab
+  artifactKey: Guid(77ac65160f0f88e4286bf2af76f6fb44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up.prefab using Guid(77ac65160f0f88e4286bf2af76f6fb44) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'fc17a3c2c99ca5c08aa208422643f3a7') in 0.020374 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 1.196298 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up.prefab
+  artifactKey: Guid(77ac65160f0f88e4286bf2af76f6fb44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up.prefab using Guid(77ac65160f0f88e4286bf2af76f6fb44) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'b2e5ff972d4ec2a893b983ff1b074a19') in 0.018497 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 4.434381 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up.prefab
+  artifactKey: Guid(77ac65160f0f88e4286bf2af76f6fb44) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up.prefab using Guid(77ac65160f0f88e4286bf2af76f6fb44) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'a447b19877902138f9a468dcd01710c8') in 0.018755 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 2.217957 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up_Down.prefab
+  artifactKey: Guid(bdf7d7e1f89f4c546bb206072bcd6197) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up_Down.prefab using Guid(bdf7d7e1f89f4c546bb206072bcd6197) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '6d998c19825aa4aab94a5063616f3854') in 0.020602 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 0.776320 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up_Down.prefab
+  artifactKey: Guid(bdf7d7e1f89f4c546bb206072bcd6197) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up_Down.prefab using Guid(bdf7d7e1f89f4c546bb206072bcd6197) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '920ef67458f38d8abf4c6bfa214b3781') in 0.017142 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 4.625956 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up_Down.prefab
+  artifactKey: Guid(bdf7d7e1f89f4c546bb206072bcd6197) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up_Down.prefab using Guid(bdf7d7e1f89f4c546bb206072bcd6197) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '513893b09ece0c3976c75e198bfac537') in 0.017254 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 42
+========================================================================
+Received Import Request.
+  Time since last request: 0.588821 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up_Down.prefab
+  artifactKey: Guid(bdf7d7e1f89f4c546bb206072bcd6197) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Left_Up_Down.prefab using Guid(bdf7d7e1f89f4c546bb206072bcd6197) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '7bddb487d7b461076506d75eae458040') in 0.018003 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 2.227816 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up.prefab
+  artifactKey: Guid(d98cfe71dbfb8694189d824d327c6e04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up.prefab using Guid(d98cfe71dbfb8694189d824d327c6e04) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '638d16b117c7ec5062989571f5119690') in 0.020220 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 0.982993 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up.prefab
+  artifactKey: Guid(d98cfe71dbfb8694189d824d327c6e04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up.prefab using Guid(d98cfe71dbfb8694189d824d327c6e04) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '00360cb13393067e1364e97098fdc496') in 0.018202 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 4.014934 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up.prefab
+  artifactKey: Guid(d98cfe71dbfb8694189d824d327c6e04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up.prefab using Guid(d98cfe71dbfb8694189d824d327c6e04) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '9f771f92c87711266fcb309e202436c4') in 0.017972 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 2.666666 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up_Down.prefab
+  artifactKey: Guid(56988ab280182f74992de191040fa805) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up_Down.prefab using Guid(56988ab280182f74992de191040fa805) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'f225ebc15f2523c65ce5e23576caee3a') in 0.019331 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 0.953108 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up_Down.prefab
+  artifactKey: Guid(56988ab280182f74992de191040fa805) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up_Down.prefab using Guid(56988ab280182f74992de191040fa805) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '7d9207700589cf12472d44972effe601') in 0.018474 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 3.427311 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up_Down.prefab
+  artifactKey: Guid(56988ab280182f74992de191040fa805) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Right_Up_Down.prefab using Guid(56988ab280182f74992de191040fa805) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '190fc490b8cb4eb6bb078ef5bb046023') in 0.017813 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 2.638955 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Up.prefab
+  artifactKey: Guid(821f105be6ec67c41afc2f0a8a6d5d72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Up.prefab using Guid(821f105be6ec67c41afc2f0a8a6d5d72) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '023adc4727ce099b5677ee7ac1074332') in 0.018571 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 0.765774 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Up.prefab
+  artifactKey: Guid(821f105be6ec67c41afc2f0a8a6d5d72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Up.prefab using Guid(821f105be6ec67c41afc2f0a8a6d5d72) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '9d8ec3e433a9e832cb4fe03000071c1c') in 0.017857 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 3.612142 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Up.prefab
+  artifactKey: Guid(821f105be6ec67c41afc2f0a8a6d5d72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Up.prefab using Guid(821f105be6ec67c41afc2f0a8a6d5d72) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '4578552042e5f289e90244b7fa4ee990') in 0.018632 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 1.815006 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Up_Down.prefab
+  artifactKey: Guid(5765438a7c568e6439e55c6cf98db8f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Up_Down.prefab using Guid(5765438a7c568e6439e55c6cf98db8f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '3840bec2b4253c3b6402f3574c557b6e') in 0.019884 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 53
+========================================================================
+Received Import Request.
+  Time since last request: 0.975148 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Up_Down.prefab
+  artifactKey: Guid(5765438a7c568e6439e55c6cf98db8f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Up_Down.prefab using Guid(5765438a7c568e6439e55c6cf98db8f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '41cef509f589d77f5c77f0746c6d5fec') in 0.018244 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 3.612890 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Up_Down.prefab
+  artifactKey: Guid(5765438a7c568e6439e55c6cf98db8f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Normal/Room_Coins_Up_Down.prefab using Guid(5765438a7c568e6439e55c6cf98db8f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'edcdb6f29a0263ed53954510d972652b') in 0.017373 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 40
+========================================================================
+Received Import Request.
+  Time since last request: 20.709433 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Reward.prefab
+  artifactKey: Guid(aa610658cc363b745be9c37beb829bd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Reward.prefab using Guid(aa610658cc363b745be9c37beb829bd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '9b1657f71b4fa33362e107f92498c252') in 0.018709 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 69
+========================================================================
+Received Import Request.
+  Time since last request: 11.767454 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Reward.prefab
+  artifactKey: Guid(aa610658cc363b745be9c37beb829bd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Reward.prefab using Guid(aa610658cc363b745be9c37beb829bd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'f8823a8bebf29a119fa442b17555ff6d') in 0.015548 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 69
+========================================================================
+Received Import Request.
+  Time since last request: 28.462585 seconds.
+  path: Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Reward.prefab
+  artifactKey: Guid(aa610658cc363b745be9c37beb829bd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/zJordi/Rooms OK/Lvl 1/Object/Room_Reward.prefab using Guid(aa610658cc363b745be9c37beb829bd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'dcc47c4bab62591bfd0d4de56192328f') in 0.010791 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 70
+========================================================================
+Received Import Request.
+  Time since last request: 1.755308 seconds.
+  path: Assets/Resources/Sprites/Bosses/Boss lvl 3/attack 1.png
+  artifactKey: Guid(aa448ff654d1337468940ed6f179887d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Bosses/Boss lvl 3/attack 1.png using Guid(aa448ff654d1337468940ed6f179887d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'a1e236498576a1852354eea4b990552c') in 0.049677 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 8
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Resources/Sprites/Bosses/Final Boss/Attack1.png
+  artifactKey: Guid(32c4af1d31ed5bd43aef76832cdd21d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Bosses/Final Boss/Attack1.png using Guid(32c4af1d31ed5bd43aef76832cdd21d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '9683f9d8f7c71f873c62d8dbe177c9bb') in 0.092128 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Resources/Sprites/Characters/Player/Attack2.png
+  artifactKey: Guid(40b4de3f256089740b8ad1de8f189ed1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Characters/Player/Attack2.png using Guid(40b4de3f256089740b8ad1de8f189ed1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '4263860eb486c690bee7c94b5c0f5ebd') in 0.052520 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 2.315999 seconds.
+  path: Assets/Resources/Sprites/Enemies/Lvl 2/Enemy 1/attack.png
+  artifactKey: Guid(168dab53ca2dca64dbb48904eac11fcd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Enemies/Lvl 2/Enemy 1/attack.png using Guid(168dab53ca2dca64dbb48904eac11fcd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'c227eb0596042aefb04012015a7ba6e6') in 0.043344 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 12
+========================================================================
+Received Import Request.
+  Time since last request: 0.331785 seconds.
+  path: Assets/Resources/Sprites/UI/coin.png
+  artifactKey: Guid(6af01d2170f4d8148a1aa69e1b1e8fc7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/UI/coin.png using Guid(6af01d2170f4d8148a1aa69e1b1e8fc7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '873a92eaaa91ce7de76c7b7e0ebce8b1') in 0.026382 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.004085 seconds.
+  path: Assets/Resources/Sprites/Cursor/cursor(1).png
+  artifactKey: Guid(f75349a286817b6479976a10636d3b2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Cursor/cursor(1).png using Guid(f75349a286817b6479976a10636d3b2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '0ec770b18768882ec56714ed13ae6b9c') in 0.014426 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.002305 seconds.
+  path: Assets/Resources/Sprites/Cursor/cursor(3).png
+  artifactKey: Guid(9a9a513fe845f784cb7e6b240a45477c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Cursor/cursor(3).png using Guid(9a9a513fe845f784cb7e6b240a45477c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '43256289e92857346d3cd3121c0f7209') in 0.015510 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.001550 seconds.
+  path: Assets/Resources/Sprites/Cursor/cursor(5).png
+  artifactKey: Guid(12a29531fbff14d4c9df6b98a0ea52c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Cursor/cursor(5).png using Guid(12a29531fbff14d4c9df6b98a0ea52c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '1f44aa0478cc9b06b42dd880e1416bad') in 0.018025 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 1.311492 seconds.
+  path: Assets/Resources/Sprites/Cursor/cursor(7).png
+  artifactKey: Guid(b56e6234cd04cae4480b73d35724b49b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Cursor/cursor(7).png using Guid(b56e6234cd04cae4480b73d35724b49b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '484ad1cf23ed6cb6c6553ccc19779d6a') in 0.015799 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/Resources/Sprites/Cursor/cursor(9).png
+  artifactKey: Guid(8e0bd05f48215b047b30c91c0bc35370) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Cursor/cursor(9).png using Guid(8e0bd05f48215b047b30c91c0bc35370) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'a83c8f8272bacc9a41a6d252099eed53') in 0.014584 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Resources/Sprites/Cursor/cursor(11).png
+  artifactKey: Guid(34e451941ecbccd41b871668489cecbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Cursor/cursor(11).png using Guid(34e451941ecbccd41b871668489cecbf) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'b1071068af937861ec172ae39c7f4b8f') in 0.016033 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.042471 seconds.
+  path: Assets/Resources/Sprites/Enemies/Lvl 2/Enemy 1/damaged and death.png
+  artifactKey: Guid(47b921c73a894f746bda86db882fe5ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Enemies/Lvl 2/Enemy 1/damaged and death.png using Guid(47b921c73a894f746bda86db882fe5ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '4bee7553816f48225a5858dec337b07b') in 0.017269 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Resources/Sprites/Bosses/Boss lvl 2/damaged.png
+  artifactKey: Guid(9361011a227a16b48ba5bb4cb4c90119) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Bosses/Boss lvl 2/damaged.png using Guid(9361011a227a16b48ba5bb4cb4c90119) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '2c4d5805cfa29b75c97c427662e8cb3f') in 0.031092 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 23.280097 seconds.
+  path: Assets/Resources/Sprites/Bosses/Boss lvl 1/hit and death.png
+  artifactKey: Guid(c1c8832eb8bbc894c9144ce12db36647) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Bosses/Boss lvl 1/hit and death.png using Guid(c1c8832eb8bbc894c9144ce12db36647) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '9d592477937a67a10ebcb1f74e8af197') in 0.051722 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.074312 seconds.
+  path: Assets/Resources/Sprites/Bosses/Boss lvl 3/Idle.png
+  artifactKey: Guid(f0086e4a62d37c043937caa11da9ef1f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Bosses/Boss lvl 3/Idle.png using Guid(f0086e4a62d37c043937caa11da9ef1f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '79f2f0eaeb0d0edb5b225dd24436c6c1') in 0.028017 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 6
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Resources/Sprites/Characters/NPC/idle.png
+  artifactKey: Guid(c83fc4e6fdc193e449d3b4be4ecb9925) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Sprites/Characters/NPC/idle.png using Guid(c83fc4e6fdc193e449d3b4be4ecb9925) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: '7ecc1971a32a332ade16813914f34373') in 0.029069 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 6
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+TcpMessagingSession - receive error: operation aborted. errorcode: 995, details: La operación de E/S se anuló por una salida de subproceso o por una solicitud de aplicación.
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0
