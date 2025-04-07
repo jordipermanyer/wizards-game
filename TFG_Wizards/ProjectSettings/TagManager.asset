@@ -26,6 +26,10 @@ TagManager:
   - Final
   - Final2
   - Final3
+  - Room
+  - Punto
+  - PlayerCamara
+  - CamaraRotacion
   layers:
   - Default
   - TransparentFX
