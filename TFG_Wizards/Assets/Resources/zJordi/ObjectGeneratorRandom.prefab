@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5349130695133643561}
   - component: {fileID: 3028728718541997291}
   - component: {fileID: 5888841651236846190}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: ObjectGeneratorRandom
   m_TagString: Object
   m_Icon: {fileID: 0}

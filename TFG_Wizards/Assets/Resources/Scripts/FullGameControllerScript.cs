@@ -4,15 +4,14 @@ using System.IO;
 
 public class FullGameController : MonoBehaviour
 {
-    public static FullGameController Instance { get; private set; } // Singleton
+    public static FullGameController Instance { get; private set; }
 
     [Header("Save Settings")]
-    public string saveFileName = "gameData.json"; // Nombre del archivo JSON
-    private string saveFilePath; // Ruta completa al archivo de guardado
+    public string saveFileName = "gameData.json";
+    private string saveFilePath;
 
     private void Awake()
     {
-        // Singleton: asegura que solo exista una instancia
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -23,18 +22,15 @@ public class FullGameController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         saveFilePath = Path.Combine(Application.persistentDataPath, saveFileName);
-        LoadGame(); // Carga los datos desde el JSON al inicio
+        LoadGame();
     }
 
     private void Start()
     {
-        ApplyVolume(); // Aplica el volumen configurado al inicio
+        ApplyVolume();
     }
 
-    // ----------------------------------
-    // Métodos para Nueva Partida, Cargar Partida y Reiniciar
-    // ----------------------------------
-
+    // ------------------------- NUEVA PARTIDA -------------------------
     public void NewGame()
     {
         ResetPlayerData();
@@ -66,20 +62,22 @@ public class FullGameController : MonoBehaviour
     private void ResetPlayerData()
     {
         PlayerPrefs.SetInt("PlayerHealth", 100);
+        PlayerPrefs.SetInt("PlayerEnergy", 100);
         PlayerPrefs.SetString("CurrentItem", "");
         PlayerPrefs.SetInt("Coins", 0);
         PlayerPrefs.SetInt("Level1Completed", 0);
         PlayerPrefs.SetInt("Level2Completed", 0);
         PlayerPrefs.SetInt("Level3Completed", 0);
-        PlayerPrefs.SetInt("FinalLevelCompleted", 0);
+        PlayerPrefs.SetInt("FinalBossUnlocked", 0);
+        PlayerPrefs.SetInt("Final", 0);
+        PlayerPrefs.SetInt("Final2", 0);
+        PlayerPrefs.SetInt("Final3", 0);
+        PlayerPrefs.SetInt("NPC", 0);
         PlayerPrefs.SetFloat("GameVolume", 1f);
         PlayerPrefs.Save();
     }
 
-    // ----------------------------------
-    // Métodos para Actualizar Datos
-    // ----------------------------------
-
+    // ------------------------- ACTUALIZAR DATOS -------------------------
     public void UpdatePlayerHealth(int value)
     {
         int currentHealth = PlayerPrefs.GetInt("PlayerHealth", 100);
@@ -122,10 +120,7 @@ public class FullGameController : MonoBehaviour
         return PlayerPrefs.GetInt("PlayerHealth", 100);
     }
 
-    // ----------------------------------
-    // Métodos de Control de Audio
-    // ----------------------------------
-
+    // ------------------------- CONTROL DE AUDIO -------------------------
     public void SetVolume(float value)
     {
         value = Mathf.Clamp01(value);
@@ -139,33 +134,30 @@ public class FullGameController : MonoBehaviour
         AudioListener.volume = PlayerPrefs.GetFloat("GameVolume", 1f);
     }
 
-    // ----------------------------------
-    // Métodos de Transición de Escenas
-    // ----------------------------------
-
+    // ------------------------- TRANSICIÓN DE ESCENAS -------------------------
     public void LoadScene(string sceneName)
     {
         Debug.Log($"Loading scene: {sceneName}");
         SceneManager.LoadScene(sceneName);
     }
 
-    // ----------------------------------
-    // Métodos de Guardado y Carga
-    // ----------------------------------
-
+    // ------------------------- GUARDAR Y CARGAR -------------------------
     public void SaveGame()
     {
         SaveData data = new SaveData
         {
             playerHealth = PlayerPrefs.GetInt("PlayerHealth", 100),
+            playerEnergy = PlayerPrefs.GetInt("PlayerEnergy", 100),
             currentItem = PlayerPrefs.GetString("CurrentItem", ""),
             coins = PlayerPrefs.GetInt("Coins", 0),
-            levelsCompleted = new int[] {
-                PlayerPrefs.GetInt("Level1Completed", 0),
-                PlayerPrefs.GetInt("Level2Completed", 0),
-                PlayerPrefs.GetInt("Level3Completed", 0),
-                PlayerPrefs.GetInt("FinalLevelCompleted", 0),
-            },
+            level1 = PlayerPrefs.GetInt("Level1Completed", 0),
+            level2 = PlayerPrefs.GetInt("Level2Completed", 0),
+            level3 = PlayerPrefs.GetInt("Level3Completed", 0),
+            finalBossUnlocked = PlayerPrefs.GetInt("FinalBossUnlocked", 0),
+            final = PlayerPrefs.GetInt("Final", 0),
+            final2 = PlayerPrefs.GetInt("Final2", 0),
+            final3 = PlayerPrefs.GetInt("Final3", 0),
+            npc = PlayerPrefs.GetInt("NPC", 0),
             gameVolume = PlayerPrefs.GetFloat("GameVolume", 1f)
         };
 
@@ -191,12 +183,17 @@ public class FullGameController : MonoBehaviour
                 SaveData data = JsonUtility.FromJson<SaveData>(json);
 
                 PlayerPrefs.SetInt("PlayerHealth", data.playerHealth);
+                PlayerPrefs.SetInt("PlayerEnergy", data.playerEnergy);
                 PlayerPrefs.SetString("CurrentItem", data.currentItem);
                 PlayerPrefs.SetInt("Coins", data.coins);
-                PlayerPrefs.SetInt("Level1Completed", data.levelsCompleted[0]);
-                PlayerPrefs.SetInt("Level2Completed", data.levelsCompleted[1]);
-                PlayerPrefs.SetInt("Level3Completed", data.levelsCompleted[2]);
-                PlayerPrefs.SetInt("FinalLevelCompleted", data.levelsCompleted[3]);
+                PlayerPrefs.SetInt("Level1Completed", data.level1);
+                PlayerPrefs.SetInt("Level2Completed", data.level2);
+                PlayerPrefs.SetInt("Level3Completed", data.level3);
+                PlayerPrefs.SetInt("FinalBossUnlocked", data.finalBossUnlocked);
+                PlayerPrefs.SetInt("Final", data.final);
+                PlayerPrefs.SetInt("Final2", data.final2);
+                PlayerPrefs.SetInt("Final3", data.final3);
+                PlayerPrefs.SetInt("NPC", data.npc);
                 PlayerPrefs.SetFloat("GameVolume", data.gameVolume);
                 PlayerPrefs.Save();
 
@@ -213,17 +210,95 @@ public class FullGameController : MonoBehaviour
         }
     }
 
-    // ----------------------------------
-    // Clase Interna para Datos del Juego
-    // ----------------------------------
+    // ------------------------- GUARDADO CON SLOT Y NOMBRE -------------------------
+    public void SaveGameToFile(string fileName, string customName)
+    {
+        BedSaveSystem.SaveSlotData data = new BedSaveSystem.SaveSlotData
+        {
+            slotName = customName,
+            playerHealth = PlayerPrefs.GetInt("PlayerHealth", 100),
+            playerEnergy = PlayerPrefs.GetInt("PlayerEnergy", 100),
+            currentItem = PlayerPrefs.GetString("CurrentItem", ""),
+            coins = PlayerPrefs.GetInt("Coins", 0),
+            level1 = PlayerPrefs.GetInt("Level1Completed", 0),
+            level2 = PlayerPrefs.GetInt("Level2Completed", 0),
+            level3 = PlayerPrefs.GetInt("Level3Completed", 0),
+            finalBossUnlocked = PlayerPrefs.GetInt("FinalBossUnlocked", 0),
+            final = PlayerPrefs.GetInt("Final", 0),
+            final2 = PlayerPrefs.GetInt("Final2", 0),
+            final3 = PlayerPrefs.GetInt("Final3", 0),
+            npc = PlayerPrefs.GetInt("NPC", 0),
+            gameVolume = PlayerPrefs.GetFloat("GameVolume", 1f)
+        };
 
+        try
+        {
+            string json = JsonUtility.ToJson(data, true);
+            string path = Path.Combine(Application.persistentDataPath, fileName);
+            File.WriteAllText(path, json);
+            Debug.Log($"Partida guardada en archivo {fileName} con nombre {customName}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error al guardar partida en {fileName}: {e.Message}");
+        }
+    }
+
+    public void LoadGameFromFile(string fileName)
+    {
+        string path = Path.Combine(Application.persistentDataPath, fileName);
+
+        if (File.Exists(path))
+        {
+            try
+            {
+                string json = File.ReadAllText(path);
+                BedSaveSystem.SaveSlotData data = JsonUtility.FromJson<BedSaveSystem.SaveSlotData>(json);
+
+                PlayerPrefs.SetInt("PlayerHealth", data.playerHealth);
+                PlayerPrefs.SetInt("PlayerEnergy", data.playerEnergy);
+                PlayerPrefs.SetString("CurrentItem", data.currentItem);
+                PlayerPrefs.SetInt("Coins", data.coins);
+                PlayerPrefs.SetInt("Level1Completed", data.level1);
+                PlayerPrefs.SetInt("Level2Completed", data.level2);
+                PlayerPrefs.SetInt("Level3Completed", data.level3);
+                PlayerPrefs.SetInt("FinalBossUnlocked", data.finalBossUnlocked);
+                PlayerPrefs.SetInt("Final", data.final);
+                PlayerPrefs.SetInt("Final2", data.final2);
+                PlayerPrefs.SetInt("Final3", data.final3);
+                PlayerPrefs.SetInt("NPC", data.npc);
+                PlayerPrefs.SetFloat("GameVolume", data.gameVolume);
+                PlayerPrefs.Save();
+
+                Debug.Log($"Partida cargada desde {fileName}");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Error al cargar partida desde {fileName}: {e.Message}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"El archivo de guardado {fileName} no existe.");
+        }
+    }
+
+    // ------------------------- CLASE INTERNA DE GUARDADO -------------------------
     [System.Serializable]
     private class SaveData
     {
         public int playerHealth;
+        public int playerEnergy;
         public string currentItem;
         public int coins;
-        public int[] levelsCompleted;
+        public int level1;
+        public int level2;
+        public int level3;
+        public int finalBossUnlocked;
+        public int final;
+        public int final2;
+        public int final3;
+        public int npc;
         public float gameVolume;
     }
 }

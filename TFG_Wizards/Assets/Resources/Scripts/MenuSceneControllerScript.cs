@@ -1,130 +1,210 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
+using System.IO;
 
 public class MenuSceneControllerScript : MonoBehaviour
 {
-    // Public fields for Inspector
-    public string newGameSceneName = "GameMapScene"; // Nombre de la escena para nueva partida
-    public string resumeGameSceneName = "StoreScene"; // Nombre de la escena para reanudar
-    public Button newGameButton; // Botón de nueva partida
-    public Button resumeGameButton; // Botón de reanudar partida
-    public Button optionsButton; // Botón de opciones (muteo)
-    public Button quitButton; // Botón de salir
-    public Slider volumeSlider; // Slider para ajustar volumen
-    public Button decreaseVolumeButton; // Botón para disminuir volumen
-    public Button increaseVolumeButton; // Botón para aumentar volumen
+    public string newGameSceneName = "GameMapScene";
+    public string resumeGameSceneName = "StoreScene";
 
-    private float volumeStep = 0.1f; // Incremento/decremento del volumen
+    public Button newGameButton;
+    public Button resumeGameButton;
+    public Button optionsButton;
+    public Button quitButton;
+    public Slider volumeSlider;
+    public Button decreaseVolumeButton;
+    public Button increaseVolumeButton;
+
+    public GameObject cargarPartidaPanel;
+    public Button regresarButton;
+
+    public Button[] slotButtons; // Botones en el panel de cargarPartida
+    public TMP_Text[] slotTexts; // Textos asociados a cada botón
+
+    public GameObject panelGestor;
+    public Button playButton;
+    public Button deleteButton;
+
+    private string[] slotFileNames = { "slot1.json", "slot2.json", "slot3.json" };
+    private int selectedSlotIndex = -1;
+    private float volumeStep = 0.1f;
 
     private void Awake()
     {
-        // Verificar que todos los elementos están asignados
-        if (newGameButton == null || resumeGameButton == null || optionsButton == null || quitButton == null || volumeSlider == null || decreaseVolumeButton == null || increaseVolumeButton == null)
+        // Verificar referencias asignadas
+        if (newGameButton == null || resumeGameButton == null || optionsButton == null || quitButton == null ||
+            volumeSlider == null || decreaseVolumeButton == null || increaseVolumeButton == null ||
+            cargarPartidaPanel == null || regresarButton == null || panelGestor == null ||
+            playButton == null || deleteButton == null || slotButtons.Length != 3 || slotTexts.Length != 3)
         {
-            Debug.LogError("One or more UI elements are not assigned in the Inspector!");
+            Debug.LogError("Faltan referencias en el Inspector.");
+            return;
         }
 
-        // Asignar listeners a los botones
+        // Listeners para menú principal
         newGameButton.onClick.AddListener(NewGame);
-        resumeGameButton.onClick.AddListener(ResumeGame);
+        resumeGameButton.onClick.AddListener(OpenCargarPartidaPanel);
         optionsButton.onClick.AddListener(ToggleAudio);
         quitButton.onClick.AddListener(QuitGame);
         volumeSlider.onValueChanged.AddListener(UpdateVolumeFromSlider);
         decreaseVolumeButton.onClick.AddListener(DecreaseVolume);
         increaseVolumeButton.onClick.AddListener(IncreaseVolume);
 
-        // Cargar el volumen guardado al iniciar el menú
+        // Listeners de carga de partida
+        for (int i = 0; i < slotButtons.Length; i++)
+        {
+            int index = i;
+            slotButtons[i].onClick.AddListener(() => SelectSlot(index));
+        }
+
+        regresarButton.onClick.AddListener(() =>
+        {
+            cargarPartidaPanel.SetActive(false);
+            panelGestor.SetActive(false);
+            selectedSlotIndex = -1;
+        });
+
+        deleteButton.onClick.AddListener(DeleteSave);
+        playButton.onClick.AddListener(PlaySavedGame);
+
+        // Inicializar volumen
         float savedVolume = PlayerPrefs.GetFloat("GameVolume", 1f);
         volumeSlider.value = savedVolume;
         FullGameController.Instance.SetVolume(savedVolume);
+
+        cargarPartidaPanel.SetActive(false);
+        panelGestor.SetActive(false);
     }
 
-    // Iniciar nueva partida
     public void NewGame()
     {
-        // Resetear los valores de la partida
         PlayerPrefs.SetInt("PlayerHealth", 100);
-        PlayerPrefs.SetInt("PlayerEnergy", 100); // Reiniciar la energía a 100
+        PlayerPrefs.SetInt("PlayerEnergy", 100);
         PlayerPrefs.SetString("CurrentItem", "");
         PlayerPrefs.SetInt("Coins", 0);
         PlayerPrefs.SetInt("Level1Completed", 0);
         PlayerPrefs.SetInt("Level2Completed", 0);
         PlayerPrefs.SetInt("Level3Completed", 0);
         PlayerPrefs.SetInt("FinalBossUnlocked", 0);
-
-        // Resetear los contadores de los ítems Final, Final2 y Final3
         PlayerPrefs.SetInt("Final", 0);
         PlayerPrefs.SetInt("Final2", 0);
         PlayerPrefs.SetInt("Final3", 0);
-
-        // Resetear el dato del NPC a 0
         PlayerPrefs.SetInt("NPC", 0);
+        PlayerPrefs.Save();
 
-        PlayerPrefs.Save(); // Guardar los cambios
-
-        Debug.Log("Nueva partida iniciada. Todos los datos han sido reseteados.");
+        Debug.Log("Nueva partida iniciada.");
         FullGameController.Instance.LoadScene(newGameSceneName);
     }
 
-    // Reanudar partida
-    public void ResumeGame()
+    public void OpenCargarPartidaPanel()
     {
-        if (PlayerPrefs.HasKey("PlayerHealth"))
+        cargarPartidaPanel.SetActive(true);
+        panelGestor.SetActive(false);
+        selectedSlotIndex = -1;
+
+        for (int i = 0; i < slotFileNames.Length; i++)
         {
-            Debug.Log("Game loaded from PlayerPrefs.");
-            FullGameController.Instance.LoadScene(resumeGameSceneName);
-        }
-        else
-        {
-            Debug.LogWarning("No save data found! Starting a new game.");
-            NewGame();
+            string path = Path.Combine(Application.persistentDataPath, slotFileNames[i]);
+            if (File.Exists(path))
+            {
+                string content = File.ReadAllText(path);
+                SaveSlotData data = JsonUtility.FromJson<SaveSlotData>(content);
+                slotTexts[i].text = data.slotName;
+                slotButtons[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                slotButtons[i].gameObject.SetActive(false);
+            }
         }
     }
 
-    // Alternar muteo del audio con el botón
+    private void SelectSlot(int index)
+    {
+        selectedSlotIndex = index;
+        panelGestor.SetActive(true);
+    }
+
+    private void PlaySavedGame()
+    {
+        if (selectedSlotIndex < 0 || selectedSlotIndex >= slotFileNames.Length)
+        {
+            Debug.LogError("Slot inválido.");
+            return;
+        }
+
+        FullGameController.Instance.LoadGameFromFile(slotFileNames[selectedSlotIndex]);
+        FullGameController.Instance.LoadScene(resumeGameSceneName);
+    }
+
+    private void DeleteSave()
+    {
+        if (selectedSlotIndex < 0 || selectedSlotIndex >= slotFileNames.Length)
+        {
+            Debug.LogError("Slot inválido para borrar.");
+            return;
+        }
+
+        string path = Path.Combine(Application.persistentDataPath, slotFileNames[selectedSlotIndex]);
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+            Debug.Log("Partida eliminada del slot " + (selectedSlotIndex + 1));
+        }
+
+        panelGestor.SetActive(false);
+        OpenCargarPartidaPanel(); // Recargar los botones de slot
+    }
+
     public void ToggleAudio()
     {
         float currentVolume = volumeSlider.value;
         float newVolume = currentVolume > 0 ? 0f : 1f;
-
-        volumeSlider.value = newVolume; // Actualizar el slider al nuevo valor
+        volumeSlider.value = newVolume;
         PlayerPrefs.SetFloat("GameVolume", newVolume);
         PlayerPrefs.Save();
-
         FullGameController.Instance.SetVolume(newVolume);
-        Debug.Log($"Audio toggled. Is Audio On: {newVolume > 0}");
+        Debug.Log("Audio toggled. Is Audio On: " + (newVolume > 0));
     }
 
-    // Ajustar volumen con el Slider
     public void UpdateVolumeFromSlider(float volume)
     {
         PlayerPrefs.SetFloat("GameVolume", volume);
         PlayerPrefs.Save();
         FullGameController.Instance.SetVolume(volume);
-        Debug.Log($"Volume adjusted to: {volume}");
+        Debug.Log("Volume adjusted to: " + volume);
     }
 
-    // Disminuir volumen con el botón de la izquierda
     public void DecreaseVolume()
     {
         float newVolume = Mathf.Max(0f, volumeSlider.value - volumeStep);
-        volumeSlider.value = newVolume; // Actualizar el slider
+        volumeSlider.value = newVolume;
         UpdateVolumeFromSlider(newVolume);
     }
 
-    // Aumentar volumen con el botón de la derecha
     public void IncreaseVolume()
     {
         float newVolume = Mathf.Min(1f, volumeSlider.value + volumeStep);
-        volumeSlider.value = newVolume; // Actualizar el slider
+        volumeSlider.value = newVolume;
         UpdateVolumeFromSlider(newVolume);
     }
 
-    // Salir del juego
     public void QuitGame()
     {
         Debug.Log("Quitted app");
         Application.Quit();
+    }
+
+    [System.Serializable]
+    public class SaveSlotData
+    {
+        public string slotName;
+        public int playerHealth;
+        public string currentItem;
+        public int coins;
+        public int[] levelsCompleted;
+        public float gameVolume;
     }
 }

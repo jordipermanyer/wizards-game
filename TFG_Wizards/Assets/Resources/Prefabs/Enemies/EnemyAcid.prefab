@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2188583297684771185}
   - component: {fileID: 5943911836333039382}
   - component: {fileID: 5306351164118639384}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: EnemyAcid
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5241018600293495242}
   - component: {fileID: 6659326303902016357}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
