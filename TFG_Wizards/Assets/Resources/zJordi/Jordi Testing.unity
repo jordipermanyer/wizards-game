@@ -298,6 +298,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291711031}
   m_CullTransparentMesh: 1
+--- !u!4 &312152619 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1327624141942914722, guid: 9cc64aeecd31fa54dad176d79c39b1fb, type: 3}
+  m_PrefabInstance: {fileID: 4223892271967286171}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &320383083
 GameObject:
   m_ObjectHideFlags: 0
@@ -5341,7 +5346,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 312152619}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &1892787130
 AudioListener:
@@ -5386,7 +5391,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.78
+  orthographic size: 2.22
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5912,7 +5917,10 @@ PrefabInstance:
       objectReference: {fileID: 2049084737}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1327624141942914722, guid: 9cc64aeecd31fa54dad176d79c39b1fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1892787129}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cc64aeecd31fa54dad176d79c39b1fb, type: 3}
 --- !u!4 &4350464757269780735 stripped
@@ -6172,7 +6180,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1892787129}
   - {fileID: 565832711}
   - {fileID: 1851894810}
   - {fileID: 1762013156}
