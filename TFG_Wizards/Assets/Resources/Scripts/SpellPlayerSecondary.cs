@@ -38,7 +38,7 @@ public class SpellPlayerSecondary : MonoBehaviour
             return;
         }
 
-        if (collider.CompareTag("Enemy") || collider.CompareTag("Boss"))
+        if (collider.CompareTag("Enemy") || collider.CompareTag("Boss") || collider.CompareTag("Pared"))
         {
             var enemy = collider.GetComponent<EnemyShooterControllerScript>();
             var enemyMele = collider.GetComponent<EnemyMeleControllerScript>();

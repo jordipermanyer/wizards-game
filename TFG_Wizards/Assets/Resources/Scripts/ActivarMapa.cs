@@ -5,6 +5,7 @@ public class ActivarMapa : MonoBehaviour
     public GameObject panelMapa;            // Panel del mapa
     public bool congelarMovimiento;         // Si está activado, el jugador no se moverá al abrir el mapa
     public GameObject player;               // Referencia al jugador
+    public bool habilitarMapa = false;       // Si está en false, el panel no se puede activar
 
     private bool panelActivo = false;
     private PlayerController playerController;
@@ -21,6 +22,8 @@ public class ActivarMapa : MonoBehaviour
 
     void Update()
     {
+        if (!habilitarMapa) return; // Si está desactivado, no hace nada
+
         if (Input.GetKeyDown(KeyCode.M))
         {
             panelActivo = !panelActivo;
@@ -32,7 +35,7 @@ public class ActivarMapa : MonoBehaviour
                     playerController.enabled = false;
 
                 if (playerRb != null)
-                    playerRb.velocity = Vector2.zero; // Detiene el movimiento completamente
+                    playerRb.velocity = Vector2.zero;
             }
             else
             {

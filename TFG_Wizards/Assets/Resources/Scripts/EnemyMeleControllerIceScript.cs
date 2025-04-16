@@ -1,21 +1,24 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using UnityEngine;
 
 public class EnemyMeleControllerIceScript : MonoBehaviour
 {
     [Header("Enemy Settings")]
-    public int maxHp = 40; // Vida m·xima del enemigo (el doble del enemigo normal)
-    public int contactDamage = 15; // DaÒo infligido al tocar al jugador
-    public float detectionDistance = 5f; // Distancia a la que detecta al jugador
-    public float speed = 2.5f; // Velocidad de movimiento (ligeramente m·s r·pida)
+    public int maxHp = 40; // Vida m√°xima
+    public int contactDamage = 15; // Da√±o al tocar al jugador
+    public float detectionDistance = 5f; // Distancia de detecci√≥n
+    public float speed = 2.5f; // Velocidad de persecuci√≥n
 
     [Header("Auto-detection")]
-    public LayerMask roomBoundsLayer; // Capa para detectar los lÌmites de la sala
+    public LayerMask roomBoundsLayer; // Capa para detectar l√≠mites de la sala
 
-    private Transform playerTransform; // Referencia al jugador
-    private int currentHp; // Vida actual
-    private bool isPlayerDetected = false; // Estado de detecciÛn del jugador
-    private Bounds roomBounds; // LÌmites de la sala detectados autom·ticamente
+    private Transform playerTransform;
+    private int currentHp;
+    private bool isPlayerDetected = false;
+    private Bounds roomBounds;
+
+    private Vector3 initialPosition;
+    private bool isReturningToOrigin = false;
 
     private void Start()
     {
@@ -26,6 +29,8 @@ public class EnemyMeleControllerIceScript : MonoBehaviour
         }
 
         currentHp = maxHp;
+        initialPosition = transform.position;
+
         DetectRoomBounds();
     }
 
@@ -35,6 +40,12 @@ public class EnemyMeleControllerIceScript : MonoBehaviour
 
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
+
+        if (isReturningToOrigin)
+        {
+            ReturnToOrigin();
+            return;
+        }
 
         if (isPlayerDetected)
         {
@@ -64,6 +75,22 @@ public class EnemyMeleControllerIceScript : MonoBehaviour
         transform.position = newPosition;
     }
 
+    private void ReturnToOrigin()
+    {
+        Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
+        float distance = Vector2.Distance(transform.position, initialPosition);
+
+        if (distance > 0.1f)
+        {
+            transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.position = initialPosition;
+            isReturningToOrigin = false;
+        }
+    }
+
     private Vector2 ClampToRoomBounds(Vector2 position)
     {
         position.x = Mathf.Clamp(position.x, roomBounds.min.x, roomBounds.max.x);
@@ -79,9 +106,14 @@ public class EnemyMeleControllerIceScript : MonoBehaviour
             if (player != null)
             {
                 player.Damage(contactDamage);
-                player.ApplySlowdown(0.5f, 3f);
-                Die();
+                player.ApplySlowdown(0.5f, 3f); // Ralentiza al jugador
+                Die(); // Si quieres que el enemigo se autodestruya tras atacar
             }
+        }
+
+        if (collider.CompareTag("Pared"))
+        {
+            isReturningToOrigin = true;
         }
     }
 

@@ -4,30 +4,33 @@ using UnityEngine;
 public class EnemyShooterControllerDroopScript : MonoBehaviour
 {
     [Header("Enemy Stats")]
-    public int maxHp = 10; // Vida máxima
-    public int contactDamage = 5; // Daño por contacto
-    public float detectionDistance = 10f; // Distancia de detección del jugador
-    public float speed = 3f; // Velocidad de movimiento
-    public float wanderSpeed = 1f; // Velocidad al deambular
-    public float wanderInterval = 2f; // Intervalo para cambiar de dirección al deambular
+    public int maxHp = 10;
+    public int contactDamage = 5;
+    public float detectionDistance = 10f;
+    public float speed = 3f;
+    public float wanderSpeed = 1f;
+    public float wanderInterval = 2f;
 
     [Header("Shooting")]
-    public GameObject bulletPrefab; // Prefab de la bala
-    public int bulletDamage = 10; // Daño de la bala
-    public float shootInterval = 2f; // Intervalo entre disparos
+    public GameObject bulletPrefab;
+    public int bulletDamage = 10;
+    public float shootInterval = 2f;
 
     [Header("Auto-detection")]
-    public LayerMask roomBoundsLayer; // Capa para detectar los límites de la sala
+    public LayerMask roomBoundsLayer;
 
     [Header("Drop System")]
-    public GameObject healthPickupPrefab; // Prefab de vida
-    public GameObject attackReloadPrefab; // Prefab de recarga de ataque
-    public GameObject coinPrefab; // Prefab de moneda
+    public GameObject healthPickupPrefab;
+    public GameObject attackReloadPrefab;
+    public GameObject coinPrefab;
 
     private Transform playerTransform;
     private int currentHp;
     private bool isPlayerDetected;
-    private Bounds roomBounds; // Límites de la sala detectados automáticamente
+    private Bounds roomBounds;
+
+    private Vector3 initialPosition;
+    private bool isReturningToOrigin = false;
 
     private void Start()
     {
@@ -39,8 +42,8 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
             playerTransform = player.transform;
         }
 
-        // Detectar los límites de la sala automáticamente
         DetectRoomBounds();
+        initialPosition = transform.position;
 
         StartCoroutine(Wander());
         StartCoroutine(ShootAtPlayer());
@@ -53,7 +56,11 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
 
-        if (isPlayerDetected)
+        if (isReturningToOrigin)
+        {
+            ReturnToOrigin();
+        }
+        else if (isPlayerDetected)
         {
             ChasePlayer();
         }
@@ -78,12 +85,28 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
         Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
         Vector2 newPosition = (Vector2)transform.position + directionToPlayer * speed * Time.deltaTime;
 
-        if (roomBounds.size != Vector3.zero) // Solo aplicar límites si se detectaron
+        if (roomBounds.size != Vector3.zero)
         {
             newPosition = ClampToRoomBounds(newPosition);
         }
 
         transform.position = newPosition;
+    }
+
+    private void ReturnToOrigin()
+    {
+        Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
+        float distance = Vector2.Distance(transform.position, initialPosition);
+
+        if (distance > 0.1f)
+        {
+            transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.position = initialPosition;
+            isReturningToOrigin = false;
+        }
     }
 
     private Vector2 ClampToRoomBounds(Vector2 position)
@@ -98,6 +121,7 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(wanderInterval);
+            // Deambulación futura si quieres implementarla
         }
     }
 
@@ -105,11 +129,10 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
     {
         while (true)
         {
-            if (isPlayerDetected && playerTransform != null && bulletPrefab != null)
+            if (!isReturningToOrigin && isPlayerDetected && playerTransform != null && bulletPrefab != null)
             {
                 Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
 
-                // Instanciar la bala
                 GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
                 bullet.GetComponent<Bullet>().Initialize(directionToPlayer, bulletDamage);
             }
@@ -128,6 +151,11 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
                 player.Damage(contactDamage);
             }
         }
+
+        if (collider.CompareTag("Pared"))
+        {
+            isReturningToOrigin = true;
+        }
     }
 
     public void Damage(int damage)
@@ -143,13 +171,13 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
     private void Die()
     {
         Debug.Log("Enemy defeated.");
-        DropLoot(); // Llamar al sistema de dropeo
+        DropLoot();
         Destroy(gameObject);
     }
 
     private void DropLoot()
     {
-        float dropChance = Random.value; // Genera un número entre 0.0 y 1.0
+        float dropChance = Random.value;
 
         if (dropChance <= 0.2f && healthPickupPrefab != null)
         {

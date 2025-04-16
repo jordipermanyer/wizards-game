@@ -30,6 +30,9 @@ TagManager:
   - Punto
   - PlayerCamara
   - CamaraRotacion
+  - barraVidaJefe
+  - vidaJefe
+  - Pared
   layers:
   - Default
   - TransparentFX
@@ -38,7 +41,7 @@ TagManager:
   - Water
   - UI
   - Minimap
-  - 
+  - Pared
   - 
   - 
   - 

@@ -4,32 +4,36 @@ using UnityEngine;
 public class EnemyShooterControllerTeleportScript : MonoBehaviour
 {
     [Header("Enemy Stats")]
-    public int maxHp = 10; // Vida máxima
-    public int contactDamage = 5; // Daño por contacto
-    public float detectionDistance = 10f; // Distancia de detección del jugador
-    public float speed = 3f; // Velocidad de movimiento
-    public float wanderSpeed = 1f; // Velocidad al deambular
-    public float wanderInterval = 2f; // Intervalo para cambiar de dirección al deambular
+    public int maxHp = 10;
+    public int contactDamage = 5;
+    public float detectionDistance = 10f;
+    public float speed = 3f;
+    public float wanderSpeed = 1f;
+    public float wanderInterval = 2f;
 
     [Header("Shooting")]
-    public GameObject bulletPrefab; // Prefab de la bala
-    public int bulletDamage = 10; // Daño de la bala
-    public float shootInterval = 2f; // Intervalo entre disparos
+    public GameObject bulletPrefab;
+    public int bulletDamage = 10;
+    public float shootInterval = 2f;
 
     [Header("Auto-detection")]
-    public LayerMask roomBoundsLayer; // Capa para detectar los límites de la sala
+    public LayerMask roomBoundsLayer;
 
     [Header("Drop Item")]
-    public GameObject teleportItemPrefab; // Prefab del objeto de teletransporte
+    public GameObject teleportItemPrefab;
 
     private Transform playerTransform;
     private int currentHp;
     private bool isPlayerDetected;
-    private Bounds roomBounds; // Límites de la sala detectados automáticamente
+    private Bounds roomBounds;
+
+    private Vector3 initialPosition;
+    public bool isReturningToOrigin = false;
 
     private void Start()
     {
         currentHp = maxHp;
+        initialPosition = transform.position;
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -37,7 +41,6 @@ public class EnemyShooterControllerTeleportScript : MonoBehaviour
             playerTransform = player.transform;
         }
 
-        // Detectar los límites de la sala automáticamente
         DetectRoomBounds();
 
         StartCoroutine(Wander());
@@ -50,6 +53,12 @@ public class EnemyShooterControllerTeleportScript : MonoBehaviour
 
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
+
+        if (isReturningToOrigin)
+        {
+            ReturnToOrigin();
+            return;
+        }
 
         if (isPlayerDetected)
         {
@@ -76,12 +85,28 @@ public class EnemyShooterControllerTeleportScript : MonoBehaviour
         Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
         Vector2 newPosition = (Vector2)transform.position + directionToPlayer * speed * Time.deltaTime;
 
-        if (roomBounds.size != Vector3.zero) // Solo aplicar límites si se detectaron
+        if (roomBounds.size != Vector3.zero)
         {
             newPosition = ClampToRoomBounds(newPosition);
         }
 
         transform.position = newPosition;
+    }
+
+    private void ReturnToOrigin()
+    {
+        Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
+        float distance = Vector2.Distance(transform.position, initialPosition);
+
+        if (distance > 0.1f)
+        {
+            transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.position = initialPosition;
+            isReturningToOrigin = false;
+        }
     }
 
     private Vector2 ClampToRoomBounds(Vector2 position)
@@ -107,7 +132,6 @@ public class EnemyShooterControllerTeleportScript : MonoBehaviour
             {
                 Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
 
-                // Instanciar la bala
                 GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
                 bullet.GetComponent<Bullet>().Initialize(directionToPlayer, bulletDamage);
             }
@@ -126,6 +150,11 @@ public class EnemyShooterControllerTeleportScript : MonoBehaviour
                 player.Damage(contactDamage);
             }
         }
+
+        if (collider.CompareTag("Pared"))
+        {
+            isReturningToOrigin = true;
+        }
     }
 
     public void Damage(int damage)
@@ -142,7 +171,6 @@ public class EnemyShooterControllerTeleportScript : MonoBehaviour
     {
         Debug.Log("Enemy defeated.");
 
-        // Dropea el objeto de teletransporte si está asignado
         if (teleportItemPrefab != null)
         {
             Instantiate(teleportItemPrefab, transform.position, Quaternion.identity);

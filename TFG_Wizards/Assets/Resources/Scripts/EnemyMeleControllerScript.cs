@@ -4,22 +4,24 @@ using UnityEngine;
 public class EnemyMeleControllerScript : MonoBehaviour
 {
     [Header("Enemy Settings")]
-    public int maxHp = 20; // Vida máxima del enemigo
-    public int contactDamage = 10; // Daño infligido al tocar al jugador
-    public float detectionDistance = 5f; // Distancia a la que detecta al jugador
-    public float speed = 2f; // Velocidad de movimiento
+    public int maxHp = 20;
+    public int contactDamage = 10;
+    public float detectionDistance = 5f;
+    public float speed = 2f;
 
     [Header("Auto-detection")]
-    public LayerMask roomBoundsLayer; // Capa para detectar los límites de la sala
+    public LayerMask roomBoundsLayer;
 
-    private Transform playerTransform; // Referencia al jugador
-    private int currentHp; // Vida actual
-    private bool isPlayerDetected = false; // Estado de detección del jugador
-    private Bounds roomBounds; // Límites de la sala detectados automáticamente
+    private Transform playerTransform;
+    private int currentHp;
+    private bool isPlayerDetected = false;
+    private Bounds roomBounds;
+
+    private Vector3 initialPosition;
+    private bool isReturningToOrigin = false;
 
     private void Start()
     {
-        // Buscar al jugador
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -27,8 +29,8 @@ public class EnemyMeleControllerScript : MonoBehaviour
         }
 
         currentHp = maxHp;
+        initialPosition = transform.position;
 
-        // Detectar los límites de la sala automáticamente
         DetectRoomBounds();
     }
 
@@ -38,6 +40,12 @@ public class EnemyMeleControllerScript : MonoBehaviour
 
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
+
+        if (isReturningToOrigin)
+        {
+            ReturnToOrigin();
+            return;
+        }
 
         if (isPlayerDetected)
         {
@@ -64,12 +72,28 @@ public class EnemyMeleControllerScript : MonoBehaviour
         Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
         Vector2 newPosition = (Vector2)transform.position + directionToPlayer * speed * Time.deltaTime;
 
-        if (roomBounds.size != Vector3.zero) // Solo aplicar límites si se detectaron
+        if (roomBounds.size != Vector3.zero)
         {
             newPosition = ClampToRoomBounds(newPosition);
         }
 
         transform.position = newPosition;
+    }
+
+    private void ReturnToOrigin()
+    {
+        Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
+        float distance = Vector2.Distance(transform.position, initialPosition);
+
+        if (distance > 0.1f)
+        {
+            transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.position = initialPosition;
+            isReturningToOrigin = false;
+        }
     }
 
     private Vector2 ClampToRoomBounds(Vector2 position)
@@ -86,9 +110,14 @@ public class EnemyMeleControllerScript : MonoBehaviour
             PlayerController player = collider.GetComponent<PlayerController>();
             if (player != null)
             {
-                player.Damage(contactDamage); // Aplica daño al jugador
-                Die(); // El enemigo se "suicida" tras tocar al jugador
+                player.Damage(contactDamage);
+                Die();
             }
+        }
+
+        if (collider.CompareTag("Pared"))
+        {
+            isReturningToOrigin = true;
         }
     }
 

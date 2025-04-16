@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Player"))
+        if (collider.CompareTag("Player") || collider.CompareTag("Pared"))
         {
             PlayerController player = collider.GetComponent<PlayerController>();
             if (player != null)

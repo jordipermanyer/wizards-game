@@ -4,20 +4,23 @@ using UnityEngine;
 public class EnemyMeleControllerAcidScript : MonoBehaviour
 {
     [Header("Enemy Settings")]
-    public int maxHp = 40; // Vida máxima del enemigo
-    public int contactDamage = 15; // Daño inicial al tocar al jugador
-    public int damageOverTime = 5; // Daño por segundo
-    public float damageDuration = 3f; // Duración del daño continuo
-    public float detectionDistance = 5f; // Distancia de detección del jugador
-    public float speed = 2.5f; // Velocidad de movimiento
+    public int maxHp = 40;
+    public int contactDamage = 15;
+    public int damageOverTime = 5;
+    public float damageDuration = 3f;
+    public float detectionDistance = 5f;
+    public float speed = 2.5f;
 
     [Header("Auto-detection")]
-    public LayerMask roomBoundsLayer; // Capa para los límites de la sala
+    public LayerMask roomBoundsLayer;
 
-    private Transform playerTransform; // Referencia al jugador
-    private int currentHp; // Vida actual
-    private bool isPlayerDetected = false; // Si detecta al jugador
-    private Bounds roomBounds; // Límites de la sala
+    private Transform playerTransform;
+    private int currentHp;
+    private bool isPlayerDetected = false;
+    private Bounds roomBounds;
+
+    private Vector3 initialPosition;
+    private bool isReturningToOrigin = false;
 
     private void Start()
     {
@@ -28,6 +31,8 @@ public class EnemyMeleControllerAcidScript : MonoBehaviour
         }
 
         currentHp = maxHp;
+        initialPosition = transform.position;
+
         DetectRoomBounds();
     }
 
@@ -37,6 +42,12 @@ public class EnemyMeleControllerAcidScript : MonoBehaviour
 
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
+
+        if (isReturningToOrigin)
+        {
+            ReturnToOrigin();
+            return;
+        }
 
         if (isPlayerDetected)
         {
@@ -66,6 +77,22 @@ public class EnemyMeleControllerAcidScript : MonoBehaviour
         transform.position = newPosition;
     }
 
+    private void ReturnToOrigin()
+    {
+        Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
+        float distance = Vector2.Distance(transform.position, initialPosition);
+
+        if (distance > 0.1f)
+        {
+            transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.position = initialPosition;
+            isReturningToOrigin = false;
+        }
+    }
+
     private Vector2 ClampToRoomBounds(Vector2 position)
     {
         position.x = Mathf.Clamp(position.x, roomBounds.min.x, roomBounds.max.x);
@@ -80,10 +107,15 @@ public class EnemyMeleControllerAcidScript : MonoBehaviour
             PlayerController player = collider.GetComponent<PlayerController>();
             if (player != null)
             {
-                player.Damage(contactDamage); // Aplica el daño inicial
-                player.ApplyDamageOverTime(damageOverTime, damageDuration); // Aplica el daño por tiempo
-                Die();
+                player.Damage(contactDamage);
+                player.ApplyDamageOverTime(damageOverTime, damageDuration);
+                Die(); // El enemigo se autodestruye tras atacar
             }
+        }
+
+        if (collider.CompareTag("Pared"))
+        {
+            isReturningToOrigin = true;
         }
     }
 

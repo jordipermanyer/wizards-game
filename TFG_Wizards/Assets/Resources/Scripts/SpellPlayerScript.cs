@@ -47,7 +47,7 @@ public class SpellPlayerScript : MonoBehaviour
         }
 
         // Comprueba si la bala golpea a un enemigo o jefe
-        if (collider.CompareTag("Enemy") || collider.CompareTag("Boss"))
+        if (collider.CompareTag("Enemy") || collider.CompareTag("Boss") || collider.CompareTag("Pared")) 
         {
             // Verifica si el objeto tiene uno de los scripts que manejan daño
             var enemyShooter = collider.GetComponent<EnemyShooterControllerScript>();
