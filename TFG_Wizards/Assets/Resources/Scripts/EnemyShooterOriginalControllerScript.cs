@@ -1,0 +1,201 @@
+using System.Collections;
+using UnityEngine;
+
+public class EnemyShooterOriginalControllerScript : MonoBehaviour
+{
+    [Header("Enemy Stats")]
+    public int maxHp = 40;
+    public int contactDamage = 5;
+    public float detectionDistance = 10f;
+    public float speed = 2f;
+    public float wanderSpeed = 1f;
+    public float wanderInterval = 2f;
+
+    [Header("Shooting")]
+    public GameObject bulletPrefab;
+    public int bulletDamage = 10;
+    public float shootInterval = 2f;
+    public float bulletOffset = 0.5f; // Separación entre las balas
+
+    [Header("Auto-detection")]
+    public LayerMask roomBoundsLayer;
+
+    [Header("Objects to Activate on Death")]
+    public GameObject objectToActivate1;
+    public GameObject objectToActivate2;
+
+    private Transform playerTransform;
+    private int currentHp;
+    private bool isPlayerDetected;
+    private Bounds roomBounds;
+
+    private Vector3 initialPosition;
+    private bool isReturningToOrigin = false;
+
+    private void Start()
+    {
+        currentHp = maxHp;
+        initialPosition = transform.position;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            playerTransform = player.transform;
+        }
+
+        DetectRoomBounds();
+
+        StartCoroutine(Wander());
+        StartCoroutine(ShootAtPlayer());
+    }
+
+    private void Update()
+    {
+        if (playerTransform == null) return;
+
+        float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
+        isPlayerDetected = distanceToPlayer <= detectionDistance;
+
+        if (isReturningToOrigin)
+        {
+            ReturnToOrigin();
+            return;
+        }
+
+        if (isPlayerDetected)
+        {
+            ChasePlayer();
+        }
+    }
+
+    private void DetectRoomBounds()
+    {
+        Collider2D roomBoundsCollider = Physics2D.OverlapCircle(transform.position, 0.1f, roomBoundsLayer);
+        if (roomBoundsCollider != null)
+        {
+            roomBounds = roomBoundsCollider.bounds;
+            Debug.Log($"Room bounds detected: {roomBounds}");
+        }
+        else
+        {
+            Debug.LogWarning("Room bounds not detected. The enemy might leave the intended area.");
+        }
+    }
+
+    private void ChasePlayer()
+    {
+        Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
+        Vector2 newPosition = (Vector2)transform.position + directionToPlayer * speed * Time.deltaTime;
+
+        if (roomBounds.size != Vector3.zero)
+        {
+            newPosition = ClampToRoomBounds(newPosition);
+        }
+
+        transform.position = newPosition;
+    }
+
+    private void ReturnToOrigin()
+    {
+        Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
+        float distance = Vector2.Distance(transform.position, initialPosition);
+
+        if (distance > 0.1f)
+        {
+            transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.position = initialPosition;
+            isReturningToOrigin = false;
+        }
+    }
+
+    private Vector2 ClampToRoomBounds(Vector2 position)
+    {
+        position.x = Mathf.Clamp(position.x, roomBounds.min.x, roomBounds.max.x);
+        position.y = Mathf.Clamp(position.y, roomBounds.min.y, roomBounds.max.y);
+        return position;
+    }
+
+    private IEnumerator Wander()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(wanderInterval);
+        }
+    }
+
+    private IEnumerator ShootAtPlayer()
+    {
+        while (true)
+        {
+            if (isPlayerDetected && playerTransform != null && bulletPrefab != null)
+            {
+                Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
+
+                // Calcula una dirección perpendicular para separar las balas
+                Vector2 perpendicular = new Vector2(-directionToPlayer.y, directionToPlayer.x) * bulletOffset;
+
+                // Primera bala (a la izquierda)
+                GameObject bullet1 = Instantiate(bulletPrefab, (Vector2)transform.position + perpendicular, Quaternion.identity);
+                bullet1.GetComponent<Bullet>().Initialize(directionToPlayer, bulletDamage);
+
+                // Segunda bala (a la derecha)
+                GameObject bullet2 = Instantiate(bulletPrefab, (Vector2)transform.position - perpendicular, Quaternion.identity);
+                bullet2.GetComponent<Bullet>().Initialize(directionToPlayer, bulletDamage);
+            }
+
+            yield return new WaitForSeconds(shootInterval);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Player"))
+        {
+            PlayerController player = collider.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.Damage(contactDamage);
+            }
+        }
+
+        if (collider.CompareTag("Pared"))
+        {
+            isReturningToOrigin = true;
+        }
+    }
+
+    public void Damage(int damage)
+    {
+        currentHp -= damage;
+
+        if (currentHp <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Enemy defeated.");
+
+        Vector3 spawnPosition = transform.position;
+        float offset = 0.5f; // Distancia de separación a izquierda y derecha
+
+        if (objectToActivate1 != null)
+        {
+            objectToActivate1.transform.position = spawnPosition + Vector3.left * offset;
+            objectToActivate1.SetActive(true);
+        }
+
+        if (objectToActivate2 != null)
+        {
+            objectToActivate2.transform.position = spawnPosition + Vector3.right * offset;
+            objectToActivate2.SetActive(true);
+        }
+
+        Destroy(gameObject);
+    }
+}

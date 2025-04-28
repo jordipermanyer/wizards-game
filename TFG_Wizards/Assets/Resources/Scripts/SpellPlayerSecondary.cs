@@ -47,6 +47,10 @@ public class SpellPlayerSecondary : MonoBehaviour
             var enemyShooterTeleport = collider.GetComponent<EnemyShooterControllerTeleportScript>();
             var enemyMeleIce = collider.GetComponent<EnemyMeleControllerIceScript>();
             var enemyMeleAcid = collider.GetComponent<EnemyMeleControllerAcidScript>();
+            var enemyClone = collider.GetComponent<EnemyShooterCloneControllerScript>();
+            var enemyOriginal = collider.GetComponent<EnemyShooterOriginalControllerScript>();
+            var enemyRadio = collider.GetComponent<EnemyShooterRadioControllerScript>();
+            var Torreta = collider.GetComponent<Turret>();
 
             if (enemy != null) enemy.Damage(damage);
             if (enemyMele != null) enemyMele.Damage(damage);
@@ -55,6 +59,10 @@ public class SpellPlayerSecondary : MonoBehaviour
             if (enemyShooterTeleport != null) enemyShooterTeleport.Damage(damage);
             if (enemyMeleIce != null) enemyMeleIce.Damage(damage);
             if (enemyMeleAcid != null) enemyMeleAcid.Damage(damage);
+            if (enemyClone != null) enemyClone.Damage(damage);
+            if (enemyOriginal != null) enemyOriginal.Damage(damage);
+            if (enemyRadio != null) enemyRadio.Damage(damage);
+            if (Torreta != null) Torreta.Damage(damage);
 
             Destroy(gameObject);
         }

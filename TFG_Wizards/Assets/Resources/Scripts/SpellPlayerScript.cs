@@ -57,7 +57,10 @@ public class SpellPlayerScript : MonoBehaviour
             var enemyShooterTeleport = collider.GetComponent<EnemyShooterControllerTeleportScript>();
             var enemyMeleIce = collider.GetComponent<EnemyMeleControllerIceScript>();
             var enemyMeleAcid = collider.GetComponent<EnemyMeleControllerAcidScript>();
-
+            var enemyClone = collider.GetComponent<EnemyShooterCloneControllerScript>();
+            var enemyOriginal = collider.GetComponent<EnemyShooterOriginalControllerScript>();
+            var enemyRadio = collider.GetComponent<EnemyShooterRadioControllerScript>();
+            var Torreta = collider.GetComponent<Turret>();
 
             if (enemyShooter != null)
             {
@@ -86,6 +89,22 @@ public class SpellPlayerScript : MonoBehaviour
             else if (enemyMeleAcid != null)
             {
                 enemyMeleAcid.Damage(damage);
+            }
+            else if (enemyClone != null)
+            {
+                enemyClone.Damage(damage);
+            }
+            else if (enemyOriginal != null)
+            {
+                enemyOriginal.Damage(damage);
+            }
+            else if (enemyRadio != null)
+            {
+                enemyRadio.Damage(damage);
+            }
+            else if (Torreta != null)
+            {
+                Torreta.Damage(damage);
             }
 
             // Destruye la bala tras impactar
