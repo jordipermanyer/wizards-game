@@ -61,6 +61,7 @@ public class SpellPlayerScript : MonoBehaviour
             var enemyOriginal = collider.GetComponent<EnemyShooterOriginalControllerScript>();
             var enemyRadio = collider.GetComponent<EnemyShooterRadioControllerScript>();
             var Torreta = collider.GetComponent<Turret>();
+            var Dragon = collider.GetComponent<EnemyDragonScript>();
 
             if (enemyShooter != null)
             {
@@ -106,6 +107,11 @@ public class SpellPlayerScript : MonoBehaviour
             {
                 Torreta.Damage(damage);
             }
+            else if (Dragon != null)
+            {
+                Dragon.Damage(damage);
+            }
+
 
             // Destruye la bala tras impactar
             Destroy(gameObject);

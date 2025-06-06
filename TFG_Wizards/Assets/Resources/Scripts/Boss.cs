@@ -34,6 +34,12 @@ public class Boss : MonoBehaviour
     private float enemySpawnInterval = 5f; // Intervalo inicial de spawn de enemigos
     private float enemyPrefab1Chance = 0.7f; // Probabilidad inicial de spawn del prefab 1
 
+    // Animator
+    private Animator animator;
+
+    // Variables para animación de movimiento
+    private Vector2 lastMoveDirection = Vector2.down; // Dirección de idle inicial (hacia abajo)
+
     private void Start()
     {
         currentHp = maxHp;
@@ -45,6 +51,9 @@ public class Boss : MonoBehaviour
         {
             playerTransform = player.transform;
         }
+
+        // Obtener referencia al Animator
+        animator = GetComponent<Animator>();
 
         DetectRoomBounds();
 
@@ -59,9 +68,18 @@ public class Boss : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
 
+        // Actualizar animación
+        animator.SetBool("Move", isPlayerDetected);
+
         if (isPlayerDetected)
         {
             ChasePlayer();
+        }
+        else
+        {
+            // Si no se está moviendo, actualizamos idleX e idleY con la última dirección de movimiento
+            animator.SetFloat("IdleX", lastMoveDirection.x);
+            animator.SetFloat("IdleY", lastMoveDirection.y);
         }
     }
 
@@ -83,6 +101,16 @@ public class Boss : MonoBehaviour
     {
         Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
         Vector2 newPosition = (Vector2)transform.position + directionToPlayer * speed * Time.deltaTime;
+
+        // Actualizar la animación de movimiento
+        animator.SetFloat("MovimientoX", directionToPlayer.x);
+        animator.SetFloat("MovimientoY", directionToPlayer.y);
+
+        // Guardar última dirección de movimiento para idle
+        if (directionToPlayer != Vector2.zero)
+        {
+            lastMoveDirection = directionToPlayer;
+        }
 
         if (roomBounds.size != Vector3.zero) // Solo aplicar límites si se detectaron
         {

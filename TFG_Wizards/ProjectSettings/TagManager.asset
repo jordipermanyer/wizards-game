@@ -33,6 +33,7 @@ TagManager:
   - barraVidaJefe
   - vidaJefe
   - Pared
+  - SpellS
   layers:
   - Default
   - TransparentFX

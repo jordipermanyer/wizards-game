@@ -51,6 +51,7 @@ public class SpellPlayerSecondary : MonoBehaviour
             var enemyOriginal = collider.GetComponent<EnemyShooterOriginalControllerScript>();
             var enemyRadio = collider.GetComponent<EnemyShooterRadioControllerScript>();
             var Torreta = collider.GetComponent<Turret>();
+            var Dragon = collider.GetComponent<EnemyDragonScript>();
 
             if (enemy != null) enemy.Damage(damage);
             if (enemyMele != null) enemyMele.Damage(damage);
@@ -63,6 +64,8 @@ public class SpellPlayerSecondary : MonoBehaviour
             if (enemyOriginal != null) enemyOriginal.Damage(damage);
             if (enemyRadio != null) enemyRadio.Damage(damage);
             if (Torreta != null) Torreta.Damage(damage);
+            if (Dragon != null) Dragon.Damage(damage);
+
 
             Destroy(gameObject);
         }

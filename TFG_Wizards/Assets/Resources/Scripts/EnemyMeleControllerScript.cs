@@ -20,6 +20,12 @@ public class EnemyMeleControllerScript : MonoBehaviour
     private Vector3 initialPosition;
     private bool isReturningToOrigin = false;
 
+    // Animator
+    private Animator animator;
+
+    // Variables para animación de movimiento
+    private Vector2 lastMoveDirection = Vector2.down; // Dirección idle inicial
+
     private void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -30,6 +36,9 @@ public class EnemyMeleControllerScript : MonoBehaviour
 
         currentHp = maxHp;
         initialPosition = transform.position;
+
+        // Obtener referencia al Animator
+        animator = GetComponent<Animator>();
 
         DetectRoomBounds();
     }
@@ -43,13 +52,22 @@ public class EnemyMeleControllerScript : MonoBehaviour
 
         if (isReturningToOrigin)
         {
+            animator.SetBool("Move", true);
             ReturnToOrigin();
             return;
         }
 
+        animator.SetBool("Move", isPlayerDetected);
+
         if (isPlayerDetected)
         {
             ChasePlayer();
+        }
+        else
+        {
+            // Si no se está moviendo, actualizar idleX e idleY con la última dirección de movimiento
+            animator.SetFloat("IdleX", lastMoveDirection.x);
+            animator.SetFloat("IdleY", lastMoveDirection.y);
         }
     }
 
@@ -72,6 +90,16 @@ public class EnemyMeleControllerScript : MonoBehaviour
         Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
         Vector2 newPosition = (Vector2)transform.position + directionToPlayer * speed * Time.deltaTime;
 
+        // Actualizar animación de movimiento
+        animator.SetFloat("MovimientoX", directionToPlayer.x);
+        animator.SetFloat("MovimientoY", directionToPlayer.y);
+
+        // Guardar última dirección de movimiento para Idle
+        if (directionToPlayer != Vector2.zero)
+        {
+            lastMoveDirection = directionToPlayer;
+        }
+
         if (roomBounds.size != Vector3.zero)
         {
             newPosition = ClampToRoomBounds(newPosition);
@@ -85,6 +113,16 @@ public class EnemyMeleControllerScript : MonoBehaviour
         Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
         float distance = Vector2.Distance(transform.position, initialPosition);
 
+        // Actualizar animación de movimiento
+        animator.SetFloat("MovimientoX", directionToOrigin.x);
+        animator.SetFloat("MovimientoY", directionToOrigin.y);
+
+        // Guardar última dirección de movimiento para Idle
+        if (directionToOrigin != Vector2.zero)
+        {
+            lastMoveDirection = directionToOrigin;
+        }
+
         if (distance > 0.1f)
         {
             transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
@@ -93,6 +131,11 @@ public class EnemyMeleControllerScript : MonoBehaviour
         {
             transform.position = initialPosition;
             isReturningToOrigin = false;
+
+            // Cuando llega al origen, pasar a Idle
+            animator.SetBool("Move", false);
+            animator.SetFloat("idleX", lastMoveDirection.x);
+            animator.SetFloat("idleY", lastMoveDirection.y);
         }
     }
 
