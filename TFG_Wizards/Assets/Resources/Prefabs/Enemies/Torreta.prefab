@@ -148,7 +148,7 @@ MonoBehaviour:
   detectionRange: 10
   bulletPrefab: {fileID: 4255507756173345382, guid: b1b3a57317fb7a14686117ee53c6f7c9, type: 3}
   firePoint: {fileID: 1562705125483078018}
-  shootInterval: 0.2
+  shootInterval: 0.5
   bulletDamage: 10
 --- !u!1 &4591581262888924694
 GameObject:

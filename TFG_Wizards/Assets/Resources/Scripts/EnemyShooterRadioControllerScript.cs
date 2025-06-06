@@ -30,6 +30,10 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     [Header("Auto-detection")]
     public LayerMask roomBoundsLayer;
 
+    // Animator
+    [Header("Animation")]
+    public Animator animator;
+
     private Transform playerTransform;
     private int currentHp;
     private bool isPlayerDetected;
@@ -49,6 +53,9 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
         {
             playerTransform = player.transform;
         }
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
 
         DetectRoomBounds();
 
@@ -73,6 +80,10 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
         if (isPlayerDetected)
         {
             ChasePlayer();
+        }
+        else
+        {
+            UpdateIdleAnimation();
         }
 
         RotateShields();
@@ -103,6 +114,27 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
         }
 
         transform.position = newPosition;
+
+        // Actualizar animación de movimiento
+        if (animator != null)
+        {
+            animator.SetBool("Move", true);
+            animator.SetFloat("MovimientoX", directionToPlayer.x);
+            animator.SetFloat("MovimientoY", directionToPlayer.y);
+        }
+    }
+
+    private void UpdateIdleAnimation()
+    {
+        if (animator != null)
+        {
+            animator.SetBool("Move", false);
+
+            Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
+
+            animator.SetFloat("idleX", directionToOrigin.x);
+            animator.SetFloat("idleY", directionToOrigin.y);
+        }
     }
 
     private void ReturnToOrigin()
@@ -113,11 +145,21 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
         if (distance > 0.1f)
         {
             transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+
+            // Actualizar animación de movimiento
+            if (animator != null)
+            {
+                animator.SetBool("Move", true);
+                animator.SetFloat("MovimientoX", directionToOrigin.x);
+                animator.SetFloat("MovimientoY", directionToOrigin.y);
+            }
         }
         else
         {
             transform.position = initialPosition;
             isReturningToOrigin = false;
+
+            UpdateIdleAnimation();
         }
     }
 
