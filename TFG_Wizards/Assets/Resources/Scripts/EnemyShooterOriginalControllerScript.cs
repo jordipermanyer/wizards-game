@@ -24,6 +24,10 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
     public GameObject objectToActivate1;
     public GameObject objectToActivate2;
 
+    [Header("Sound Settings")]
+    public AudioClip idleSound;
+    public AudioClip walkingSound;
+
     private Transform playerTransform;
     private int currentHp;
     private bool isPlayerDetected;
@@ -31,6 +35,16 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
 
     private Vector3 initialPosition;
     private bool isReturningToOrigin = false;
+
+    // Animator
+    private Animator animator;
+
+    // Animación de movimiento
+    private Vector2 lastMoveDirection = Vector2.down; // Dirección idle inicial
+
+    // Audio
+    private AudioSource audioSource;
+    private bool wasMovingLastFrame = false;
 
     private void Start()
     {
@@ -41,6 +55,15 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
         if (player != null)
         {
             playerTransform = player.transform;
+        }
+
+        animator = GetComponent<Animator>();
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.loop = true;
         }
 
         DetectRoomBounds();
@@ -58,13 +81,49 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
 
         if (isReturningToOrigin)
         {
+            animator.SetBool("Move", true);
+            PlayMovementSound(true);
             ReturnToOrigin();
             return;
         }
 
+        animator.SetBool("Move", isPlayerDetected);
+        PlayMovementSound(isPlayerDetected);
+
         if (isPlayerDetected)
         {
             ChasePlayer();
+        }
+        else
+        {
+            // Si no se está moviendo, actualizar IdleX e IdleY con la última dirección
+            animator.SetFloat("IdleX", lastMoveDirection.x);
+            animator.SetFloat("IdleY", lastMoveDirection.y);
+        }
+    }
+
+    private void PlayMovementSound(bool isMoving)
+    {
+        if (isMoving != wasMovingLastFrame)
+        {
+            wasMovingLastFrame = isMoving;
+
+            if (isMoving)
+            {
+                if (walkingSound != null)
+                {
+                    audioSource.clip = walkingSound;
+                    audioSource.Play();
+                }
+            }
+            else
+            {
+                if (idleSound != null)
+                {
+                    audioSource.clip = idleSound;
+                    audioSource.Play();
+                }
+            }
         }
     }
 
@@ -87,6 +146,16 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
         Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
         Vector2 newPosition = (Vector2)transform.position + directionToPlayer * speed * Time.deltaTime;
 
+        // Animación de movimiento
+        animator.SetFloat("MovimientoX", directionToPlayer.x);
+        animator.SetFloat("MovimientoY", directionToPlayer.y);
+
+        // Guardar última dirección de movimiento para Idle
+        if (directionToPlayer != Vector2.zero)
+        {
+            lastMoveDirection = directionToPlayer;
+        }
+
         if (roomBounds.size != Vector3.zero)
         {
             newPosition = ClampToRoomBounds(newPosition);
@@ -100,6 +169,16 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
         Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
         float distance = Vector2.Distance(transform.position, initialPosition);
 
+        // Animación de movimiento
+        animator.SetFloat("MovimientoX", directionToOrigin.x);
+        animator.SetFloat("MovimientoY", directionToOrigin.y);
+
+        // Guardar última dirección de movimiento para Idle
+        if (directionToOrigin != Vector2.zero)
+        {
+            lastMoveDirection = directionToOrigin;
+        }
+
         if (distance > 0.1f)
         {
             transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
@@ -108,6 +187,12 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
         {
             transform.position = initialPosition;
             isReturningToOrigin = false;
+
+            // Cuando llega al origen, pasar a Idle
+            animator.SetBool("Move", false);
+            PlayMovementSound(false);
+            animator.SetFloat("IdleX", lastMoveDirection.x);
+            animator.SetFloat("IdleY", lastMoveDirection.y);
         }
     }
 
@@ -134,14 +219,14 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
             {
                 Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
 
-                // Calcula una dirección perpendicular para separar las balas
+                // Dirección perpendicular para separar las balas
                 Vector2 perpendicular = new Vector2(-directionToPlayer.y, directionToPlayer.x) * bulletOffset;
 
-                // Primera bala (a la izquierda)
+                // Primera bala (izquierda)
                 GameObject bullet1 = Instantiate(bulletPrefab, (Vector2)transform.position + perpendicular, Quaternion.identity);
                 bullet1.GetComponent<Bullet>().Initialize(directionToPlayer, bulletDamage);
 
-                // Segunda bala (a la derecha)
+                // Segunda bala (derecha)
                 GameObject bullet2 = Instantiate(bulletPrefab, (Vector2)transform.position - perpendicular, Quaternion.identity);
                 bullet2.GetComponent<Bullet>().Initialize(directionToPlayer, bulletDamage);
             }

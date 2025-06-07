@@ -32,10 +32,18 @@ public class PlayerController : MonoBehaviour
     public TMP_Text healthText;
     public TMP_Text coinsText;
 
+    // Audio
+    public AudioClip idleClip;
+    public AudioClip walkClip;
+    public AudioClip hitClip;
+    private AudioSource audioSource;
+    private bool wasWalking = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         // Load initial values from PlayerPrefs
         currentHp = PlayerPrefs.GetInt("PlayerHealth", maxHp);
@@ -50,6 +58,7 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
         HandleExit();
         FlipSprite();
+        HandleFootsteps();
     }
 
     private void FixedUpdate()
@@ -96,6 +105,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void HandleFootsteps()
+    {
+        bool isWalking = movement != Vector2.zero;
+
+        if (isWalking && !wasWalking)
+        {
+            PlayLoopingSound(walkClip);
+        }
+        else if (!isWalking && wasWalking)
+        {
+            PlayLoopingSound(idleClip);
+        }
+
+        wasWalking = isWalking;
+    }
+
+    private void PlayLoopingSound(AudioClip clip)
+    {
+        if (audioSource.clip != clip)
+        {
+            audioSource.Stop();
+            audioSource.clip = clip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+    }
+
     public void Damage(int damage)
     {
         if (isInvincible || currentHp <= 0)
@@ -108,12 +144,18 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.Save();
         UpdateHealthUI();
 
+        PlayHitSound();
         StartCoroutine(FlashRed());
 
         if (currentHp <= 0)
         {
             Die();
         }
+    }
+
+    private void PlayHitSound()
+    {
+        audioSource.PlayOneShot(hitClip);
     }
 
     private IEnumerator FlashRed()

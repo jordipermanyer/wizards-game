@@ -15,7 +15,7 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     public GameObject bulletPrefab;
     public int bulletDamage = 10;
     public float shootInterval = 2f;
-    public float spreadAngle = 15f; // Separación entre los 3 disparos
+    public float spreadAngle = 15f;
 
     [Header("Shield")]
     public GameObject shieldPrefab;
@@ -30,9 +30,15 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     [Header("Auto-detection")]
     public LayerMask roomBoundsLayer;
 
-    // Animator
     [Header("Animation")]
     public Animator animator;
+
+    [Header("Audio")]
+    public AudioSource idleAudioSource;
+    public AudioSource walkAudioSource;
+
+    [Header("Drop")] // <--- NUEVO HEADER
+    public GameObject objetoADropear; // <--- NUEVO CAMPO
 
     private Transform playerTransform;
     private int currentHp;
@@ -115,13 +121,18 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
 
         transform.position = newPosition;
 
-        // Actualizar animación de movimiento
         if (animator != null)
         {
             animator.SetBool("Move", true);
             animator.SetFloat("MovimientoX", directionToPlayer.x);
             animator.SetFloat("MovimientoY", directionToPlayer.y);
         }
+
+        // Reproducir sonido de caminar
+        if (!walkAudioSource.isPlaying)
+            walkAudioSource.Play();
+        if (idleAudioSource.isPlaying)
+            idleAudioSource.Stop();
     }
 
     private void UpdateIdleAnimation()
@@ -132,9 +143,15 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
 
             Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
 
-            animator.SetFloat("idleX", directionToOrigin.x);
-            animator.SetFloat("idleY", directionToOrigin.y);
+            animator.SetFloat("IdleX", directionToOrigin.x);
+            animator.SetFloat("IdleY", directionToOrigin.y);
         }
+
+        // Reproducir sonido de idle
+        if (!idleAudioSource.isPlaying)
+            idleAudioSource.Play();
+        if (walkAudioSource.isPlaying)
+            walkAudioSource.Stop();
     }
 
     private void ReturnToOrigin()
@@ -146,13 +163,18 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
         {
             transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
 
-            // Actualizar animación de movimiento
             if (animator != null)
             {
                 animator.SetBool("Move", true);
                 animator.SetFloat("MovimientoX", directionToOrigin.x);
                 animator.SetFloat("MovimientoY", directionToOrigin.y);
             }
+
+            // Reproducir sonido de caminar
+            if (!walkAudioSource.isPlaying)
+                walkAudioSource.Play();
+            if (idleAudioSource.isPlaying)
+                idleAudioSource.Stop();
         }
         else
         {
@@ -187,11 +209,8 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
                 Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
                 float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
 
-                // Disparo central
                 SpawnBullet(baseAngle);
-                // Disparo a la izquierda
                 SpawnBullet(baseAngle + spreadAngle);
-                // Disparo a la derecha
                 SpawnBullet(baseAngle - spreadAngle);
             }
 
@@ -215,7 +234,7 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
             GameObject shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
             shield.transform.parent = transform;
             Shield shieldScript = shield.GetComponent<Shield>();
-            shieldScript.Setup(this, 5); // 5 de daño al jugador
+            shieldScript.Setup(this, 5);
             shields[i] = shield;
         }
     }
@@ -274,6 +293,13 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
         yield return new WaitForSeconds(explosionDelay);
 
         Explode();
+
+        // NUEVO: Droppear el objeto antes de destruirse
+        if (objetoADropear != null)
+        {
+            Instantiate(objetoADropear, transform.position, Quaternion.identity);
+            Debug.Log("Objeto dropeado en: " + transform.position);
+        }
 
         Destroy(gameObject);
     }

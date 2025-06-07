@@ -17,12 +17,18 @@ public class PlayerShooting : MonoBehaviour
     public TextMeshProUGUI shootingModeText;
     public TextMeshProUGUI energyText;
 
+    [Header("Audio Settings")]
+    public AudioClip primaryShootClip;
+    public AudioClip secondaryShootClip;
+    private AudioSource audioSource;
+
     private bool isUsingPrimaryAttack = true;
     private Animator animator; // Referencia al Animator
 
     private void Start()
     {
         animator = GetComponent<Animator>(); // Obtener el Animator del jugador
+        audioSource = GetComponent<AudioSource>(); // Obtener el AudioSource
 
         // Cargar energía guardada o iniciar con 100 si es la primera vez
         if (!PlayerPrefs.HasKey("PlayerEnergy"))
@@ -69,6 +75,9 @@ public class PlayerShooting : MonoBehaviour
         {
             Instantiate(primarySpellPrefab, shootPoint.position, Quaternion.identity)
                 .GetComponent<SpellPlayerScript>().Initialize(direction, 10);
+
+            // Sonido disparo primario
+            PlayShootSound(primaryShootClip);
         }
         else
         {
@@ -80,6 +89,9 @@ public class PlayerShooting : MonoBehaviour
                 currentEnergy -= secondarySpellCost;
                 SaveEnergy();
                 UpdateUI();
+
+                // Sonido disparo secundario
+                PlayShootSound(secondaryShootClip);
             }
             else
             {
@@ -90,6 +102,14 @@ public class PlayerShooting : MonoBehaviour
 
         // Activar la animación de ataque
         StartCoroutine(TriggerAttackAnimation());
+    }
+
+    private void PlayShootSound(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 
     private IEnumerator TriggerAttackAnimation()
@@ -123,3 +143,4 @@ public class PlayerShooting : MonoBehaviour
         SaveEnergy();
     }
 }
+

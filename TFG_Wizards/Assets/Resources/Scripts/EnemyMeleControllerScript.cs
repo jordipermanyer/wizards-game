@@ -26,6 +26,14 @@ public class EnemyMeleControllerScript : MonoBehaviour
     // Variables para animación de movimiento
     private Vector2 lastMoveDirection = Vector2.down; // Dirección idle inicial
 
+    // Sonidos
+    [Header("Sound Settings")]
+    public AudioClip idleSound;
+    public AudioClip walkingSound;
+    private AudioSource audioSource;
+
+    private bool wasMovingLastFrame = false;
+
     private void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -40,6 +48,14 @@ public class EnemyMeleControllerScript : MonoBehaviour
         // Obtener referencia al Animator
         animator = GetComponent<Animator>();
 
+        // Obtener referencia al AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.loop = true;
+        }
+
         DetectRoomBounds();
     }
 
@@ -53,11 +69,13 @@ public class EnemyMeleControllerScript : MonoBehaviour
         if (isReturningToOrigin)
         {
             animator.SetBool("Move", true);
+            PlayMovementSound(true);
             ReturnToOrigin();
             return;
         }
 
         animator.SetBool("Move", isPlayerDetected);
+        PlayMovementSound(isPlayerDetected);
 
         if (isPlayerDetected)
         {
@@ -68,6 +86,31 @@ public class EnemyMeleControllerScript : MonoBehaviour
             // Si no se está moviendo, actualizar idleX e idleY con la última dirección de movimiento
             animator.SetFloat("IdleX", lastMoveDirection.x);
             animator.SetFloat("IdleY", lastMoveDirection.y);
+        }
+    }
+
+    private void PlayMovementSound(bool isMoving)
+    {
+        if (isMoving != wasMovingLastFrame)
+        {
+            wasMovingLastFrame = isMoving;
+
+            if (isMoving)
+            {
+                if (walkingSound != null)
+                {
+                    audioSource.clip = walkingSound;
+                    audioSource.Play();
+                }
+            }
+            else
+            {
+                if (idleSound != null)
+                {
+                    audioSource.clip = idleSound;
+                    audioSource.Play();
+                }
+            }
         }
     }
 
@@ -134,8 +177,9 @@ public class EnemyMeleControllerScript : MonoBehaviour
 
             // Cuando llega al origen, pasar a Idle
             animator.SetBool("Move", false);
-            animator.SetFloat("idleX", lastMoveDirection.x);
-            animator.SetFloat("idleY", lastMoveDirection.y);
+            PlayMovementSound(false);
+            animator.SetFloat("IdleX", lastMoveDirection.x);
+            animator.SetFloat("IdleY", lastMoveDirection.y);
         }
     }
 

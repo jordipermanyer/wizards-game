@@ -5,40 +5,43 @@ using UnityEngine.UI;
 public class Boss : MonoBehaviour
 {
     [Header("Boss Stats")]
-    public int maxHp = 1000; // Vida máxima del boss
-    public int contactDamage = 10; // Daño por contacto
-    public float detectionDistance = 15f; // Distancia de detección del jugador
-    public float speed = 2f; // Velocidad de movimiento
-    public Slider healthBar; // Barra de vida del boss
+    public int maxHp = 1000;
+    public int contactDamage = 10;
+    public float detectionDistance = 15f;
+    public float speed = 2f;
+    public Slider healthBar;
 
     [Header("Shooting")]
-    public GameObject bulletPrefab; // Prefab de la bala
-    public int bulletDamage = 15; // Daño de la bala
-    public float shootInterval = 1.5f; // Intervalo entre disparos
+    public GameObject bulletPrefab;
+    public int bulletDamage = 15;
+    public float shootInterval = 1.5f;
 
     [Header("Enemy Spawning")]
-    public GameObject enemyPrefab1; // Primer tipo de enemigo
-    public GameObject enemyPrefab2; // Segundo tipo de enemigo
-    public Transform[] spawnPoints; // Puntos de referencia para el spawn
+    public GameObject enemyPrefab1;
+    public GameObject enemyPrefab2;
+    public Transform[] spawnPoints;
 
     [Header("Auto-detection")]
-    public LayerMask roomBoundsLayer; // Capa para detectar los límites de la sala
+    public LayerMask roomBoundsLayer;
 
     [Header("Drop Item")]
-    public GameObject dropPrefab; // Prefab que soltará el boss al morir
+    public GameObject dropPrefab;
+
+    [Header("Audio")]
+    public AudioClip idleClip;
+    public AudioClip moveClip;
+    private AudioSource audioSource;
+    private bool isMoving = false; // Para controlar el cambio de sonido
 
     private Transform playerTransform;
     private int currentHp;
     private bool isPlayerDetected;
     private Bounds roomBounds;
-    private float enemySpawnInterval = 5f; // Intervalo inicial de spawn de enemigos
-    private float enemyPrefab1Chance = 0.7f; // Probabilidad inicial de spawn del prefab 1
+    private float enemySpawnInterval = 5f;
+    private float enemyPrefab1Chance = 0.7f;
 
-    // Animator
     private Animator animator;
-
-    // Variables para animación de movimiento
-    private Vector2 lastMoveDirection = Vector2.down; // Dirección de idle inicial (hacia abajo)
+    private Vector2 lastMoveDirection = Vector2.down;
 
     private void Start()
     {
@@ -52,8 +55,8 @@ public class Boss : MonoBehaviour
             playerTransform = player.transform;
         }
 
-        // Obtener referencia al Animator
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         DetectRoomBounds();
 
@@ -68,8 +71,19 @@ public class Boss : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
 
-        // Actualizar animación
         animator.SetBool("Move", isPlayerDetected);
+
+        // Cambio de sonido si cambia el estado Move
+        if (isPlayerDetected && !isMoving)
+        {
+            isMoving = true;
+            PlaySound(moveClip);
+        }
+        else if (!isPlayerDetected && isMoving)
+        {
+            isMoving = false;
+            PlaySound(idleClip);
+        }
 
         if (isPlayerDetected)
         {
@@ -77,9 +91,18 @@ public class Boss : MonoBehaviour
         }
         else
         {
-            // Si no se está moviendo, actualizamos idleX e idleY con la última dirección de movimiento
             animator.SetFloat("IdleX", lastMoveDirection.x);
             animator.SetFloat("IdleY", lastMoveDirection.y);
+        }
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.loop = true;
+            audioSource.Play();
         }
     }
 
@@ -102,17 +125,15 @@ public class Boss : MonoBehaviour
         Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
         Vector2 newPosition = (Vector2)transform.position + directionToPlayer * speed * Time.deltaTime;
 
-        // Actualizar la animación de movimiento
         animator.SetFloat("MovimientoX", directionToPlayer.x);
         animator.SetFloat("MovimientoY", directionToPlayer.y);
 
-        // Guardar última dirección de movimiento para idle
         if (directionToPlayer != Vector2.zero)
         {
             lastMoveDirection = directionToPlayer;
         }
 
-        if (roomBounds.size != Vector3.zero) // Solo aplicar límites si se detectaron
+        if (roomBounds.size != Vector3.zero)
         {
             newPosition = ClampToRoomBounds(newPosition);
         }
@@ -207,7 +228,6 @@ public class Boss : MonoBehaviour
     {
         Debug.Log("Boss defeated.");
 
-        // Si hay un dropPrefab asignado, instanciarlo en la posición del jefe
         if (dropPrefab != null)
         {
             Instantiate(dropPrefab, transform.position, Quaternion.identity);

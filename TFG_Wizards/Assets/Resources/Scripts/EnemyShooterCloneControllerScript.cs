@@ -23,6 +23,10 @@ public class EnemyShooterCloneControllerScript : MonoBehaviour
     [Header("Auto-detection")]
     public LayerMask roomBoundsLayer;
 
+    [Header("Audio")]
+    public AudioSource audioSourceIdle;
+    public AudioSource audioSourceWalking;
+
     private Transform playerTransform;
     private int currentHp;
     private bool isPlayerDetected;
@@ -30,6 +34,8 @@ public class EnemyShooterCloneControllerScript : MonoBehaviour
 
     private Vector3 initialPosition;
     private bool isReturningToOrigin = false;
+
+    private Animator animator;
 
     private void Start()
     {
@@ -41,6 +47,8 @@ public class EnemyShooterCloneControllerScript : MonoBehaviour
         {
             playerTransform = player.transform;
         }
+
+        animator = GetComponent<Animator>();
 
         DetectRoomBounds();
 
@@ -64,6 +72,13 @@ public class EnemyShooterCloneControllerScript : MonoBehaviour
         if (isPlayerDetected)
         {
             ChasePlayer();
+            UpdateAnimation(playerTransform.position - transform.position);
+            PlayWalkingSound();
+        }
+        else
+        {
+            animator.SetBool("Move", false);
+            PlayIdleSound();
         }
     }
 
@@ -102,11 +117,15 @@ public class EnemyShooterCloneControllerScript : MonoBehaviour
         if (distance > 0.1f)
         {
             transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+            UpdateAnimation(initialPosition - transform.position);
+            PlayWalkingSound();
         }
         else
         {
             transform.position = initialPosition;
             isReturningToOrigin = false;
+            animator.SetBool("Move", false);
+            PlayIdleSound();
         }
     }
 
@@ -172,7 +191,6 @@ public class EnemyShooterCloneControllerScript : MonoBehaviour
     {
         Debug.Log("Enemy defeated. Exploding!");
 
-        // Explota lanzando balas en todas las direcciones
         Explode();
 
         Destroy(gameObject);
@@ -191,4 +209,47 @@ public class EnemyShooterCloneControllerScript : MonoBehaviour
             bullet.GetComponent<Bullet>().Initialize(direction, bulletDamage);
         }
     }
+
+    private void UpdateAnimation(Vector3 movementDirection)
+    {
+        Vector2 movementNormalized = movementDirection.normalized;
+
+        if (isPlayerDetected || isReturningToOrigin)
+        {
+            animator.SetBool("Move", true);
+            animator.SetFloat("MovimientoX", movementNormalized.x);
+            animator.SetFloat("MovimientoY", movementNormalized.y);
+        }
+        else
+        {
+            animator.SetBool("Move", false);
+            animator.SetFloat("idleX", movementNormalized.x);
+            animator.SetFloat("idleY", movementNormalized.y);
+        }
+    }
+
+    private void PlayIdleSound()
+    {
+        if (!audioSourceIdle.isPlaying)
+        {
+            audioSourceIdle.Play();
+        }
+        if (audioSourceWalking.isPlaying)
+        {
+            audioSourceWalking.Stop();
+        }
+    }
+
+    private void PlayWalkingSound()
+    {
+        if (!audioSourceWalking.isPlaying)
+        {
+            audioSourceWalking.Play();
+        }
+        if (audioSourceIdle.isPlaying)
+        {
+            audioSourceIdle.Stop();
+        }
+    }
 }
+

@@ -4,13 +4,17 @@ using UnityEngine;
 public class EnemyMeleControllerIceScript : MonoBehaviour
 {
     [Header("Enemy Settings")]
-    public int maxHp = 40; // Vida máxima
+    public int maxHp = 60; // Vida máxima
     public int contactDamage = 15; // Daño al tocar al jugador
     public float detectionDistance = 5f; // Distancia de detección
     public float speed = 2.5f; // Velocidad de persecución
 
     [Header("Auto-detection")]
     public LayerMask roomBoundsLayer; // Capa para detectar límites de la sala
+
+    [Header("Sounds")]
+    public AudioSource idleSoundSource; // Sonido de idle
+    public AudioSource walkSoundSource; // Sonido de caminar
 
     private Transform playerTransform;
     private int currentHp;
@@ -19,6 +23,9 @@ public class EnemyMeleControllerIceScript : MonoBehaviour
 
     private Vector3 initialPosition;
     private bool isReturningToOrigin = false;
+
+    private Animator animator;
+    private bool isPlayingWalkSound = false; // Control de sonido
 
     private void Start()
     {
@@ -31,6 +38,8 @@ public class EnemyMeleControllerIceScript : MonoBehaviour
         currentHp = maxHp;
         initialPosition = transform.position;
 
+        animator = GetComponent<Animator>();
+
         DetectRoomBounds();
     }
 
@@ -41,6 +50,10 @@ public class EnemyMeleControllerIceScript : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
 
+        animator.SetBool("Move", isPlayerDetected);
+
+        HandleSound(isPlayerDetected); // Manejar sonidos
+
         if (isReturningToOrigin)
         {
             ReturnToOrigin();
@@ -50,6 +63,10 @@ public class EnemyMeleControllerIceScript : MonoBehaviour
         if (isPlayerDetected)
         {
             ChasePlayer();
+        }
+        else
+        {
+            SetIdleAnimation();
         }
     }
 
@@ -73,6 +90,10 @@ public class EnemyMeleControllerIceScript : MonoBehaviour
         }
 
         transform.position = newPosition;
+
+        // Actualizar parámetros de animación de movimiento
+        animator.SetFloat("MovimientoX", directionToPlayer.x);
+        animator.SetFloat("MovimientoY", directionToPlayer.y);
     }
 
     private void ReturnToOrigin()
@@ -83,11 +104,22 @@ public class EnemyMeleControllerIceScript : MonoBehaviour
         if (distance > 0.1f)
         {
             transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+
+            animator.SetBool("Move", true);
+            animator.SetFloat("MovimientoX", directionToOrigin.x);
+            animator.SetFloat("MovimientoY", directionToOrigin.y);
+
+            HandleSound(true); // Sonido de caminar
         }
         else
         {
             transform.position = initialPosition;
             isReturningToOrigin = false;
+
+            animator.SetBool("Move", false);
+            SetIdleAnimation();
+
+            HandleSound(false); // Sonido de idle
         }
     }
 
@@ -129,5 +161,41 @@ public class EnemyMeleControllerIceScript : MonoBehaviour
     private void Die()
     {
         Destroy(gameObject);
+    }
+
+    private void SetIdleAnimation()
+    {
+        if (playerTransform == null) return;
+
+        Vector2 idleDirection = (playerTransform.position - transform.position).normalized;
+
+        animator.SetFloat("IdleX", idleDirection.x);
+        animator.SetFloat("IdleY", idleDirection.y);
+    }
+
+    private void HandleSound(bool isWalking)
+    {
+        if (isWalking && !isPlayingWalkSound)
+        {
+            // Cambiar a sonido de caminar
+            if (idleSoundSource != null && idleSoundSource.isPlaying)
+                idleSoundSource.Stop();
+
+            if (walkSoundSource != null && !walkSoundSource.isPlaying)
+                walkSoundSource.Play();
+
+            isPlayingWalkSound = true;
+        }
+        else if (!isWalking && isPlayingWalkSound)
+        {
+            // Cambiar a sonido de idle
+            if (walkSoundSource != null && walkSoundSource.isPlaying)
+                walkSoundSource.Stop();
+
+            if (idleSoundSource != null && !idleSoundSource.isPlaying)
+                idleSoundSource.Play();
+
+            isPlayingWalkSound = false;
+        }
     }
 }

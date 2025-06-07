@@ -32,6 +32,13 @@ public class EnemyDragonScript : MonoBehaviour
     [Header("Auto-detection")]
     public LayerMask roomBoundsLayer;
 
+    [Header("Sounds")]
+    public AudioSource idleSoundSource;
+    public AudioSource walkSoundSource;
+
+    [Header("Drop Settings")]
+    public GameObject dropPrefab; // <<<--- NUEVO CAMPO para que puedas escoger el objeto a dropear
+
     private Transform playerTransform;
     private bool isPlayerDetected = false;
     private bool isRegenerating = false;
@@ -46,7 +53,9 @@ public class EnemyDragonScript : MonoBehaviour
     private Coroutine flashCoroutine;
     private Color originalColor;
 
-    private Animator animator; // <- Referencia al Animator
+    private Animator animator;
+
+    private bool isPlayingWalkSound = false;
 
     private void Start()
     {
@@ -84,12 +93,38 @@ public class EnemyDragonScript : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
 
-        animator.SetBool("Move", isPlayerDetected); // <- Cambia la animación base según si detecta o no
+        animator.SetBool("Move", isPlayerDetected);
+
+        HandleSound(isPlayerDetected);
 
         if (isPlayerDetected)
             ChasePlayer();
         else
-            SetIdleAnimation(); // <- Actualiza el idle hacia el jugador
+            SetIdleAnimation();
+    }
+
+    private void HandleSound(bool isWalking)
+    {
+        if (isWalking && !isPlayingWalkSound)
+        {
+            if (idleSoundSource != null && idleSoundSource.isPlaying)
+                idleSoundSource.Stop();
+
+            if (walkSoundSource != null && !walkSoundSource.isPlaying)
+                walkSoundSource.Play();
+
+            isPlayingWalkSound = true;
+        }
+        else if (!isWalking && isPlayingWalkSound)
+        {
+            if (walkSoundSource != null && walkSoundSource.isPlaying)
+                walkSoundSource.Stop();
+
+            if (idleSoundSource != null && !idleSoundSource.isPlaying)
+                idleSoundSource.Play();
+
+            isPlayingWalkSound = false;
+        }
     }
 
     private void DetectRoomBounds()
@@ -118,7 +153,6 @@ public class EnemyDragonScript : MonoBehaviour
 
         transform.position = newPosition;
 
-        // Animación de movimiento
         animator.SetFloat("MovimientoX", direction.x);
         animator.SetFloat("MovimientoY", direction.y);
     }
@@ -129,8 +163,8 @@ public class EnemyDragonScript : MonoBehaviour
 
         Vector2 idleDirection = (playerTransform.position - transform.position).normalized;
 
-        animator.SetFloat("idleX", idleDirection.x);
-        animator.SetFloat("idleY", idleDirection.y);
+        animator.SetFloat("IdleX", idleDirection.x);
+        animator.SetFloat("IdleY", idleDirection.y);
     }
 
     private void ReturnToOrigin()
@@ -144,6 +178,8 @@ public class EnemyDragonScript : MonoBehaviour
             animator.SetBool("Move", true);
             animator.SetFloat("MovimientoX", directionToOrigin.x);
             animator.SetFloat("MovimientoY", directionToOrigin.y);
+
+            HandleSound(true);
         }
         else
         {
@@ -151,6 +187,8 @@ public class EnemyDragonScript : MonoBehaviour
             isReturningToOrigin = false;
             animator.SetBool("Move", false);
             SetIdleAnimation();
+
+            HandleSound(false);
         }
     }
 
@@ -188,7 +226,9 @@ public class EnemyDragonScript : MonoBehaviour
         isIntangible = true;
         canReenterRegen = false;
 
-        animator.SetBool("Move", false); // <- Detener animación de movimiento
+        animator.SetBool("Move", false);
+
+        HandleSound(false);
 
         if (targetSpriteRenderer != null)
         {
@@ -287,6 +327,13 @@ public class EnemyDragonScript : MonoBehaviour
     private void Die()
     {
         Debug.Log("EnemyDragon defeated.");
+
+        // <<<--- DROPEAR OBJETO
+        if (dropPrefab != null)
+        {
+            Instantiate(dropPrefab, transform.position, Quaternion.identity);
+        }
+
         Destroy(gameObject);
     }
 
@@ -304,4 +351,5 @@ public class EnemyDragonScript : MonoBehaviour
         }
     }
 }
+
 
