@@ -6136,13 +6136,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5281835451618237172, guid: ffeecbe67a720444197ec4df7c649fd1, type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5281835451618237172, guid: ffeecbe67a720444197ec4df7c649fd1, type: 3}
+      propertyPath: contactDamage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8671675691856087455, guid: ffeecbe67a720444197ec4df7c649fd1, type: 3}
       propertyPath: m_Name
       value: BossRadio2
       objectReference: {fileID: 0}
     - target: {fileID: 8671675691856087455, guid: ffeecbe67a720444197ec4df7c649fd1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6163,7 +6171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 700608291483397361, guid: fd9fb9ef9aa476249a391ded9dc84694, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6890093260556426877, guid: fd9fb9ef9aa476249a391ded9dc84694, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6324,7 +6332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3005184643686998710, guid: bcbdb8594d6f88b4d97225ceef45348d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8278716428219608539, guid: bcbdb8594d6f88b4d97225ceef45348d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6385,7 +6393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5168775996972665883, guid: 6ff93781c1b92944d8ccb8f89d04af90, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7968847527073556778, guid: 6ff93781c1b92944d8ccb8f89d04af90, type: 3}
       propertyPath: m_LocalPosition.x

@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 120
-  contactDamage: 5
+  contactDamage: 1
   detectionDistance: 10
   speed: 3
   wanderSpeed: 1

@@ -44,7 +44,7 @@ public class Shield : MonoBehaviour
         shieldCollider.enabled = false;
 
         // Esperar 2 segundos
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.5f);
 
         // Volver a activar escudo
         spriteRenderer.enabled = true;

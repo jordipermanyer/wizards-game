@@ -20,8 +20,8 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     [Header("Shield")]
     public GameObject shieldPrefab;
     public int shieldCount = 7;
-    public float shieldRadius = 1.5f;
-    public float shieldRotationSpeed = 200f;
+    public float shieldRadius = 1f;
+    public float shieldRotationSpeed = 150f;
 
     [Header("Explosion")]
     public int explosionBulletCount = 20;
@@ -37,8 +37,8 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     public AudioSource idleAudioSource;
     public AudioSource walkAudioSource;
 
-    [Header("Drop")] // <--- NUEVO HEADER
-    public GameObject objetoADropear; // <--- NUEVO CAMPO
+    [Header("Drop")]
+    public GameObject objetoADropear;
 
     private Transform playerTransform;
     private int currentHp;
@@ -128,7 +128,6 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
             animator.SetFloat("MovimientoY", directionToPlayer.y);
         }
 
-        // Reproducir sonido de caminar
         if (!walkAudioSource.isPlaying)
             walkAudioSource.Play();
         if (idleAudioSource.isPlaying)
@@ -147,7 +146,6 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
             animator.SetFloat("IdleY", directionToOrigin.y);
         }
 
-        // Reproducir sonido de idle
         if (!idleAudioSource.isPlaying)
             idleAudioSource.Play();
         if (walkAudioSource.isPlaying)
@@ -170,7 +168,6 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
                 animator.SetFloat("MovimientoY", directionToOrigin.y);
             }
 
-            // Reproducir sonido de caminar
             if (!walkAudioSource.isPlaying)
                 walkAudioSource.Play();
             if (idleAudioSource.isPlaying)
@@ -234,7 +231,7 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
             GameObject shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
             shield.transform.parent = transform;
             Shield shieldScript = shield.GetComponent<Shield>();
-            shieldScript.Setup(this, 5);
+            shieldScript.Setup(this, 1); // <-- AQUÍ CAMBIE EL DAÑO A 1
             shields[i] = shield;
         }
     }
@@ -294,7 +291,6 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
 
         Explode();
 
-        // NUEVO: Droppear el objeto antes de destruirse
         if (objetoADropear != null)
         {
             Instantiate(objetoADropear, transform.position, Quaternion.identity);
