@@ -19,6 +19,11 @@ public class EnemyShooterControllerScript : MonoBehaviour
     [Header("Auto-detection")]
     public LayerMask roomBoundsLayer;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip walkingClip;
+    public AudioClip idleClip;
+
     private Transform playerTransform;
     private int currentHp;
     private bool isPlayerDetected;
@@ -26,6 +31,10 @@ public class EnemyShooterControllerScript : MonoBehaviour
 
     private Vector3 initialPosition;
     private bool isReturningToOrigin = false;
+
+    private Animator animator;
+    private bool isMoving = false;
+    private AudioClip lastPlayedClip;
 
     private void Start()
     {
@@ -37,6 +46,9 @@ public class EnemyShooterControllerScript : MonoBehaviour
         {
             playerTransform = player.transform;
         }
+
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         DetectRoomBounds();
 
@@ -61,6 +73,12 @@ public class EnemyShooterControllerScript : MonoBehaviour
         {
             ChasePlayer();
         }
+        else
+        {
+            UpdateAnimation(Vector2.zero);
+        }
+
+        HandleSound();
     }
 
     private void DetectRoomBounds()
@@ -69,11 +87,6 @@ public class EnemyShooterControllerScript : MonoBehaviour
         if (roomBoundsCollider != null)
         {
             roomBounds = roomBoundsCollider.bounds;
-            Debug.Log($"Room bounds detected: {roomBounds}");
-        }
-        else
-        {
-            Debug.LogWarning("Room bounds not detected. The enemy might leave the intended area.");
         }
     }
 
@@ -88,6 +101,8 @@ public class EnemyShooterControllerScript : MonoBehaviour
         }
 
         transform.position = newPosition;
+
+        UpdateAnimation(directionToPlayer);
     }
 
     private void ReturnToOrigin()
@@ -98,11 +113,13 @@ public class EnemyShooterControllerScript : MonoBehaviour
         if (distance > 0.1f)
         {
             transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+            UpdateAnimation(directionToOrigin);
         }
         else
         {
             transform.position = initialPosition;
             isReturningToOrigin = false;
+            UpdateAnimation(Vector2.zero);
         }
     }
 
@@ -166,7 +183,40 @@ public class EnemyShooterControllerScript : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Enemy defeated.");
         Destroy(gameObject);
+    }
+
+    private void UpdateAnimation(Vector2 direction)
+    {
+        if (animator == null) return;
+
+        if (direction != Vector2.zero)
+        {
+            animator.SetFloat("MovimientoX", direction.x);
+            animator.SetFloat("MovimientoY", direction.y);
+            animator.SetBool("Move", true);
+            isMoving = true;
+        }
+        else
+        {
+            animator.SetFloat("IdleX", animator.GetFloat("MovimientoX"));
+            animator.SetFloat("IdleY", animator.GetFloat("MovimientoY"));
+            animator.SetBool("Move", false);
+            isMoving = false;
+        }
+    }
+
+    private void HandleSound()
+    {
+        if (audioSource == null || (walkingClip == null && idleClip == null)) return;
+
+        AudioClip targetClip = isMoving ? walkingClip : idleClip;
+
+        if (audioSource.clip != targetClip)
+        {
+            audioSource.clip = targetClip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
     }
 }

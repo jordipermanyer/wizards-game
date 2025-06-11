@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator), typeof(AudioSource))]
 public class EnemyShooterControllerTeleportScript : MonoBehaviour
 {
     [Header("Enemy Stats")]
@@ -22,6 +23,10 @@ public class EnemyShooterControllerTeleportScript : MonoBehaviour
     [Header("Drop Item")]
     public GameObject teleportItemPrefab;
 
+    [Header("Audio")]
+    public AudioClip idleSound;
+    public AudioClip walkSound;
+
     private Transform playerTransform;
     private int currentHp;
     private bool isPlayerDetected;
@@ -30,10 +35,16 @@ public class EnemyShooterControllerTeleportScript : MonoBehaviour
     private Vector3 initialPosition;
     public bool isReturningToOrigin = false;
 
+    private Animator animator;
+    private AudioSource audioSource;
+
     private void Start()
     {
         currentHp = maxHp;
         initialPosition = transform.position;
+
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -56,13 +67,17 @@ public class EnemyShooterControllerTeleportScript : MonoBehaviour
 
         if (isReturningToOrigin)
         {
-            ReturnToOrigin();
+            MoveTo(initialPosition);
             return;
         }
 
         if (isPlayerDetected)
         {
             ChasePlayer();
+        }
+        else
+        {
+            SetIdleAnimation();
         }
     }
 
@@ -91,21 +106,24 @@ public class EnemyShooterControllerTeleportScript : MonoBehaviour
         }
 
         transform.position = newPosition;
+        SetMoveAnimation(directionToPlayer);
     }
 
-    private void ReturnToOrigin()
+    private void MoveTo(Vector3 target)
     {
-        Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
-        float distance = Vector2.Distance(transform.position, initialPosition);
+        Vector2 direction = (target - transform.position).normalized;
+        float distance = Vector2.Distance(transform.position, target);
 
         if (distance > 0.1f)
         {
-            transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+            transform.position += (Vector3)(direction * speed * Time.deltaTime);
+            SetMoveAnimation(direction);
         }
         else
         {
-            transform.position = initialPosition;
+            transform.position = target;
             isReturningToOrigin = false;
+            SetIdleAnimation();
         }
     }
 
@@ -137,6 +155,38 @@ public class EnemyShooterControllerTeleportScript : MonoBehaviour
             }
 
             yield return new WaitForSeconds(shootInterval);
+        }
+    }
+
+    private void SetMoveAnimation(Vector2 direction)
+    {
+        animator.SetBool("Move", true);
+        animator.SetFloat("MovimientoX", direction.x);
+        animator.SetFloat("MovimientoY", direction.y);
+
+        if (audioSource.clip != walkSound || !audioSource.isPlaying)
+        {
+            audioSource.clip = walkSound;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+    }
+
+    private void SetIdleAnimation()
+    {
+        animator.SetBool("Move", false);
+
+        // Usa la última dirección del movimiento como idleX/idleY
+        float lastX = animator.GetFloat("MovimientoX");
+        float lastY = animator.GetFloat("MovimientoY");
+        animator.SetFloat("IdleX", lastX);
+        animator.SetFloat("IdleY", lastY);
+
+        if (audioSource.clip != idleSound || !audioSource.isPlaying)
+        {
+            audioSource.clip = idleSound;
+            audioSource.loop = true;
+            audioSource.Play();
         }
     }
 

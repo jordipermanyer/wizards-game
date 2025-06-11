@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator), typeof(AudioSource))]
 public class EnemyShooterControllerDroopScript : MonoBehaviour
 {
     [Header("Enemy Stats")]
@@ -24,6 +25,10 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
     public GameObject attackReloadPrefab;
     public GameObject coinPrefab;
 
+    [Header("Audio Clips")]
+    public AudioClip idleClip;
+    public AudioClip walkClip;
+
     private Transform playerTransform;
     private int currentHp;
     private bool isPlayerDetected;
@@ -31,6 +36,12 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
 
     private Vector3 initialPosition;
     private bool isReturningToOrigin = false;
+
+    // Animación y sonido
+    private Animator animator;
+    private AudioSource audioSource;
+
+    private bool isMoving;
 
     private void Start()
     {
@@ -41,6 +52,9 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
         {
             playerTransform = player.transform;
         }
+
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         DetectRoomBounds();
         initialPosition = transform.position;
@@ -64,6 +78,12 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
         {
             ChasePlayer();
         }
+        else
+        {
+            SetIdleAnimation();
+        }
+
+        HandleFootstepSound();
     }
 
     private void DetectRoomBounds()
@@ -91,6 +111,7 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
         }
 
         transform.position = newPosition;
+        SetMovementAnimation(directionToPlayer);
     }
 
     private void ReturnToOrigin()
@@ -101,11 +122,13 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
         if (distance > 0.1f)
         {
             transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+            SetMovementAnimation(directionToOrigin);
         }
         else
         {
             transform.position = initialPosition;
             isReturningToOrigin = false;
+            SetIdleAnimation();
         }
     }
 
@@ -121,7 +144,7 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(wanderInterval);
-            // Deambulación futura si quieres implementarla
+            // Implementación futura de deambulación aleatoria si se desea
         }
     }
 
@@ -197,6 +220,48 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
         else
         {
             Debug.Log("No drop.");
+        }
+    }
+
+    private void SetMovementAnimation(Vector2 direction)
+    {
+        isMoving = true;
+
+        animator.SetFloat("MovimientoX", direction.x);
+        animator.SetFloat("MovimientoY", direction.y);
+        animator.SetBool("Move", true);
+    }
+
+    private void SetIdleAnimation()
+    {
+        isMoving = false;
+
+        Vector2 direction = playerTransform != null ? (playerTransform.position - transform.position).normalized : Vector2.down;
+
+        animator.SetFloat("IdleX", direction.x);
+        animator.SetFloat("IdleY", direction.y);
+        animator.SetBool("Move", false);
+    }
+
+    private void HandleFootstepSound()
+    {
+        if (isMoving)
+        {
+            if (walkClip != null && (!audioSource.isPlaying || audioSource.clip != walkClip))
+            {
+                audioSource.clip = walkClip;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            if (idleClip != null && (!audioSource.isPlaying || audioSource.clip != idleClip))
+            {
+                audioSource.clip = idleClip;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
         }
     }
 }

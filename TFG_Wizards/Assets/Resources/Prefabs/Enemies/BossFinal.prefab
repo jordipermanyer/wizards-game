@@ -220,8 +220,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4255507756173345382, guid: b1b3a57317fb7a14686117ee53c6f7c9, type: 3}
   bulletDamage: 20
   shootInterval: 1.5
-  enemyPrefab1: {fileID: 1958665703209033530, guid: 6ff93781c1b92944d8ccb8f89d04af90, type: 3}
-  enemyPrefab2: {fileID: 1917947261824368850, guid: fa6b40ca090c681428c3d5fafa683f56, type: 3}
+  enemyPrefab1: {fileID: 5390612191931407576, guid: fa6b40ca090c681428c3d5fafa683f56, type: 3}
+  enemyPrefab2: {fileID: 8884709011549219716, guid: 61b3e4adb5e9750468ba474aa7d82628, type: 3}
   spawnPoints:
   - {fileID: 6755680771755893073}
   - {fileID: 8101696656656556891}

@@ -392,8 +392,8 @@ MonoBehaviour:
   numberOfRooms: 15
   roomSize: {x: 16, y: 8}
   player: {fileID: 1449569125}
-  coinRoomCount: 1
-  itemRoomCount: 1
+  coinRoomCount: 3
+  itemRoomCount: 2
 --- !u!114 &99295177 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7462829079561371687, guid: efd1ea5536378224e964561ae87d7146, type: 3}

@@ -100,7 +100,7 @@ MonoBehaviour:
   contactDamage: 15
   damageOverTime: 5
   damageDuration: 3
-  detectionDistance: 5
+  detectionDistance: 8
   speed: 2.5
   roomBoundsLayer:
     serializedVersion: 2
