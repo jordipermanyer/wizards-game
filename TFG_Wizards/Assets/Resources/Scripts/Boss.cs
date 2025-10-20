@@ -31,7 +31,7 @@ public class Boss : MonoBehaviour
     public AudioClip idleClip;
     public AudioClip moveClip;
     private AudioSource audioSource;
-    private bool isMoving = false; // Para controlar el cambio de sonido
+    private bool isMoving = false; // Controlar el canvi de so
 
     private Transform playerTransform;
     private int currentHp;
@@ -73,7 +73,7 @@ public class Boss : MonoBehaviour
 
         animator.SetBool("Move", isPlayerDetected);
 
-        // Cambio de sonido si cambia el estado Move
+        // Canvi de so si canvia estat a Move
         if (isPlayerDetected && !isMoving)
         {
             isMoving = true;

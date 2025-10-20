@@ -109,14 +109,14 @@ public class PlayerController : MonoBehaviour
     {
         bool isWalking = movement != Vector2.zero;
 
-        if (isWalking && !wasWalking)
+        /*if (isWalking && !wasWalking)
         {
             PlayLoopingSound(walkClip);
         }
         else if (!isWalking && wasWalking)
         {
             PlayLoopingSound(idleClip);
-        }
+        }*/
 
         wasWalking = isWalking;
     }
@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayHitSound()
     {
-        audioSource.PlayOneShot(hitClip);
+        //audioSource.PlayOneShot(hitClip);
     }
 
     private IEnumerator FlashRed()
