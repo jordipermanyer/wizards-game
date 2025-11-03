@@ -5865,7 +5865,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8671675691856087455, guid: ffeecbe67a720444197ec4df7c649fd1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6168,13 +6168,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1035673109}
     m_Modifications:
+    - target: {fileID: 1078471621679815162, guid: 40a6e6c41af1a974390b52b27acff55c, type: 3}
+      propertyPath: baseHp
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3900764267594895953, guid: 40a6e6c41af1a974390b52b27acff55c, type: 3}
       propertyPath: m_Name
       value: BossDragon3
       objectReference: {fileID: 0}
     - target: {fileID: 3900764267594895953, guid: 40a6e6c41af1a974390b52b27acff55c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6742198916701644586, guid: 40a6e6c41af1a974390b52b27acff55c, type: 3}
       propertyPath: m_LocalPosition.x
