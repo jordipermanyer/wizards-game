@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea42878166a0f040a2cd5a0976770e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSceneName: Prueba
+  targetSceneName: BossLvl1Scene
 --- !u!58 &3938231920449774424
 CircleCollider2D:
   m_ObjectHideFlags: 0
