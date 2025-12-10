@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Hierarchy
   m_RootView: {fileID: 5}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 104
+  controlID: 55
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 157
+  controlID: 30
   draggingID: 0
 --- !u!114 &9
 MonoBehaviour:
@@ -468,23 +468,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: bc900000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: caa3ffffdca8ffff42acffff4cadffff1cdaffff40e7ffff70e8ffffb8eaffff5aefffff74f4ffff16fbffff4c9600003c9800007a980000
+      m_ExpandedIDs: e2f5ffff0cf9ffff64f9ffff16fbffff54930000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Map Grid Details
+        m_OriginalName: Map Grid Details
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 37708
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 4}
       m_SearchString: 
@@ -876,9 +876,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -5.8751493, y: 10.210945, z: -0.2948376}
+    m_Target: {x: -0.35359353, y: 0.10815062, z: -0.047822874}
     speed: 2
-    m_Value: {x: -5.8751493, y: 10.210945, z: -0.2948376}
+    m_Value: {x: -0.35359353, y: 0.10815062, z: -0.047822874}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -928,9 +928,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 31.406784
+    m_Target: 6.7053223
     speed: 2
-    m_Value: 31.406784
+    m_Value: 6.7053223
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1583,7 +1583,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/Scenes
+    - Assets/Resources/Tiles/Tiles lvl 1
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1591,16 +1591,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 47
   m_LastFolders:
-  - Assets/Resources/Scenes
+  - Assets/Resources/Tiles/Tiles lvl 1
   m_LastFoldersGridSize: 47
   m_LastProjectPath: C:\Users\Jordi\Desktop\tfg\wizards-game\TFG_Wizards
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 199}
-    m_SelectedIDs: 9c920000
-    m_LastClickedID: 37532
-    m_ExpandedIDs: 00000000d2910000d4910000d6910000d8910000da910000dc910000
+    scrollPos: {x: 0, y: 327}
+    m_SelectedIDs: 30950000
+    m_LastClickedID: 38192
+    m_ExpandedIDs: 0000000026900000289000002a9000002c9000002e90000030900000f2900000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1628,7 +1628,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d2910000d4910000d6910000d8910000da910000dc910000
+    m_ExpandedIDs: 0000000026900000289000002a9000002c9000002e90000030900000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
