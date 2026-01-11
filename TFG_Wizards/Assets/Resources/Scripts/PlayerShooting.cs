@@ -9,6 +9,11 @@ public class PlayerShooting : MonoBehaviour
     public GameObject secondarySpellPrefab; // Prefab del disparo secundario
     public Transform shootPoint; // Punto de disparo del jugador
 
+    [Header("Cooldown")]
+    [Tooltip("Tiempo entre disparos. 0.25 = 4 disparos/segundo")]
+    public float shootCooldown = 0.25f;
+    private float nextShootTime = 0f;
+
     [Header("Energy System")]
     public int currentEnergy;
     public int secondarySpellCost = 20; // Energía que cuesta el segundo ataque
@@ -23,14 +28,13 @@ public class PlayerShooting : MonoBehaviour
     private AudioSource audioSource;
 
     private bool isUsingPrimaryAttack = true;
-    private Animator animator; // Referencia al Animator
+    private Animator animator;
 
     private void Start()
     {
-        animator = GetComponent<Animator>(); // Obtener el Animator del jugador
-        audioSource = GetComponent<AudioSource>(); // Obtener el AudioSource
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
-        // Cargar energía guardada o iniciar con 100 si es la primera vez
         if (!PlayerPrefs.HasKey("PlayerEnergy"))
         {
             PlayerPrefs.SetInt("PlayerEnergy", 100);
@@ -43,70 +47,89 @@ public class PlayerShooting : MonoBehaviour
 
     private void Update()
     {
-        // Alternar entre los disparos con la barra espaciadora
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isUsingPrimaryAttack = !isUsingPrimaryAttack;
-            shootingModeText.text = isUsingPrimaryAttack ? "Modo: Disparo Primario" : "Modo: Disparo Secundario";
+            if (shootingModeText != null)
+                shootingModeText.text = isUsingPrimaryAttack ? "Modo: Disparo Primario" : "Modo: Disparo Secundario";
         }
 
-        // Disparar con las flechas sin afectar el movimiento del jugador
+        // Flechas: dispara SOLO si ha pasado el cooldown
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            Shoot(Vector2.up);
+            TryShoot(Vector2.up);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            Shoot(Vector2.down);
+            TryShoot(Vector2.down);
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            Shoot(Vector2.left);
+            TryShoot(Vector2.left);
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            Shoot(Vector2.right);
+            TryShoot(Vector2.right);
         }
+    }
+
+    private void TryShoot(Vector2 direction)
+    {
+        // Si aún no toca, no dispara
+        if (Time.time < nextShootTime)
+            return;
+
+        // Reservamos el siguiente disparo
+        nextShootTime = Time.time + shootCooldown;
+
+        Shoot(direction);
     }
 
     private void Shoot(Vector2 direction)
     {
         if (isUsingPrimaryAttack)
         {
-            Instantiate(primarySpellPrefab, shootPoint.position, Quaternion.identity)
-                .GetComponent<SpellPlayerScript>().Initialize(direction, 10);
+            if (primarySpellPrefab == null || shootPoint == null) return;
 
-            // Sonido disparo primario
+            Instantiate(primarySpellPrefab, shootPoint.position, Quaternion.identity)
+                .GetComponent<SpellPlayerScript>()
+                .Initialize(direction, 10);
+
             PlayShootSound(primaryShootClip);
         }
         else
         {
             if (currentEnergy >= secondarySpellCost)
             {
+                if (secondarySpellPrefab == null || shootPoint == null) return;
+
                 Instantiate(secondarySpellPrefab, shootPoint.position, Quaternion.identity)
-                    .GetComponent<SpellPlayerSecondary>().Initialize(direction, 50);
+                    .GetComponent<SpellPlayerSecondary>()
+                    .Initialize(direction, 50);
 
                 currentEnergy -= secondarySpellCost;
                 SaveEnergy();
                 UpdateUI();
 
-                // Sonido disparo secundario
                 PlayShootSound(secondaryShootClip);
             }
             else
             {
                 Debug.Log("No tienes suficiente energía para disparar el ataque secundario.");
+
+                // IMPORTANTE: si no disparas por falta de energía,
+                // devolvemos el cooldown para que no "castigue" un intento fallido.
+                nextShootTime = Time.time;
                 return;
             }
         }
 
-        // Activar la animación de ataque
         StartCoroutine(TriggerAttackAnimation());
     }
 
     private void PlayShootSound(AudioClip clip)
     {
-        if (clip != null)
+        if (clip != null && audioSource != null)
         {
             audioSource.PlayOneShot(clip);
         }
@@ -114,12 +137,18 @@ public class PlayerShooting : MonoBehaviour
 
     private IEnumerator TriggerAttackAnimation()
     {
-        animator.SetBool("isAttacking", true);
-        yield return new WaitForSeconds(0.1f); // Espera un instante para que la animación se reproduzca
-        animator.SetBool("isAttacking", false);
+        if (animator != null)
+        {
+            animator.SetBool("isAttacking", true);
+            yield return new WaitForSeconds(0.1f);
+            animator.SetBool("isAttacking", false);
+        }
+        else
+        {
+            yield return null;
+        }
     }
 
-    // Método corregido para añadir energía SIN LÍMITE
     public void AddEnergy(int amount)
     {
         currentEnergy += amount;
@@ -135,7 +164,8 @@ public class PlayerShooting : MonoBehaviour
 
     private void UpdateUI()
     {
-        energyText.text = $"Energía: {currentEnergy}";
+        if (energyText != null)
+            energyText.text = $"Energía: {currentEnergy}";
     }
 
     private void OnApplicationQuit()
@@ -143,4 +173,3 @@ public class PlayerShooting : MonoBehaviour
         SaveEnergy();
     }
 }
-
