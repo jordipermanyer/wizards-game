@@ -9,8 +9,6 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
     public int contactDamage = 5;
     public float detectionDistance = 10f;
     public float speed = 3f;
-    public float wanderSpeed = 1f;
-    public float wanderInterval = 2f;
 
     [Header("Shooting")]
     public GameObject bulletPrefab;
@@ -20,7 +18,7 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
     [Header("Auto-detection")]
     public LayerMask roomBoundsLayer;
 
-    [Header("Drop System")]
+    [Header("Drop System (Always drops 1/3 each)")]
     public GameObject healthPickupPrefab;
     public GameObject attackReloadPrefab;
     public GameObject coinPrefab;
@@ -37,11 +35,13 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
     private Vector3 initialPosition;
     private bool isReturningToOrigin = false;
 
-    // Animación y sonido
     private Animator animator;
     private AudioSource audioSource;
 
     private bool isMoving;
+
+    //Candado para evitar doble muerte/doble drop
+    private bool hasDied = false;
 
     private void Start()
     {
@@ -49,9 +49,7 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
-        {
             playerTransform = player.transform;
-        }
 
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -59,13 +57,19 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
         DetectRoomBounds();
         initialPosition = transform.position;
 
-        StartCoroutine(Wander());
         StartCoroutine(ShootAtPlayer());
     }
 
     private void Update()
     {
-        if (playerTransform == null) return;
+        if (hasDied) return;
+
+        if (playerTransform == null)
+        {
+            SetIdleAnimation();
+            HandleFootstepSound();
+            return;
+        }
 
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
@@ -106,9 +110,7 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
         Vector2 newPosition = (Vector2)transform.position + directionToPlayer * speed * Time.deltaTime;
 
         if (roomBounds.size != Vector3.zero)
-        {
             newPosition = ClampToRoomBounds(newPosition);
-        }
 
         transform.position = newPosition;
         SetMovementAnimation(directionToPlayer);
@@ -121,7 +123,12 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
 
         if (distance > 0.1f)
         {
-            transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
+            Vector2 newPosition = (Vector2)transform.position + directionToOrigin * speed * Time.deltaTime;
+
+            if (roomBounds.size != Vector3.zero)
+                newPosition = ClampToRoomBounds(newPosition);
+
+            transform.position = newPosition;
             SetMovementAnimation(directionToOrigin);
         }
         else
@@ -139,25 +146,25 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
         return position;
     }
 
-    private IEnumerator Wander()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(wanderInterval);
-            // Implementación futura de deambulación aleatoria si se desea
-        }
-    }
-
     private IEnumerator ShootAtPlayer()
     {
         while (true)
         {
-            if (!isReturningToOrigin && isPlayerDetected && playerTransform != null && bulletPrefab != null)
+            if (!hasDied &&
+                !isReturningToOrigin &&
+                isPlayerDetected &&
+                playerTransform != null &&
+                bulletPrefab != null)
             {
                 Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
 
                 GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                bullet.GetComponent<Bullet>().Initialize(directionToPlayer, bulletDamage);
+
+                Bullet bulletScript = bullet.GetComponent<Bullet>();
+                if (bulletScript != null)
+                    bulletScript.Initialize(directionToPlayer, bulletDamage);
+                else
+                    Debug.LogWarning("Bullet prefab has no Bullet script attached.");
             }
 
             yield return new WaitForSeconds(shootInterval);
@@ -166,13 +173,13 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
+        if (hasDied) return;
+
         if (collider.CompareTag("Player"))
         {
             PlayerController player = collider.GetComponent<PlayerController>();
             if (player != null)
-            {
                 player.Damage(contactDamage);
-            }
         }
 
         if (collider.CompareTag("Pared"))
@@ -183,44 +190,58 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
 
     public void Damage(int damage)
     {
-        currentHp -= damage;
+        if (hasDied) return;
 
+        currentHp -= damage;
         if (currentHp <= 0)
-        {
             Die();
-        }
     }
 
     private void Die()
     {
+        if (hasDied) return;   //evita doble ejecución
+        hasDied = true;
+
         Debug.Log("Enemy defeated.");
+
         DropLoot();
+
         Destroy(gameObject);
     }
 
     private void DropLoot()
     {
-        float dropChance = Random.value;
+        // 1/3 exacto cada uno: 0 = health, 1 = attack reload, 2 = coin
+        int roll = Random.Range(0, 3);
 
-        if (dropChance <= 0.2f && healthPickupPrefab != null)
+        GameObject dropPrefab = null;
+        switch (roll)
         {
-            Instantiate(healthPickupPrefab, transform.position, Quaternion.identity);
-            Debug.Log("Dropped: Health Pickup");
+            case 0: dropPrefab = healthPickupPrefab; break;
+            case 1: dropPrefab = attackReloadPrefab; break;
+            case 2: dropPrefab = coinPrefab; break;
         }
-        else if (dropChance <= 0.4f && attackReloadPrefab != null)
+
+        // Si el prefab seleccionado está vacío, SIEMPRE usa HealthPotion (y solo ese)
+        if (dropPrefab == null)
         {
-            Instantiate(attackReloadPrefab, transform.position, Quaternion.identity);
-            Debug.Log("Dropped: Attack Reload");
+            GameObject fallback = GameObject.Find("HealthPotion");
+
+            if (fallback != null)
+            {
+                Instantiate(fallback, transform.position, Quaternion.identity);
+                Debug.Log("Drop fallback used: HealthPotion");
+            }
+            else
+            {
+                Debug.LogWarning("Drop failed: selected prefab is null and HealthPotion was not found.");
+            }
+            return;
         }
-        else if (dropChance <= 0.5f && coinPrefab != null)
-        {
-            Instantiate(coinPrefab, transform.position, Quaternion.identity);
-            Debug.Log("Dropped: Coin");
-        }
-        else
-        {
-            Debug.Log("No drop.");
-        }
+
+        //Solo 1 Instantiate => solo 1 drop
+        Instantiate(dropPrefab, transform.position, Quaternion.identity);
+        Debug.Log($"Dropped: {dropPrefab.name}");
     }
 
     private void SetMovementAnimation(Vector2 direction)
@@ -236,7 +257,9 @@ public class EnemyShooterControllerDroopScript : MonoBehaviour
     {
         isMoving = false;
 
-        Vector2 direction = playerTransform != null ? (playerTransform.position - transform.position).normalized : Vector2.down;
+        Vector2 direction = playerTransform != null
+            ? (playerTransform.position - transform.position).normalized
+            : Vector2.down;
 
         animator.SetFloat("IdleX", direction.x);
         animator.SetFloat("IdleY", direction.y);
