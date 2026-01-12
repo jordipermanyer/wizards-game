@@ -6,9 +6,9 @@ public class ObjectGeneratorControllerScript : MonoBehaviour
 {
     [Header("Items per probabilitat (ordre important)")]
     public List<GameObject> itemPrefabs;
-    // 0: mapa   (50%)
-    // 1: moneda (15%)
-    // 2: pocio  (15%)
+    // 0: mapa   (30%)
+    // 1: moneda (30%)
+    // 2: pocio  (20%)
     // 3: baculo (10%)
     // 4: bow    (5%)
     // 5: sword  (5%)
@@ -80,9 +80,9 @@ public class ObjectGeneratorControllerScript : MonoBehaviour
         int rnd = Random.Range(1, 101); // 1–100
         int index;
 
-        if (rnd <= 50) index = 0;          // Mapa 50%
-        else if (rnd <= 65) index = 1;     // Moneda 15%
-        else if (rnd <= 80) index = 2;     // Pocio 15%
+        if (rnd <= 30) index = 0;          // Mapa 30%
+        else if (rnd <= 55) index = 1;     // Moneda 30%
+        else if (rnd <= 70) index = 2;     // Pocio 20%
         else if (rnd <= 90) index = 3;     // Baculo 10%
         else if (rnd <= 95) index = 4;     // Bow 5%
         else index = 5;                    // Sword 5%

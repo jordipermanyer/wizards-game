@@ -5,9 +5,9 @@ using System.Collections;
 public class PlayerShooting : MonoBehaviour
 {
     [Header("Shooting Settings")]
-    public GameObject primarySpellPrefab; // Prefab del disparo primario
-    public GameObject secondarySpellPrefab; // Prefab del disparo secundario
-    public Transform shootPoint; // Punto de disparo del jugador
+    public GameObject primarySpellPrefab;
+    public GameObject secondarySpellPrefab;
+    public Transform shootPoint;
 
     [Header("Cooldown")]
     [Tooltip("Tiempo entre disparos. 0.25 = 4 disparos/segundo")]
@@ -15,15 +15,25 @@ public class PlayerShooting : MonoBehaviour
     private float nextShootTime = 0f;
 
     [Header("Damage")]
-    public float damageMultiplier = 1f; // 1 = normal, 1.5 = +50 percent
+    public float damageMultiplier = 1f;
 
     [Header("Energy System")]
     public int currentEnergy;
-    public int secondarySpellCost = 20; // Energia que cuesta el segundo ataque
+    public int secondarySpellCost = 20;
 
-    [Header("UI Elements")]
-    public TextMeshProUGUI shootingModeText;
-    public TextMeshProUGUI energyText;
+    [Header("UI Panel")]
+    public GameObject shootPanel;
+
+    [Header("UI Texts")]
+    public TextMeshProUGUI attackLabelText;   // ModoText in your hierarchy
+    public TextMeshProUGUI energyCounterText; // EnergiaCounter in your hierarchy
+
+    [Header("UI Mode Images")]
+    public GameObject modeNormalImg; // ModeNormalImg
+    public GameObject modeStrongImg; // ModeStrongImg
+
+    [Header("UI Settings")]
+    public string attackLabel = "ATAQUE:";
 
     [Header("Audio Settings")]
     public AudioClip primaryShootClip;
@@ -45,6 +55,8 @@ public class PlayerShooting : MonoBehaviour
         }
 
         currentEnergy = PlayerPrefs.GetInt("PlayerEnergy", 100);
+
+        UpdateModeUI();
         UpdateUI();
     }
 
@@ -53,11 +65,9 @@ public class PlayerShooting : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isUsingPrimaryAttack = !isUsingPrimaryAttack;
-            if (shootingModeText != null)
-                shootingModeText.text = isUsingPrimaryAttack ? "Modo: Disparo Primario" : "Modo: Disparo Secundario";
+            UpdateModeUI();
         }
 
-        // Flechas: dispara SOLO si ha pasado el cooldown
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             TryShoot(Vector2.up);
@@ -78,11 +88,9 @@ public class PlayerShooting : MonoBehaviour
 
     private void TryShoot(Vector2 direction)
     {
-        // Si aun no toca, no dispara
         if (Time.time < nextShootTime)
             return;
 
-        // Reservamos el siguiente disparo
         nextShootTime = Time.time + shootCooldown;
 
         Shoot(direction);
@@ -124,9 +132,8 @@ public class PlayerShooting : MonoBehaviour
             }
             else
             {
-                Debug.Log("No tienes suficiente energia para disparar el ataque secundario.");
+                Debug.Log("Not enough energy for secondary attack.");
 
-                // If no shot due to energy, do not punish the player with cooldown
                 nextShootTime = Time.time;
                 return;
             }
@@ -172,8 +179,23 @@ public class PlayerShooting : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (energyText != null)
-            energyText.text = $"Energia: {currentEnergy}";
+        if (attackLabelText != null)
+            attackLabelText.text = attackLabel;
+
+        if (energyCounterText != null)
+            energyCounterText.text = currentEnergy.ToString();
+
+        // Optional: hide panel if not assigned or you do not want auto behavior
+        // if (shootPanel != null) shootPanel.SetActive(true);
+    }
+
+    private void UpdateModeUI()
+    {
+        if (modeNormalImg != null)
+            modeNormalImg.SetActive(isUsingPrimaryAttack);
+
+        if (modeStrongImg != null)
+            modeStrongImg.SetActive(!isUsingPrimaryAttack);
     }
 
     private void OnApplicationQuit()

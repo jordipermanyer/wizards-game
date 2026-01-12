@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyShooterOriginalControllerScript : MonoBehaviour
 {
@@ -11,11 +12,14 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
     public float wanderSpeed = 1f;
     public float wanderInterval = 2f;
 
+    [Header("Health Bar")]
+    public Slider healthBar;
+
     [Header("Shooting")]
     public GameObject bulletPrefab;
     public int bulletDamage = 10;
     public float shootInterval = 2f;
-    public float bulletOffset = 0.5f; // Separación entre las balas
+    public float bulletOffset = 0.5f;
 
     [Header("Auto-detection")]
     public LayerMask roomBoundsLayer;
@@ -36,20 +40,26 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
     private Vector3 initialPosition;
     private bool isReturningToOrigin = false;
 
-    // Animator
     private Animator animator;
+    private Vector2 lastMoveDirection = Vector2.down;
 
-    // Animación de movimiento
-    private Vector2 lastMoveDirection = Vector2.down; // Dirección idle inicial
-
-    // Audio
     private AudioSource audioSource;
     private bool wasMovingLastFrame = false;
+
+    // Public getters for external scripts (e.g. GestorClones)
+    public int CurrentHp { get { return currentHp; } }
+    public int MaxHp { get { return maxHp; } }
 
     private void Start()
     {
         currentHp = maxHp;
         initialPosition = transform.position;
+
+        if (healthBar != null)
+        {
+            healthBar.maxValue = maxHp;
+            healthBar.value = currentHp;
+        }
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -96,7 +106,6 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
         }
         else
         {
-            // Si no se está moviendo, actualizar IdleX e IdleY con la última dirección
             animator.SetFloat("IdleX", lastMoveDirection.x);
             animator.SetFloat("IdleY", lastMoveDirection.y);
         }
@@ -133,7 +142,6 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
         if (roomBoundsCollider != null)
         {
             roomBounds = roomBoundsCollider.bounds;
-            Debug.Log($"Room bounds detected: {roomBounds}");
         }
         else
         {
@@ -146,11 +154,9 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
         Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
         Vector2 newPosition = (Vector2)transform.position + directionToPlayer * speed * Time.deltaTime;
 
-        // Animación de movimiento
         animator.SetFloat("MovimientoX", directionToPlayer.x);
         animator.SetFloat("MovimientoY", directionToPlayer.y);
 
-        // Guardar última dirección de movimiento para Idle
         if (directionToPlayer != Vector2.zero)
         {
             lastMoveDirection = directionToPlayer;
@@ -169,11 +175,9 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
         Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
         float distance = Vector2.Distance(transform.position, initialPosition);
 
-        // Animación de movimiento
         animator.SetFloat("MovimientoX", directionToOrigin.x);
         animator.SetFloat("MovimientoY", directionToOrigin.y);
 
-        // Guardar última dirección de movimiento para Idle
         if (directionToOrigin != Vector2.zero)
         {
             lastMoveDirection = directionToOrigin;
@@ -188,7 +192,6 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
             transform.position = initialPosition;
             isReturningToOrigin = false;
 
-            // Cuando llega al origen, pasar a Idle
             animator.SetBool("Move", false);
             PlayMovementSound(false);
             animator.SetFloat("IdleX", lastMoveDirection.x);
@@ -218,15 +221,11 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
             if (isPlayerDetected && playerTransform != null && bulletPrefab != null)
             {
                 Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
-
-                // Dirección perpendicular para separar las balas
                 Vector2 perpendicular = new Vector2(-directionToPlayer.y, directionToPlayer.x) * bulletOffset;
 
-                // Primera bala (izquierda)
                 GameObject bullet1 = Instantiate(bulletPrefab, (Vector2)transform.position + perpendicular, Quaternion.identity);
                 bullet1.GetComponent<Bullet>().Initialize(directionToPlayer, bulletDamage);
 
-                // Segunda bala (derecha)
                 GameObject bullet2 = Instantiate(bulletPrefab, (Vector2)transform.position - perpendicular, Quaternion.identity);
                 bullet2.GetComponent<Bullet>().Initialize(directionToPlayer, bulletDamage);
             }
@@ -256,6 +255,9 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
     {
         currentHp -= damage;
 
+        if (healthBar != null)
+            healthBar.value = currentHp;
+
         if (currentHp <= 0)
         {
             Die();
@@ -264,10 +266,8 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Enemy defeated.");
-
         Vector3 spawnPosition = transform.position;
-        float offset = 0.5f; // Distancia de separación a izquierda y derecha
+        float offset = 0.5f;
 
         if (objectToActivate1 != null)
         {

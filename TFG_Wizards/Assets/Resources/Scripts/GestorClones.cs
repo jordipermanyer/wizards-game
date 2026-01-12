@@ -1,13 +1,17 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GestorClones : MonoBehaviour
 {
-    [Header("Objetos a seguir (Clones)")]
+    [Header("Clones")]
     public GameObject clone1;
     public GameObject clone2;
     public GameObject clone3;
 
-    [Header("Objeto a dropear")]
+    [Header("Boss Health Bar (Total)")]
+    public Slider healthBar;
+
+    [Header("Drop Object")]
     public GameObject objetoADropear;
 
     private bool clone1Destroyed = false;
@@ -16,47 +20,79 @@ public class GestorClones : MonoBehaviour
 
     private GameObject ultimoCloneVivo;
 
+    private int maxTotalHp = 0;
+
     private void Start()
     {
-        // Al inicio, asignamos uno de los clones como el "último vivo"
+        maxTotalHp = GetCloneMaxHp(clone1) + GetCloneMaxHp(clone2) + GetCloneMaxHp(clone3);
+
+        if (healthBar != null)
+        {
+            healthBar.maxValue = maxTotalHp;
+            healthBar.value = maxTotalHp;
+        }
+
         ActualizarUltimoCloneVivo();
     }
 
     private void Update()
     {
-        // Verificar estado de cada clone
+        // Track destroyed clones
         if (clone1 == null && !clone1Destroyed)
         {
             clone1Destroyed = true;
-            Debug.Log("Clone1 destruido");
             ActualizarUltimoCloneVivo();
         }
 
         if (clone2 == null && !clone2Destroyed)
         {
             clone2Destroyed = true;
-            Debug.Log("Clone2 destruido");
             ActualizarUltimoCloneVivo();
         }
 
         if (clone3 == null && !clone3Destroyed)
         {
             clone3Destroyed = true;
-            Debug.Log("Clone3 destruido");
             ActualizarUltimoCloneVivo();
         }
 
-        // Si los tres clones están destruidos:
+        // Update total HP bar
+        if (healthBar != null)
+        {
+            int currentTotalHp = GetCloneCurrentHp(clone1) + GetCloneCurrentHp(clone2) + GetCloneCurrentHp(clone3);
+            healthBar.value = Mathf.Clamp(currentTotalHp, 0, maxTotalHp);
+        }
+
+        // If all clones are destroyed
         if (clone1Destroyed && clone2Destroyed && clone3Destroyed)
         {
             DropearObjeto();
-            Destroy(gameObject); // Destruye el GestorClones después del drop
+            Destroy(gameObject);
         }
+    }
+
+    private int GetCloneMaxHp(GameObject cloneObj)
+    {
+        if (cloneObj == null) return 0;
+
+        EnemyShooterOriginalControllerScript c = cloneObj.GetComponent<EnemyShooterOriginalControllerScript>();
+        if (c == null) return 0;
+
+        return c.MaxHp;
+    }
+
+    private int GetCloneCurrentHp(GameObject cloneObj)
+    {
+        if (cloneObj == null) return 0;
+
+        EnemyShooterOriginalControllerScript c = cloneObj.GetComponent<EnemyShooterOriginalControllerScript>();
+        if (c == null) return 0;
+
+        return Mathf.Max(0, c.CurrentHp);
     }
 
     private void ActualizarUltimoCloneVivo()
     {
-        // Esta función busca cuál es el último clone vivo
         if (!clone1Destroyed && clone1 != null)
         {
             ultimoCloneVivo = clone1;
@@ -71,7 +107,7 @@ public class GestorClones : MonoBehaviour
         }
         else
         {
-            ultimoCloneVivo = null; // Ya no queda ningún clone
+            ultimoCloneVivo = null;
         }
     }
 
@@ -87,17 +123,14 @@ public class GestorClones : MonoBehaviour
             }
             else
             {
-                // Si por alguna razón no queda referencia, dropea en el centro del gestor
                 posicionDrop = transform.position;
             }
 
             Instantiate(objetoADropear, posicionDrop, Quaternion.identity);
-            Debug.Log("Objeto dropeado en: " + posicionDrop);
         }
         else
         {
-            Debug.LogWarning("No se asignó un objeto a dropear en el GestorClones.");
+            Debug.LogWarning("GestorClones: objetoADropear not assigned.");
         }
     }
 }
-
