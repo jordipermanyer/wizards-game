@@ -1,42 +1,51 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SwordScript : MonoBehaviour
 {
     [Header("Sword Settings")]
-    public int cost = 10; // Cost in coins to acquire the Sword
+    public int cost = 10; // Cost in coins (store only)
+    public float damageMultiplierBonus = 0.5f; // 0.5 = +50 percent damage
+    public string storeSceneName = "StoreScene";
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        // Verifica si el objeto que colisiona es el jugador
-        if (collider.CompareTag("Player"))
+        if (!collider.CompareTag("Player"))
+            return;
+
+        bool isInStore = SceneManager.GetActiveScene().name == storeSceneName;
+
+        PlayerShooting shooting = collider.GetComponent<PlayerShooting>();
+        if (shooting == null)
+            return;
+
+        // If in store, charge coins
+        if (isInStore)
         {
-            // Obtén las monedas actuales del jugador desde PlayerPrefs
             int currentCoins = PlayerPrefs.GetInt("Coins", 0);
 
-            // Comprueba si el jugador tiene suficientes monedas
-            if (currentCoins >= cost)
+            if (currentCoins < cost)
             {
-                // Resta las monedas del jugador y actualiza PlayerPrefs
-                int newCoins = currentCoins - cost;
-                PlayerPrefs.SetInt("Coins", newCoins);
-                PlayerPrefs.Save(); // Asegúrate de guardar los cambios
-
-                // Duplica el daño del jugador
-                PlayerController player = collider.GetComponent<PlayerController>();
-                if (player != null)
-                {
-                    player.DoubleDamage();
-                }
-
-                // Destruye el objeto de la espada
-                Destroy(gameObject);
-
-                Debug.Log($"Sword acquired! Attack damage doubled. Coins left: {newCoins}");
+                Debug.Log("Not enough coins to acquire the Sword");
+                return;
             }
-            else
-            {
-                Debug.Log("Not enough coins to acquire the Sword!");
-            }
+
+            int newCoins = currentCoins - cost;
+            PlayerPrefs.SetInt("Coins", newCoins);
+            PlayerPrefs.Save();
+
+            Debug.Log("Sword purchased. Coins left: " + newCoins);
         }
+        else
+        {
+            Debug.Log("Sword picked up for free (not in store)");
+        }
+
+        // Apply damage bonus
+        shooting.damageMultiplier *= (1f + damageMultiplierBonus);
+
+        Debug.Log("Sword applied. New damage multiplier: " + shooting.damageMultiplier);
+
+        Destroy(gameObject);
     }
 }

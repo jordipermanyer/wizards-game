@@ -13,6 +13,12 @@ public class ActivarMapa : MonoBehaviour
 
     void Start()
     {
+        if (player == null)
+        {
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
+            if (p != null) player = p;
+        }
+
         if (player != null)
         {
             playerController = player.GetComponent<PlayerController>();

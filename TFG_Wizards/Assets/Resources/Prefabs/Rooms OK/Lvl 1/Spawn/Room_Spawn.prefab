@@ -32,11 +32,11 @@ Transform:
   m_Children:
   - {fileID: 1780469901455171879}
   - {fileID: 7157565889276048580}
-  - {fileID: 610393828299718500}
   - {fileID: 5934364702942982971}
   - {fileID: 5567960344648837370}
   - {fileID: 8640621135540052052}
   - {fileID: 4861063605538536107}
+  - {fileID: 575385332428513344}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &581388548374238853
@@ -4056,7 +4056,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7268329307485519918, guid: 9aaf7902350ca104c91728bb06a3efcf, type: 3}
   m_PrefabInstance: {fileID: 3928638331997664021}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &6270358666507959753
+--- !u!1001 &6377213512741397229
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -4109,6 +4109,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7022415630018421487, guid: c818ebf24a57a564097cebcd357dcbdd, type: 3}
+      propertyPath: dialogueLine
+      value: Por favor, usa las escaleras que tengo a mi lado para salir de la mazmorra
+        si te ves en apuros.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7022415630018421487, guid: c818ebf24a57a564097cebcd357dcbdd, type: 3}
       propertyPath: dialogueText
       value: 
       objectReference: {fileID: 2137677379453669624}
@@ -4121,10 +4126,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c818ebf24a57a564097cebcd357dcbdd, type: 3}
---- !u!4 &610393828299718500 stripped
+--- !u!4 &575385332428513344 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6880449164876612269, guid: c818ebf24a57a564097cebcd357dcbdd, type: 3}
-  m_PrefabInstance: {fileID: 6270358666507959753}
+  m_PrefabInstance: {fileID: 6377213512741397229}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6880100219383691987
 PrefabInstance:
