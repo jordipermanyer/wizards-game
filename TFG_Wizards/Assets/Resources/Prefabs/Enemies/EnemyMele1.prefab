@@ -52,8 +52,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 60
   contactDamage: 10
-  detectionDistance: 7
-  speed: 1
+  detectionDistance: 10
+  speed: 2
   roomBoundsLayer:
     serializedVersion: 2
     m_Bits: 8

@@ -144,12 +144,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb59dcba86a17b46a5352a04047977a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 70
-  detectionRange: 10
+  maxHp: 50
+  detectionRange: 7
   bulletPrefab: {fileID: 4255507756173345382, guid: b1b3a57317fb7a14686117ee53c6f7c9, type: 3}
   firePoint: {fileID: 1562705125483078018}
-  shootInterval: 0.5
-  bulletDamage: 10
+  shootInterval: 1.5
+  bulletDamage: 5
 --- !u!1 &4591581262888924694
 GameObject:
   m_ObjectHideFlags: 0

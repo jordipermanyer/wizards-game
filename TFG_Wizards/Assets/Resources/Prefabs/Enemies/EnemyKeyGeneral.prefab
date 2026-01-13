@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13f446b88027a704795852cb0bf28d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHp: 80
   contactDamage: 5
   detectionDistance: 10
   speed: 3

@@ -21,33 +21,55 @@ public class Boss : MonoBehaviour
     public GameObject enemyPrefab2;
     public Transform[] spawnPoints;
 
+    [Tooltip("Spawn after X percent damage accumulated since last spawn. 5 = 5 percent.")]
+    public int spawnStepPercent = 5;
+
+    [Tooltip("Minimum seconds between spawns.")]
+    public float spawnCooldownSeconds = 5f;
+
+    [Tooltip("Chance to spawn enemyPrefab1 (0..1). Example: 0.3 = 30 percent.")]
+    [Range(0f, 1f)]
+    public float enemyPrefab1Chance = 0.3f;
+
+    [Tooltip("Chance to spawn enemyPrefab2 (0..1). Example: 0.6 = 60 percent.")]
+    [Range(0f, 1f)]
+    public float enemyPrefab2Chance = 0.6f;
+
     [Header("Auto-detection")]
     public LayerMask roomBoundsLayer;
-
-    [Header("Drop Item")]
-    public GameObject dropPrefab;
 
     [Header("Audio")]
     public AudioClip idleClip;
     public AudioClip moveClip;
     private AudioSource audioSource;
-    private bool isMoving = false; // Controlar el canvi de so
+    private bool isMoving = false;
+
+    [Header("UI")]
+    public GameObject panelJefes;
 
     private Transform playerTransform;
     private int currentHp;
     private bool isPlayerDetected;
     private Bounds roomBounds;
-    private float enemySpawnInterval = 5f;
-    private float enemyPrefab1Chance = 0.7f;
 
     private Animator animator;
     private Vector2 lastMoveDirection = Vector2.down;
 
+    // Spawn control
+    private float lastSpawnTime = -999f;
+    private int damageAccumulatedSinceLastSpawn = 0;
+
     private void Start()
     {
         currentHp = maxHp;
-        healthBar.maxValue = maxHp;
-        healthBar.value = maxHp;
+
+        if (healthBar != null)
+        {
+            healthBar.maxValue = maxHp;
+            healthBar.value = maxHp;
+        }
+
+        if (spawnStepPercent <= 0) spawnStepPercent = 5;
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -61,7 +83,6 @@ public class Boss : MonoBehaviour
         DetectRoomBounds();
 
         StartCoroutine(ShootAtPlayer());
-        StartCoroutine(SpawnEnemies());
     }
 
     private void Update()
@@ -71,9 +92,9 @@ public class Boss : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
 
-        animator.SetBool("Move", isPlayerDetected);
+        if (animator != null)
+            animator.SetBool("Move", isPlayerDetected);
 
-        // Canvi de so si canvia estat a Move
         if (isPlayerDetected && !isMoving)
         {
             isMoving = true;
@@ -91,14 +112,17 @@ public class Boss : MonoBehaviour
         }
         else
         {
-            animator.SetFloat("IdleX", lastMoveDirection.x);
-            animator.SetFloat("IdleY", lastMoveDirection.y);
+            if (animator != null)
+            {
+                animator.SetFloat("IdleX", lastMoveDirection.x);
+                animator.SetFloat("IdleY", lastMoveDirection.y);
+            }
         }
     }
 
     private void PlaySound(AudioClip clip)
     {
-        if (clip != null)
+        if (clip != null && audioSource != null)
         {
             audioSource.clip = clip;
             audioSource.loop = true;
@@ -112,7 +136,6 @@ public class Boss : MonoBehaviour
         if (roomBoundsCollider != null)
         {
             roomBounds = roomBoundsCollider.bounds;
-            Debug.Log($"Room bounds detected: {roomBounds}");
         }
         else
         {
@@ -125,8 +148,11 @@ public class Boss : MonoBehaviour
         Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
         Vector2 newPosition = (Vector2)transform.position + directionToPlayer * speed * Time.deltaTime;
 
-        animator.SetFloat("MovimientoX", directionToPlayer.x);
-        animator.SetFloat("MovimientoY", directionToPlayer.y);
+        if (animator != null)
+        {
+            animator.SetFloat("MovimientoX", directionToPlayer.x);
+            animator.SetFloat("MovimientoY", directionToPlayer.y);
+        }
 
         if (directionToPlayer != Vector2.zero)
         {
@@ -152,52 +178,17 @@ public class Boss : MonoBehaviour
     {
         while (true)
         {
-            if (isPlayerDetected && playerTransform != null && bulletPrefab != null)
+            if (isPlayerDetected && playerTransform != null && bulletPrefab != null && currentHp > 0)
             {
                 Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
                 GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                bullet.GetComponent<Bullet>().Initialize(directionToPlayer, bulletDamage);
+                Bullet b = bullet.GetComponent<Bullet>();
+                if (b != null)
+                {
+                    b.Initialize(directionToPlayer, bulletDamage);
+                }
             }
             yield return new WaitForSeconds(shootInterval);
-        }
-    }
-
-    private IEnumerator SpawnEnemies()
-    {
-        while (currentHp > 0)
-        {
-            if (currentHp <= 750) enemySpawnInterval = 5f;
-            if (currentHp <= 500) enemySpawnInterval = 2f;
-            if (currentHp <= 350) enemySpawnInterval = 2f;
-
-            float spawnChance = Random.value;
-            GameObject enemyToSpawn = spawnChance <= enemyPrefab1Chance ? enemyPrefab1 : enemyPrefab2;
-            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            Instantiate(enemyToSpawn, spawnPoint.position, Quaternion.identity);
-
-            if (currentHp <= 500) enemyPrefab1Chance = 0.5f;
-            if (currentHp <= 350)
-            {
-                enemyPrefab1Chance = 0.3f;
-                StartCoroutine(ShootInAllDirections());
-            }
-
-            yield return new WaitForSeconds(enemySpawnInterval);
-        }
-    }
-
-    private IEnumerator ShootInAllDirections()
-    {
-        while (currentHp <= 350 && currentHp > 0)
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                float angle = i * 45f;
-                Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-                GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                bullet.GetComponent<Bullet>().Initialize(direction, bulletDamage);
-            }
-            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -215,8 +206,23 @@ public class Boss : MonoBehaviour
 
     public void Damage(int damage)
     {
+        if (currentHp <= 0) return;
+        if (damage <= 0) return;
+
+        int hpBefore = currentHp;
+
         currentHp -= damage;
-        healthBar.value = currentHp;
+        if (currentHp < 0) currentHp = 0;
+
+        if (healthBar != null)
+            healthBar.value = currentHp;
+
+        // Accumulate real applied damage (clamped by hpBefore)
+        int appliedDamage = Mathf.Min(damage, hpBefore);
+        damageAccumulatedSinceLastSpawn += appliedDamage;
+
+        // Step is based on current HP AFTER the hit (as requested)
+        TrySpawnByDamageStep(currentHp);
 
         if (currentHp <= 0)
         {
@@ -224,13 +230,74 @@ public class Boss : MonoBehaviour
         }
     }
 
+    private void TrySpawnByDamageStep(int hpReferenceForStep)
+    {
+        if (spawnPoints == null || spawnPoints.Length == 0) return;
+        if (enemyPrefab1 == null && enemyPrefab2 == null) return;
+
+        int stepDamage = Mathf.RoundToInt(hpReferenceForStep * (spawnStepPercent / 100f));
+        if (stepDamage < 1) stepDamage = 1;
+
+        bool cooldownReady = (Time.time - lastSpawnTime) >= spawnCooldownSeconds;
+        if (!cooldownReady) return;
+
+        if (damageAccumulatedSinceLastSpawn < stepDamage) return;
+
+        // Spawn 1 enemy per spawn point (3 points -> 3 enemies)
+        SpawnEnemiesAtAllSpawnPoints();
+
+        lastSpawnTime = Time.time;
+
+        damageAccumulatedSinceLastSpawn -= stepDamage;
+        if (damageAccumulatedSinceLastSpawn < 0) damageAccumulatedSinceLastSpawn = 0;
+    }
+
+    private void SpawnEnemiesAtAllSpawnPoints()
+    {
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            Transform sp = spawnPoints[i];
+            if (sp == null) continue;
+
+            GameObject chosen = ChooseEnemyPrefab();
+            if (chosen == null) continue;
+
+            Instantiate(chosen, sp.position, Quaternion.identity);
+        }
+    }
+
+    private GameObject ChooseEnemyPrefab()
+    {
+        // If one is missing, use the other
+        if (enemyPrefab1 == null && enemyPrefab2 == null) return null;
+        if (enemyPrefab1 == null) return enemyPrefab2;
+        if (enemyPrefab2 == null) return enemyPrefab1;
+
+        float r = Random.value;
+
+        // 30% prefab1
+        if (r < enemyPrefab1Chance) return enemyPrefab1;
+
+        // next 60% prefab2
+        if (r < enemyPrefab1Chance + enemyPrefab2Chance) return enemyPrefab2;
+
+        // remaining 10% -> no spawn
+        return null;
+    }
+
+
     private void Die()
     {
         Debug.Log("Boss defeated.");
 
-        if (dropPrefab != null)
+        // Disable boss UI panel
+        if (panelJefes != null)
         {
-            Instantiate(dropPrefab, transform.position, Quaternion.identity);
+            panelJefes.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("Boss: panelJefes not assigned.");
         }
 
         Destroy(gameObject);
