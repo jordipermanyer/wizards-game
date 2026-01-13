@@ -1,136 +1,131 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GestorClones : MonoBehaviour
 {
-    [Header("Clones")]
-    public GameObject clone1;
-    public GameObject clone2;
-    public GameObject clone3;
-
-    [Header("Boss Health Bar (Total)")]
+    [Header("Boss Health Bar")]
     public Slider healthBar;
 
     [Header("Drop Object")]
     public GameObject objetoADropear;
 
-    private bool clone1Destroyed = false;
-    private bool clone2Destroyed = false;
-    private bool clone3Destroyed = false;
-
-    private GameObject ultimoCloneVivo;
-
+    private List<ICloneBossUnit> clones = new List<ICloneBossUnit>();
     private int maxTotalHp = 0;
+    private bool dropped = false;
 
     private void Start()
     {
-        maxTotalHp = GetCloneMaxHp(clone1) + GetCloneMaxHp(clone2) + GetCloneMaxHp(clone3);
-
-        if (healthBar != null)
-        {
-            healthBar.maxValue = maxTotalHp;
-            healthBar.value = maxTotalHp;
-        }
-
-        ActualizarUltimoCloneVivo();
+        UpdateHealthBarMax();
+        UpdateHealthBarValue();
     }
 
     private void Update()
     {
-        // Track destroyed clones
-        if (clone1 == null && !clone1Destroyed)
-        {
-            clone1Destroyed = true;
-            ActualizarUltimoCloneVivo();
-        }
+        CleanupNullClones();
+        UpdateHealthBarValue();
 
-        if (clone2 == null && !clone2Destroyed)
+        if (!dropped && AllClonesDead())
         {
-            clone2Destroyed = true;
-            ActualizarUltimoCloneVivo();
-        }
-
-        if (clone3 == null && !clone3Destroyed)
-        {
-            clone3Destroyed = true;
-            ActualizarUltimoCloneVivo();
-        }
-
-        // Update total HP bar
-        if (healthBar != null)
-        {
-            int currentTotalHp = GetCloneCurrentHp(clone1) + GetCloneCurrentHp(clone2) + GetCloneCurrentHp(clone3);
-            healthBar.value = Mathf.Clamp(currentTotalHp, 0, maxTotalHp);
-        }
-
-        // If all clones are destroyed
-        if (clone1Destroyed && clone2Destroyed && clone3Destroyed)
-        {
+            dropped = true;
             DropearObjeto();
             Destroy(gameObject);
         }
     }
 
-    private int GetCloneMaxHp(GameObject cloneObj)
+    public void RegisterClone(ICloneBossUnit clone)
     {
-        if (cloneObj == null) return 0;
+        if (clone == null) return;
+        if (clones.Contains(clone)) return;
 
-        EnemyShooterOriginalControllerScript c = cloneObj.GetComponent<EnemyShooterOriginalControllerScript>();
-        if (c == null) return 0;
+        clones.Add(clone);
+        maxTotalHp += Mathf.Max(0, clone.MaxHp);
 
-        return c.MaxHp;
+        UpdateHealthBarMax();
+        UpdateHealthBarValue();
     }
 
-    private int GetCloneCurrentHp(GameObject cloneObj)
+    private void UpdateHealthBarMax()
     {
-        if (cloneObj == null) return 0;
+        if (healthBar == null) return;
 
-        EnemyShooterOriginalControllerScript c = cloneObj.GetComponent<EnemyShooterOriginalControllerScript>();
-        if (c == null) return 0;
+        int safeMax = Mathf.Max(1, maxTotalHp);
+        healthBar.maxValue = safeMax;
 
-        return Mathf.Max(0, c.CurrentHp);
+        if (healthBar.value > safeMax)
+            healthBar.value = safeMax;
     }
 
-    private void ActualizarUltimoCloneVivo()
+    private void UpdateHealthBarValue()
     {
-        if (!clone1Destroyed && clone1 != null)
+        if (healthBar == null) return;
+
+        int currentTotalHp = 0;
+
+        for (int i = 0; i < clones.Count; i++)
         {
-            ultimoCloneVivo = clone1;
+            ICloneBossUnit c = clones[i];
+            if (c == null) continue;
+
+            currentTotalHp += Mathf.Max(0, c.CurrentHp);
         }
-        else if (!clone2Destroyed && clone2 != null)
+
+        healthBar.value = Mathf.Clamp(currentTotalHp, 0, Mathf.Max(1, maxTotalHp));
+    }
+
+    private void CleanupNullClones()
+    {
+        for (int i = clones.Count - 1; i >= 0; i--)
         {
-            ultimoCloneVivo = clone2;
+            if (clones[i] == null || clones[i].IsDestroyed)
+                clones.RemoveAt(i);
         }
-        else if (!clone3Destroyed && clone3 != null)
+    }
+
+    private bool AllClonesDead()
+    {
+        if (clones.Count == 0) return true;
+
+        for (int i = 0; i < clones.Count; i++)
         {
-            ultimoCloneVivo = clone3;
+            ICloneBossUnit c = clones[i];
+            if (c == null) continue;
+
+            if (c.CurrentHp > 0)
+                return false;
         }
-        else
-        {
-            ultimoCloneVivo = null;
-        }
+
+        return true;
     }
 
     private void DropearObjeto()
     {
-        if (objetoADropear != null)
-        {
-            Vector3 posicionDrop = Vector3.zero;
-
-            if (ultimoCloneVivo != null)
-            {
-                posicionDrop = ultimoCloneVivo.transform.position;
-            }
-            else
-            {
-                posicionDrop = transform.position;
-            }
-
-            Instantiate(objetoADropear, posicionDrop, Quaternion.identity);
-        }
-        else
+        if (objetoADropear == null)
         {
             Debug.LogWarning("GestorClones: objetoADropear not assigned.");
+            return;
         }
+
+        Vector3 pos = transform.position;
+
+        for (int i = 0; i < clones.Count; i++)
+        {
+            ICloneBossUnit c = clones[i];
+            if (c != null && c.TransformRef != null)
+            {
+                pos = c.TransformRef.position;
+                break;
+            }
+        }
+
+        Instantiate(objetoADropear, pos, Quaternion.identity);
     }
+}
+
+public interface ICloneBossUnit
+{
+    int CurrentHp { get; }
+    int MaxHp { get; }
+    bool IsDestroyed { get; }
+    Transform TransformRef { get; }
 }

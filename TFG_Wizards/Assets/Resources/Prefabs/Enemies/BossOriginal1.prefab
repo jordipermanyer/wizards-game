@@ -47,9 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f190dbd2574d1c1498d3f139ef89f479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clone1: {fileID: 9101014777848967199}
-  clone2: {fileID: 3553054560531963091}
-  clone3: {fileID: 4131281209111493270}
+  healthBar: {fileID: 0}
   objetoADropear: {fileID: 5146206018753787299, guid: 33b56a77a5aa3d7418794f0d10b08d10, type: 3}
 --- !u!1 &3553054560531963091
 GameObject:
@@ -153,16 +151,16 @@ MonoBehaviour:
   speed: 3
   wanderSpeed: 1
   wanderInterval: 2
+  gestorClones: {fileID: 1296237627221397594}
   bulletPrefab: {fileID: 4255507756173345382, guid: b1b3a57317fb7a14686117ee53c6f7c9, type: 3}
   bulletDamage: 10
   shootInterval: 2
-  explosionProjectileCount: 10
-  explosionProjectileSpeed: 7
+  bulletOffset: 0.5
   roomBoundsLayer:
     serializedVersion: 2
     m_Bits: 8
-  audioSourceIdle: {fileID: 5294632087249173934}
-  audioSourceWalking: {fileID: 2618473589070540077}
+  idleSound: {fileID: 0}
+  walkingSound: {fileID: 0}
 --- !u!50 &4832564093235970145
 Rigidbody2D:
   serializedVersion: 4
@@ -592,16 +590,16 @@ MonoBehaviour:
   speed: 4
   wanderSpeed: 1
   wanderInterval: 2
+  gestorClones: {fileID: 1296237627221397594}
   bulletPrefab: {fileID: 4255507756173345382, guid: b1b3a57317fb7a14686117ee53c6f7c9, type: 3}
   bulletDamage: 10
   shootInterval: 2
-  explosionProjectileCount: 10
-  explosionProjectileSpeed: 7
+  bulletOffset: 0.5
   roomBoundsLayer:
     serializedVersion: 2
     m_Bits: 8
-  audioSourceIdle: {fileID: 8727390689366020687}
-  audioSourceWalking: {fileID: 1549395827885970464}
+  idleSound: {fileID: 0}
+  walkingSound: {fileID: 0}
 --- !u!50 &1340356602378142793
 Rigidbody2D:
   serializedVersion: 4
@@ -1030,6 +1028,7 @@ MonoBehaviour:
   speed: 2.5
   wanderSpeed: 1
   wanderInterval: 2
+  gestorClones: {fileID: 1296237627221397594}
   bulletPrefab: {fileID: 4255507756173345382, guid: b1b3a57317fb7a14686117ee53c6f7c9, type: 3}
   bulletDamage: 20
   shootInterval: 1

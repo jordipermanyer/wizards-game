@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class EnemyShooterOriginalControllerScript : MonoBehaviour
+public class EnemyShooterOriginalControllerScript : MonoBehaviour, ICloneBossUnit
 {
     [Header("Enemy Stats")]
     public int maxHp = 40;
@@ -12,8 +11,8 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
     public float wanderSpeed = 1f;
     public float wanderInterval = 2f;
 
-    [Header("Health Bar")]
-    public Slider healthBar;
+    [Header("Boss Manager")]
+    public GestorClones gestorClones;
 
     [Header("Shooting")]
     public GameObject bulletPrefab;
@@ -46,20 +45,23 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
     private AudioSource audioSource;
     private bool wasMovingLastFrame = false;
 
-    // Public getters for external scripts (e.g. GestorClones)
+    private bool hasDied = false;
+
     public int CurrentHp { get { return currentHp; } }
     public int MaxHp { get { return maxHp; } }
+    public bool IsDestroyed { get { return this == null || gameObject == null; } }
+    public Transform TransformRef { get { return transform; } }
 
     private void Start()
     {
         currentHp = maxHp;
         initialPosition = transform.position;
 
-        if (healthBar != null)
-        {
-            healthBar.maxValue = maxHp;
-            healthBar.value = currentHp;
-        }
+        if (gestorClones == null)
+            gestorClones = FindObjectOfType<GestorClones>();
+
+        if (gestorClones != null)
+            gestorClones.RegisterClone(this);
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -253,34 +255,51 @@ public class EnemyShooterOriginalControllerScript : MonoBehaviour
 
     public void Damage(int damage)
     {
-        currentHp -= damage;
+        if (hasDied) return;
 
-        if (healthBar != null)
-            healthBar.value = currentHp;
+        currentHp -= damage;
 
         if (currentHp <= 0)
         {
+            currentHp = 0;
             Die();
         }
     }
 
     private void Die()
     {
+        if (hasDied) return;
+        hasDied = true;
+
         Vector3 spawnPosition = transform.position;
         float offset = 0.5f;
 
-        if (objectToActivate1 != null)
-        {
-            objectToActivate1.transform.position = spawnPosition + Vector3.left * offset;
-            objectToActivate1.SetActive(true);
-        }
-
-        if (objectToActivate2 != null)
-        {
-            objectToActivate2.transform.position = spawnPosition + Vector3.right * offset;
-            objectToActivate2.SetActive(true);
-        }
+        ActivateAndRegisterChild(objectToActivate1, spawnPosition + Vector3.left * offset);
+        ActivateAndRegisterChild(objectToActivate2, spawnPosition + Vector3.right * offset);
 
         Destroy(gameObject);
+    }
+
+    private void ActivateAndRegisterChild(GameObject childObj, Vector3 pos)
+    {
+        if (childObj == null) return;
+
+        childObj.transform.position = pos;
+        childObj.SetActive(true);
+
+        // Child script name must stay EnemyShooterCloneControllerScript
+        EnemyShooterCloneControllerScript child = childObj.GetComponent<EnemyShooterCloneControllerScript>();
+        if (child != null)
+        {
+            if (child.gestorClones == null)
+                child.gestorClones = gestorClones;
+
+            if (gestorClones != null)
+                gestorClones.RegisterClone(child);
+
+            return;
+        }
+
+        Debug.LogWarning("Child object missing EnemyShooterCloneControllerScript.");
     }
 }

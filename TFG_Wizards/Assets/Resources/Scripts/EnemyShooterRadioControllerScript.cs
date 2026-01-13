@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyShooterRadioControllerScript : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     public float speed = 3f;
     public float wanderSpeed = 1f;
     public float wanderInterval = 2f;
+
+    [Header("Health Bar")]
+    public Slider healthBar;
 
     [Header("Shooting")]
     public GameObject bulletPrefab;
@@ -49,10 +53,22 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     private bool isReturningToOrigin = false;
     private GameObject[] shields;
 
+    private bool isDying = false;
+
     private void Start()
     {
         currentHp = maxHp;
         initialPosition = transform.position;
+
+        if (healthBar != null)
+        {
+            healthBar.maxValue = maxHp;
+            healthBar.value = maxHp;
+        }
+        else
+        {
+            Debug.LogWarning("EnemyShooterRadioControllerScript: healthBar is not assigned.");
+        }
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -73,6 +89,7 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     private void Update()
     {
         if (playerTransform == null) return;
+        if (isDying) return;
 
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
@@ -101,7 +118,7 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
         if (roomBoundsCollider != null)
         {
             roomBounds = roomBoundsCollider.bounds;
-            Debug.Log($"Room bounds detected: {roomBounds}");
+            Debug.Log("Room bounds detected: " + roomBounds);
         }
         else
         {
@@ -128,9 +145,9 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
             animator.SetFloat("MovimientoY", directionToPlayer.y);
         }
 
-        if (!walkAudioSource.isPlaying)
+        if (walkAudioSource != null && !walkAudioSource.isPlaying)
             walkAudioSource.Play();
-        if (idleAudioSource.isPlaying)
+        if (idleAudioSource != null && idleAudioSource.isPlaying)
             idleAudioSource.Stop();
     }
 
@@ -141,14 +158,13 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
             animator.SetBool("Move", false);
 
             Vector2 directionToOrigin = (initialPosition - transform.position).normalized;
-
             animator.SetFloat("IdleX", directionToOrigin.x);
             animator.SetFloat("IdleY", directionToOrigin.y);
         }
 
-        if (!idleAudioSource.isPlaying)
+        if (idleAudioSource != null && !idleAudioSource.isPlaying)
             idleAudioSource.Play();
-        if (walkAudioSource.isPlaying)
+        if (walkAudioSource != null && walkAudioSource.isPlaying)
             walkAudioSource.Stop();
     }
 
@@ -168,9 +184,9 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
                 animator.SetFloat("MovimientoY", directionToOrigin.y);
             }
 
-            if (!walkAudioSource.isPlaying)
+            if (walkAudioSource != null && !walkAudioSource.isPlaying)
                 walkAudioSource.Play();
-            if (idleAudioSource.isPlaying)
+            if (idleAudioSource != null && idleAudioSource.isPlaying)
                 idleAudioSource.Stop();
         }
         else
@@ -201,7 +217,7 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     {
         while (true)
         {
-            if (isPlayerDetected && playerTransform != null && bulletPrefab != null)
+            if (!isDying && isPlayerDetected && playerTransform != null && bulletPrefab != null)
             {
                 Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
                 float baseAngle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
@@ -219,7 +235,11 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     {
         Quaternion rotation = Quaternion.Euler(0, 0, angle);
         GameObject bullet = Instantiate(bulletPrefab, transform.position, rotation);
-        bullet.GetComponent<Bullet>().Initialize(rotation * Vector2.right, bulletDamage);
+        Bullet b = bullet.GetComponent<Bullet>();
+        if (b != null)
+        {
+            b.Initialize(rotation * Vector2.right, bulletDamage);
+        }
     }
 
     private void CreateShields()
@@ -230,8 +250,13 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
         {
             GameObject shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
             shield.transform.parent = transform;
+
             Shield shieldScript = shield.GetComponent<Shield>();
-            shieldScript.Setup(this, 1); // <-- AQUÍ CAMBIE EL DAÑO A 1
+            if (shieldScript != null)
+            {
+                shieldScript.Setup(this, 1);
+            }
+
             shields[i] = shield;
         }
     }
@@ -256,6 +281,8 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
+        if (isDying) return;
+
         if (collider.CompareTag("Player"))
         {
             PlayerController player = collider.GetComponent<PlayerController>();
@@ -273,10 +300,17 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
 
     public void Damage(int damage)
     {
+        if (isDying) return;
+
         currentHp -= damage;
+        if (currentHp < 0) currentHp = 0;
+
+        if (healthBar != null)
+            healthBar.value = currentHp;
 
         if (currentHp <= 0)
         {
+            isDying = true;
             StartCoroutine(DieWithExplosion());
         }
     }
@@ -286,15 +320,13 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
         Debug.Log("Enemy defeated.");
 
         Explode();
-
         yield return new WaitForSeconds(explosionDelay);
-
         Explode();
 
         if (objetoADropear != null)
         {
             Instantiate(objetoADropear, transform.position, Quaternion.identity);
-            Debug.Log("Objeto dropeado en: " + transform.position);
+            Debug.Log("Drop spawned at: " + transform.position);
         }
 
         Destroy(gameObject);
@@ -302,12 +334,19 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
 
     private void Explode()
     {
+        if (bulletPrefab == null) return;
+
         for (int i = 0; i < explosionBulletCount; i++)
         {
             float angle = (360f / explosionBulletCount) * i;
             Quaternion rotation = Quaternion.Euler(0, 0, angle);
             GameObject bullet = Instantiate(bulletPrefab, transform.position, rotation);
-            bullet.GetComponent<Bullet>().Initialize(rotation * Vector2.right, bulletDamage);
+
+            Bullet b = bullet.GetComponent<Bullet>();
+            if (b != null)
+            {
+                b.Initialize(rotation * Vector2.right, bulletDamage);
+            }
         }
     }
 }
