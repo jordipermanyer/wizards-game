@@ -209,10 +209,16 @@ MonoBehaviour:
   primarySpellPrefab: {fileID: 4255507756173345382, guid: ab1700b0fb4273746b33f386d7edd235, type: 3}
   secondarySpellPrefab: {fileID: 4255507756173345382, guid: 751b828519f51e844bc112004448ebb0, type: 3}
   shootPoint: {fileID: 3241942217798967506}
+  shootCooldown: 0.25
+  damageMultiplier: 1
   currentEnergy: 0
-  secondarySpellCost: 20
-  shootingModeText: {fileID: 0}
-  energyText: {fileID: 0}
+  secondarySpellCost: 5
+  shootPanel: {fileID: 0}
+  attackLabelText: {fileID: 0}
+  energyCounterText: {fileID: 0}
+  modeNormalImg: {fileID: 0}
+  modeStrongImg: {fileID: 0}
+  attackLabel: 'ATAQUE:'
   primaryShootClip: {fileID: 8300000, guid: e472ba6dd9f1bc7448517cd930bae60c, type: 3}
   secondaryShootClip: {fileID: 8300000, guid: d2980411d60a2b543aa56e1a3055f4ff, type: 3}
 --- !u!82 &4440048599724593779
