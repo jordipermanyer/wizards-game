@@ -12,7 +12,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 movement;
 
     // Health and Damage variables
-    public int maxHp = 1000;
+    public int maxHp = 250;
+    public int startingHp = 100;
+
     private int currentHp;
     public float invincibilityDuration = 1.0f;
     private bool isInvincible = false;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     // Boost limits
     private const int maxBoostPurchases = 4;
+    public int maxCoins = 99;
 
     // Player components
     public SpriteRenderer playerSprite;
@@ -45,13 +48,25 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
-        // Load initial values from PlayerPrefs
-        currentHp = PlayerPrefs.GetInt("PlayerHealth", maxHp);
         defaultMoveSpeed = moveSpeed;
+
+        // Load initial values from PlayerPrefs
+        if (!PlayerPrefs.HasKey("PlayerHealth"))
+        {
+            currentHp = Mathf.Clamp(startingHp, 0, maxHp);
+            PlayerPrefs.SetInt("PlayerHealth", currentHp);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            currentHp = PlayerPrefs.GetInt("PlayerHealth", maxHp);
+            currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+        }
 
         UpdateHealthUI();
         UpdateCoinsUI();
     }
+
 
     private void Update()
     {
@@ -59,7 +74,21 @@ public class PlayerController : MonoBehaviour
         HandleExit();
         FlipSprite();
         HandleFootsteps();
+
+        // Developer shortcut: press 0 to set 1,000,000 HP
+        if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Keypad0))
+        {
+            maxHp = 1000000;
+            currentHp = 1000000;
+
+            PlayerPrefs.SetInt("PlayerHealth", currentHp);
+            PlayerPrefs.Save();
+
+            UpdateHealthUI();
+            Debug.Log("Developer shortcut: HP set to 1,000,000.");
+        }
     }
+
 
     private void FixedUpdate()
     {
@@ -181,6 +210,8 @@ public class PlayerController : MonoBehaviour
     {
         int currentCoins = PlayerPrefs.GetInt("Coins", 0);
         currentCoins += amount;
+        currentCoins = Mathf.Clamp(currentCoins, 0, maxCoins);
+
         PlayerPrefs.SetInt("Coins", currentCoins);
         PlayerPrefs.Save();
         UpdateCoinsUI();

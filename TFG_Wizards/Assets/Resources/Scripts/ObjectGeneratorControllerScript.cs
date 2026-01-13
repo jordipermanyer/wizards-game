@@ -65,7 +65,7 @@ public class ObjectGeneratorControllerScript : MonoBehaviour
 
     void GenerateRandomItem()
     {
-        if (itemPrefabs == null || itemPrefabs.Count < 6)
+        if (itemPrefabs == null || itemPrefabs.Count < 4)
         {
             Debug.LogWarning("Falten prefabs assignats a itemPrefabs!");
             return;

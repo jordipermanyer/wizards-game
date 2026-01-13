@@ -4461,7 +4461,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8371084553995441707, guid: a958319a6fce18146b47a1078d6bb94c, type: 3}
       propertyPath: maxHp
-      value: 100000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8371084553995441707, guid: a958319a6fce18146b47a1078d6bb94c, type: 3}
       propertyPath: coinsText
