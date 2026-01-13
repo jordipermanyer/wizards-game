@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class EnemyDragonScript : MonoBehaviour
 {
@@ -7,11 +8,14 @@ public class EnemyDragonScript : MonoBehaviour
     public int baseHp = 200;
     public int currentHp;
     public int maxHp;
-    public int regenStage = 0;
+    public int regenStage = 0; // Kept for compatibility (not used now)
 
     public int contactDamage = 5;
     public float detectionDistance = 10f;
     public float speed = 3f;
+
+    [Header("Health Bar")]
+    public Slider healthBar;
 
     [Header("Flamethrower Attack")]
     public GameObject flamePrefab;
@@ -19,7 +23,10 @@ public class EnemyDragonScript : MonoBehaviour
     public float flameRate = 0.1f;
 
     [Header("Regeneration Settings")]
-    public float regenDuration = 3f;
+    public float regenDuration = 3f;          // Must be 3 seconds (your request)
+    public float regenInterval = 5f;          // Every 5 seconds (your request)
+    [Range(0f, 1f)]
+    public float regenHealFraction = 0.5f;    // Heal 50 percent of damage received
     public SpriteRenderer targetSpriteRenderer;
     public Color flashColor = Color.red;
     public float flashDuration = 0.2f;
@@ -37,31 +44,43 @@ public class EnemyDragonScript : MonoBehaviour
     public AudioSource walkSoundSource;
 
     [Header("Drop Settings")]
-    public GameObject dropPrefab; // <<<--- NUEVO CAMPO para que puedas escoger el objeto a dropear
+    public GameObject dropPrefab;
 
     private Transform playerTransform;
     private bool isPlayerDetected = false;
     private bool isRegenerating = false;
     private bool isIntangible = false;
-    private bool canReenterRegen = true;
 
     private bool isReturningToOrigin = false;
     private Vector3 initialPosition;
     private Bounds roomBounds;
 
     private Coroutine regenCoroutine;
-    private Coroutine flashCoroutine;
     private Color originalColor;
 
     private Animator animator;
 
     private bool isPlayingWalkSound = false;
+    private bool hasDied = false;
+
+    // Tracks damage taken since last regeneration
+    private int damageTakenSinceLastRegen = 0;
 
     private void Start()
     {
         maxHp = baseHp;
         currentHp = maxHp;
         initialPosition = transform.position;
+
+        if (healthBar != null)
+        {
+            healthBar.maxValue = maxHp;
+            healthBar.value = currentHp;
+        }
+        else
+        {
+            Debug.LogWarning("EnemyDragonScript: healthBar is not assigned.");
+        }
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -78,10 +97,14 @@ public class EnemyDragonScript : MonoBehaviour
         DetectRoomBounds();
 
         StartCoroutine(FlamethrowerAttack());
+
+        // New regen behavior: periodic check every regenInterval seconds
+        StartCoroutine(RegenerationLoop());
     }
 
     private void Update()
     {
+        if (hasDied) return;
         if (isRegenerating || playerTransform == null) return;
 
         if (isReturningToOrigin)
@@ -93,7 +116,8 @@ public class EnemyDragonScript : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         isPlayerDetected = distanceToPlayer <= detectionDistance;
 
-        animator.SetBool("Move", isPlayerDetected);
+        if (animator != null)
+            animator.SetBool("Move", isPlayerDetected);
 
         HandleSound(isPlayerDetected);
 
@@ -133,7 +157,7 @@ public class EnemyDragonScript : MonoBehaviour
         if (roomBoundsCollider != null)
         {
             roomBounds = roomBoundsCollider.bounds;
-            Debug.Log($"Room bounds detected: {roomBounds}");
+            Debug.Log("Room bounds detected: " + roomBounds);
         }
         else
         {
@@ -153,8 +177,11 @@ public class EnemyDragonScript : MonoBehaviour
 
         transform.position = newPosition;
 
-        animator.SetFloat("MovimientoX", direction.x);
-        animator.SetFloat("MovimientoY", direction.y);
+        if (animator != null)
+        {
+            animator.SetFloat("MovimientoX", direction.x);
+            animator.SetFloat("MovimientoY", direction.y);
+        }
     }
 
     private void SetIdleAnimation()
@@ -163,8 +190,11 @@ public class EnemyDragonScript : MonoBehaviour
 
         Vector2 idleDirection = (playerTransform.position - transform.position).normalized;
 
-        animator.SetFloat("IdleX", idleDirection.x);
-        animator.SetFloat("IdleY", idleDirection.y);
+        if (animator != null)
+        {
+            animator.SetFloat("IdleX", idleDirection.x);
+            animator.SetFloat("IdleY", idleDirection.y);
+        }
     }
 
     private void ReturnToOrigin()
@@ -175,9 +205,13 @@ public class EnemyDragonScript : MonoBehaviour
         if (distance > 0.1f)
         {
             transform.position += (Vector3)(directionToOrigin * speed * Time.deltaTime);
-            animator.SetBool("Move", true);
-            animator.SetFloat("MovimientoX", directionToOrigin.x);
-            animator.SetFloat("MovimientoY", directionToOrigin.y);
+
+            if (animator != null)
+            {
+                animator.SetBool("Move", true);
+                animator.SetFloat("MovimientoX", directionToOrigin.x);
+                animator.SetFloat("MovimientoY", directionToOrigin.y);
+            }
 
             HandleSound(true);
         }
@@ -185,9 +219,11 @@ public class EnemyDragonScript : MonoBehaviour
         {
             transform.position = initialPosition;
             isReturningToOrigin = false;
-            animator.SetBool("Move", false);
-            SetIdleAnimation();
 
+            if (animator != null)
+                animator.SetBool("Move", false);
+
+            SetIdleAnimation();
             HandleSound(false);
         }
     }
@@ -203,7 +239,7 @@ public class EnemyDragonScript : MonoBehaviour
     {
         while (true)
         {
-            if (isPlayerDetected && !isRegenerating)
+            if (!hasDied && isPlayerDetected && !isRegenerating)
             {
                 GameObject flame = Instantiate(flamePrefab, transform.position, Quaternion.identity);
                 Vector2 direction = (playerTransform.position - transform.position).normalized;
@@ -216,7 +252,26 @@ public class EnemyDragonScript : MonoBehaviour
 
                 Destroy(flame, flameDuration);
             }
+
             yield return new WaitForSeconds(flameRate);
+        }
+    }
+
+    // New: every regenInterval seconds, try to regen based on damage taken
+    private IEnumerator RegenerationLoop()
+    {
+        while (!hasDied)
+        {
+            yield return new WaitForSeconds(regenInterval);
+
+            if (hasDied) yield break;
+            if (isRegenerating) continue;
+
+            // Only regen if took damage since last regen and not at full health
+            if (damageTakenSinceLastRegen <= 0) continue;
+            if (currentHp >= maxHp) { damageTakenSinceLastRegen = 0; continue; }
+
+            EnterRegenMode();
         }
     }
 
@@ -224,9 +279,9 @@ public class EnemyDragonScript : MonoBehaviour
     {
         isRegenerating = true;
         isIntangible = true;
-        canReenterRegen = false;
 
-        animator.SetBool("Move", false);
+        if (animator != null)
+            animator.SetBool("Move", false);
 
         HandleSound(false);
 
@@ -238,12 +293,18 @@ public class EnemyDragonScript : MonoBehaviour
         }
 
         SpawnEnemies();
+
+        if (regenCoroutine != null)
+            StopCoroutine(regenCoroutine);
+
         regenCoroutine = StartCoroutine(RegenerateHealth());
     }
 
     private void SpawnEnemies()
     {
+        if (spawnableEnemies == null) return;
         if (spawnableEnemies.Length == 0) return;
+        if (spawnPoint1 == null || spawnPoint2 == null) return;
 
         Instantiate(spawnableEnemies[Random.Range(0, spawnableEnemies.Length)], spawnPoint1.position, Quaternion.identity);
         Instantiate(spawnableEnemies[Random.Range(0, spawnableEnemies.Length)], spawnPoint2.position, Quaternion.identity);
@@ -253,10 +314,20 @@ public class EnemyDragonScript : MonoBehaviour
     {
         float elapsed = 0f;
 
-        float regenPercent = GetRegenPercent(regenStage);
-        int healAmount = Mathf.RoundToInt(maxHp * regenPercent);
+        // Heal only 50 percent of damage received since last regen
+        int healAmount = Mathf.RoundToInt(damageTakenSinceLastRegen * regenHealFraction);
+        if (healAmount < 0) healAmount = 0;
+
         int startHp = currentHp;
         int targetHp = Mathf.Min(currentHp + healAmount, maxHp);
+
+        // If nothing to heal, just exit quickly
+        if (targetHp <= startHp)
+        {
+            damageTakenSinceLastRegen = 0;
+            ExitRegenMode();
+            yield break;
+        }
 
         while (elapsed < regenDuration)
         {
@@ -265,20 +336,17 @@ public class EnemyDragonScript : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / regenDuration);
             currentHp = Mathf.RoundToInt(Mathf.Lerp(startHp, targetHp, t));
+
+            if (healthBar != null)
+                healthBar.value = currentHp;
+
             yield return null;
         }
 
-        regenStage++;
-        ExitRegenMode();
-    }
+        // Reset damage buffer after regen
+        damageTakenSinceLastRegen = 0;
 
-    private float GetRegenPercent(int stage)
-    {
-        if (stage == 0) return 1f;
-        if (stage == 1) return 0.75f;
-        if (stage == 2) return 0.5f;
-        if (stage == 3) return 0.45f;
-        return 0.4f;
+        ExitRegenMode();
     }
 
     private void ExitRegenMode()
@@ -292,43 +360,36 @@ public class EnemyDragonScript : MonoBehaviour
             c.a = 1f;
             targetSpriteRenderer.color = c;
         }
-
-        float cooldown = regenStage * 0.5f;
-        StartCoroutine(EnableRegenAfterDelay(cooldown));
-    }
-
-    private IEnumerator EnableRegenAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        canReenterRegen = true;
-
-        if (currentHp <= maxHp * 0.75f && !isRegenerating)
-        {
-            EnterRegenMode();
-        }
     }
 
     public void Damage(int damage)
     {
+        if (hasDied) return;
         if (isIntangible) return;
+        if (damage <= 0) return;
 
         currentHp -= damage;
+        if (currentHp < 0) currentHp = 0;
+
+        // Track damage since last regeneration
+        damageTakenSinceLastRegen += damage;
+
+        if (healthBar != null)
+            healthBar.value = currentHp;
 
         if (currentHp <= 0)
         {
             Die();
         }
-        else if (!isRegenerating && currentHp <= maxHp * 0.75f && canReenterRegen)
-        {
-            EnterRegenMode();
-        }
     }
 
     private void Die()
     {
+        if (hasDied) return;
+        hasDied = true;
+
         Debug.Log("EnemyDragon defeated.");
 
-        // <<<--- DROPEAR OBJETO
         if (dropPrefab != null)
         {
             Instantiate(dropPrefab, transform.position, Quaternion.identity);
@@ -339,6 +400,8 @@ public class EnemyDragonScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
+        if (hasDied) return;
+
         if (collider.CompareTag("Player"))
         {
             PlayerController player = collider.GetComponent<PlayerController>();
@@ -351,5 +414,3 @@ public class EnemyDragonScript : MonoBehaviour
         }
     }
 }
-
-

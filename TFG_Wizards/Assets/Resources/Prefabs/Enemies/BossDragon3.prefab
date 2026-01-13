@@ -98,17 +98,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdfd92cc5b72e8c4380f4d807ced370f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHp: 200
+  baseHp: 100
   currentHp: 0
   maxHp: 0
   regenStage: 0
   contactDamage: 5
   detectionDistance: 10
-  speed: 3
+  speed: 2.5
+  healthBar: {fileID: 0}
   flamePrefab: {fileID: 4255507756173345382, guid: b1b3a57317fb7a14686117ee53c6f7c9, type: 3}
   flameDuration: 0.5
   flameRate: 0.1
-  regenDuration: 5
+  regenDuration: 3
+  regenInterval: 5
+  regenHealFraction: 0.5
   targetSpriteRenderer: {fileID: 6834731350296622301}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
@@ -119,7 +122,7 @@ MonoBehaviour:
   - {fileID: 8728046737802871584, guid: 3e341f8aac2927a4cbd6d07cbc42418e, type: 3}
   roomBoundsLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   idleSoundSource: {fileID: 1501775141583220691}
   walkSoundSource: {fileID: 4441814083345402288}
   dropPrefab: {fileID: 7363326050768601219, guid: 22380c8bfe347ed45b65837477dd8a08, type: 3}

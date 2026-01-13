@@ -145,10 +145,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d02a6e4a528734c8b915c0ac6cd56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 150
+  maxHp: 50
   contactDamage: 5
   detectionDistance: 10
-  speed: 3
+  speed: 1
   wanderSpeed: 1
   wanderInterval: 2
   gestorClones: {fileID: 1296237627221397594}
@@ -584,10 +584,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d02a6e4a528734c8b915c0ac6cd56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 150
+  maxHp: 50
   contactDamage: 5
   detectionDistance: 10
-  speed: 4
+  speed: 2
   wanderSpeed: 1
   wanderInterval: 2
   gestorClones: {fileID: 1296237627221397594}

@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections; // Necesario para usar IEnumerator
+using System.Collections;
 
 public class Shield : MonoBehaviour
 {
@@ -8,6 +8,9 @@ public class Shield : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Collider2D shieldCollider;
+
+    // Nerf: boss controls this. Default is old value.
+    public float disableDuration = 2.5f;
 
     public void Setup(EnemyShooterRadioControllerScript owner, int damage)
     {
@@ -33,21 +36,30 @@ public class Shield : MonoBehaviour
         }
         else if (collider.CompareTag("Spell"))
         {
+            if (owner != null)
+                owner.OnShieldHit();
+
             StartCoroutine(DeactivateShieldTemporarily());
         }
     }
 
+    public bool IsActive()
+    {
+        if (spriteRenderer == null || shieldCollider == null) return false;
+        return spriteRenderer.enabled && shieldCollider.enabled;
+    }
+
     private IEnumerator DeactivateShieldTemporarily()
     {
-        // Ocultar escudo
-        spriteRenderer.enabled = false;
-        shieldCollider.enabled = false;
+        // Hide shield
+        if (spriteRenderer != null) spriteRenderer.enabled = false;
+        if (shieldCollider != null) shieldCollider.enabled = false;
 
-        // Esperar 2 segundos
-        yield return new WaitForSeconds(2.5f);
+        // Wait
+        yield return new WaitForSeconds(disableDuration);
 
-        // Volver a activar escudo
-        spriteRenderer.enabled = true;
-        shieldCollider.enabled = true;
+        // Reactivate shield
+        if (spriteRenderer != null) spriteRenderer.enabled = true;
+        if (shieldCollider != null) shieldCollider.enabled = true;
     }
 }

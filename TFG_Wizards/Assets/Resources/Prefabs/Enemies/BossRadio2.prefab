@@ -96,20 +96,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14afc6aa4e243294bb7480155787819d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 120
+  maxHp: 100
   contactDamage: 1
   detectionDistance: 10
-  speed: 3
+  contactDamageCooldown: 0.75
+  speed: 1
   wanderSpeed: 1
   wanderInterval: 2
+  healthBar: {fileID: 0}
   bulletPrefab: {fileID: 4255507756173345382, guid: b1b3a57317fb7a14686117ee53c6f7c9, type: 3}
   bulletDamage: 10
-  shootInterval: 2
-  spreadAngle: 15
+  shootInterval: 3
+  spreadAngle: 30
   shieldPrefab: {fileID: 4445167296756507515, guid: 59045eb5a208334469398779e3ac9c90, type: 3}
-  shieldCount: 7
+  shieldCount: 8
   shieldRadius: 1
-  shieldRotationSpeed: 150
+  shieldRotationSpeed: 50
+  damageAllowedShieldFraction: 0.5
+  shieldDisableDuration: 3.5
   explosionBulletCount: 20
   explosionDelay: 1
   roomBoundsLayer:

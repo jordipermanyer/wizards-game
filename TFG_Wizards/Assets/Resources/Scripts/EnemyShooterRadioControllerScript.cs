@@ -6,9 +6,16 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
 {
     [Header("Enemy Stats")]
     public int maxHp = 100;
-    public int contactDamage = 5;
+    public int contactDamage = 2; // nerf default
     public float detectionDistance = 10f;
-    public float speed = 3f;
+
+    [Tooltip("Seconds between contact damage ticks.")]
+    public float contactDamageCooldown = 0.75f;
+    private float nextContactDamageTime = 0f;
+
+    [Tooltip("Movement speed")]
+    public float speed = 2.2f;
+
     public float wanderSpeed = 1f;
     public float wanderInterval = 2f;
 
@@ -26,6 +33,12 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     public int shieldCount = 7;
     public float shieldRadius = 1f;
     public float shieldRotationSpeed = 150f;
+
+    [Range(0f, 1f)]
+    public float damageAllowedShieldFraction = 0.5f;
+
+    [Header("Shield Regen")]
+    public float shieldDisableDuration = 3.5f;
 
     [Header("Explosion")]
     public int explosionBulletCount = 20;
@@ -51,6 +64,7 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
 
     private Vector3 initialPosition;
     private bool isReturningToOrigin = false;
+
     private GameObject[] shields;
 
     private bool isDying = false;
@@ -97,6 +111,7 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
         if (isReturningToOrigin)
         {
             ReturnToOrigin();
+            RotateShields();
             return;
         }
 
@@ -235,6 +250,7 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     {
         Quaternion rotation = Quaternion.Euler(0, 0, angle);
         GameObject bullet = Instantiate(bulletPrefab, transform.position, rotation);
+
         Bullet b = bullet.GetComponent<Bullet>();
         if (b != null)
         {
@@ -244,6 +260,12 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
 
     private void CreateShields()
     {
+        if (shieldPrefab == null || shieldCount <= 0)
+        {
+            shields = new GameObject[0];
+            return;
+        }
+
         shields = new GameObject[shieldCount];
 
         for (int i = 0; i < shieldCount; i++)
@@ -255,6 +277,7 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
             if (shieldScript != null)
             {
                 shieldScript.Setup(this, 1);
+                shieldScript.disableDuration = shieldDisableDuration;
             }
 
             shields[i] = shield;
@@ -264,6 +287,7 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
     private void RotateShields()
     {
         if (shields == null) return;
+        if (shields.Length == 0) return;
 
         for (int i = 0; i < shields.Length; i++)
         {
@@ -279,12 +303,43 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
         }
     }
 
+    public int GetActiveShieldCount()
+    {
+        if (shields == null) return 0;
+
+        int active = 0;
+        for (int i = 0; i < shields.Length; i++)
+        {
+            if (shields[i] == null) continue;
+
+            Shield s = shields[i].GetComponent<Shield>();
+            if (s != null && s.IsActive())
+                active++;
+        }
+        return active;
+    }
+
+    public bool CanTakeDamageNow()
+    {
+        if (shieldCount <= 0) return true;
+
+        int active = GetActiveShieldCount();
+        int threshold = Mathf.FloorToInt(shieldCount * damageAllowedShieldFraction);
+        return active <= threshold;
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (isDying) return;
 
         if (collider.CompareTag("Player"))
         {
+            // Contact damage cooldown
+            if (Time.time < nextContactDamageTime)
+                return;
+
+            nextContactDamageTime = Time.time + contactDamageCooldown;
+
             PlayerController player = collider.GetComponent<PlayerController>();
             if (player != null)
             {
@@ -298,9 +353,19 @@ public class EnemyShooterRadioControllerScript : MonoBehaviour
         }
     }
 
+    public void OnShieldHit()
+    {
+        // Optional hook
+    }
+
     public void Damage(int damage)
     {
         if (isDying) return;
+
+        if (!CanTakeDamageNow())
+        {
+            return;
+        }
 
         currentHp -= damage;
         if (currentHp < 0) currentHp = 0;

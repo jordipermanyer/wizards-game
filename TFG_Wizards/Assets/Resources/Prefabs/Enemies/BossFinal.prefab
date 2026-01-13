@@ -212,16 +212,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9926652289e21304984dd530cbbbf20e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 1000
-  contactDamage: 10
-  detectionDistance: 15
-  speed: 2
+  maxHp: 500
+  contactDamage: 8
+  detectionDistance: 10
+  speed: 1.5
   healthBar: {fileID: 0}
   bulletPrefab: {fileID: 4255507756173345382, guid: b1b3a57317fb7a14686117ee53c6f7c9, type: 3}
-  bulletDamage: 20
+  bulletDamage: 15
   shootInterval: 1.5
-  enemyPrefab1: {fileID: 5390612191931407576, guid: fa6b40ca090c681428c3d5fafa683f56, type: 3}
-  enemyPrefab2: {fileID: 8884709011549219716, guid: 61b3e4adb5e9750468ba474aa7d82628, type: 3}
+  enemyPrefab1: {fileID: 700608291483397361, guid: fd9fb9ef9aa476249a391ded9dc84694, type: 3}
+  enemyPrefab2: {fileID: 5168775996972665883, guid: 6ff93781c1b92944d8ccb8f89d04af90, type: 3}
   spawnPoints:
   - {fileID: 6755680771755893073}
   - {fileID: 8101696656656556891}
