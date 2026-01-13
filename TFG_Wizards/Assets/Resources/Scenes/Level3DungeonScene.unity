@@ -167,233 +167,233 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomPrefabs:
-  - prefab: {fileID: 101188119234473770, guid: bdf7d7e1f89f4c546bb206072bcd6197, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: b750969d7153a52418b5c51493d2d870, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 52423514dc65ee446ba899f41f83e20d, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 94deba7c987b37244acc217edc47527b, type: 3}
     doors:
     - {x: 0, y: -1}
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 77ac65160f0f88e4286bf2af76f6fb44, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: f2a816621ee6ca24f9b6af14e60f28c3, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 56988ab280182f74992de191040fa805, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: c16b23d4d7917f84aa01367f579ddf43, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
     - {x: 1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 4595da4a5c2483e47b0f8aeea79e326f, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 79bcacb90d36be24aa4a409c5432034a, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: fa273099924aa9c48b37047a746c8185, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: dc8ffdd3e7e894d429f27f969d5deaca, type: 3}
     doors:
     - {x: 0, y: -1}
     - {x: 1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: d98cfe71dbfb8694189d824d327c6e04, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 2088c54908e3e80418dd5e6c47c566cc, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: e53031ae570738b4ab67d912858073a5, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 03091ae6c5436a04ba95ac621bf01e56, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: d8897459918381247983bd546e471cb7, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: d56cae94ce73e1049a9a94b8ffb6875b, type: 3}
     doors:
     - {x: 0, y: -1}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 5765438a7c568e6439e55c6cf98db8f8, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: f18d307f1dcf84043a15b057183b65d4, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
-  - prefab: {fileID: 101188119234473770, guid: b6b456ca4a17c5b4dba43bb49c2efe7f, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 2863061a24831d64db8220bc0a57daa3, type: 3}
     doors:
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 821f105be6ec67c41afc2f0a8a6d5d72, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 80e2d1fbbaa83cc42bb9a581b599ed89, type: 3}
     doors:
     - {x: 0, y: 1}
-  - prefab: {fileID: 101188119234473770, guid: 52c265c91f5130e4883af33fba289873, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 83ce87e84f460c842a8a4f9a26eb4136, type: 3}
     doors:
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 621de1b5d493cb24980f3cf44d095f54, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 6cc5bac35caf7f04b9bb7de1f3b50643, type: 3}
     doors:
     - {x: 0, y: -1}
-  - prefab: {fileID: 101188119234473770, guid: 11d94f2397b77ed42a19477268ded0d0, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 3b7d5043ba8b7a04b887fe613440af53, type: 3}
     doors:
     - {x: 1, y: 0}
   coinRoomPrefabs:
-  - prefab: {fileID: 101188119234473770, guid: f59b73cfdc257084183c7be000fc120e, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: d2ff3f68c9f68d34f945e563035e1bc2, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: a35239101f70eae4fbfe781f0bd77a6f, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: d4971c9719a8de74d920c3ab84621bc6, type: 3}
     doors:
     - {x: 0, y: -1}
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: eb8c57701034c7c4aae9b9c44fd4a8e4, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 6702e6a83e2d4c14f8af49cf22f900bc, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 00bdea67f6919244d8b32766831a8d33, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 767ee6b879541bb41b8e4406ad926aea, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
     - {x: 1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: ba35b8d0c9603d94392ba5beac0de7aa, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: d4712d1b3f21e1e4eb3cf776e94170ab, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: e2fc392df3685a9418fa42ac84d8a6e0, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: a6be7d55d4dc7734aa60b65da7ab4601, type: 3}
     doors:
     - {x: 0, y: -1}
     - {x: 1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: f77a7c1cb8737d6448d65a9d1b8269f6, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: f23c8a8b08bb7e2458233900c03197b0, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 73ff859cd827f9b4fb6b7a1eb7ca34ab, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 3fd165b901da61f4690b249090d72918, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 87acedbea63d2e54e894f3cb9be4acaf, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 697a299506426054e810c5e24efd9aab, type: 3}
     doors:
     - {x: 0, y: -1}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: b8ef027ce6a1cf442afa85efa130d7fa, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: ab5d2e5d855900a40a42e7711bb707c7, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
-  - prefab: {fileID: 101188119234473770, guid: b57746c936c1cd148824c5d154309974, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 05853ca62736df14b82e97ce156c4637, type: 3}
     doors:
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 96be50aa095d0e54387f6f806a81a237, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: a490251f41bf5cd469ee0b95d4fe8efb, type: 3}
     doors:
     - {x: 0, y: 1}
-  - prefab: {fileID: 101188119234473770, guid: 550155b3390e8934da9d409448bffd8d, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: d2f53273c1a83b346ab1f76c9f095883, type: 3}
     doors:
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: dbbf328f8bd555647a62b89abe817f7c, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 6b58b332fd8f5d04fa478fe7acd88015, type: 3}
     doors:
     - {x: 0, y: -1}
-  - prefab: {fileID: 101188119234473770, guid: be16f70f9a6e13d4994ed127584e9a15, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 1bcce0cd14f6d63408b09666657ec62a, type: 3}
     doors:
     - {x: 1, y: 0}
   itemRoomPrefabs:
-  - prefab: {fileID: 101188119234473770, guid: f6f440fc23f21124897f708e27d16936, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: c580f50578496f9429f94807a723f8c8, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 3a9a1e83bead701499a30fdf3a46c2a5, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 54f5be3ea319a8a4a94817ed0ce174ba, type: 3}
     doors:
     - {x: 0, y: -1}
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: a2b130a192232074b8c8e8e9a94ee1bd, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 2e10116f479aedf48ad23ec9c4f72944, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: c507a4ce3bbec1145b0d4a5caeca8f7e, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 1fd36719926afb348b2abfbc9137b72d, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
     - {x: 1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: f0135d1ab8f3c8e4290b6334b5f43665, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: a8c4bad7c56660742a3a66939c06c20b, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: fc60e9d715b45754f860894564a828e4, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 00da50f660667b142965018cf46d1999, type: 3}
     doors:
     - {x: 0, y: -1}
     - {x: 1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 091d2afb74cd04d459aa36bdd4cb0ab3, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: f3d86b40f5b9b2946927d577aa813a3f, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 455de02825c3e9848ba667ff9590c5e9, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 5d5945cc6c27a204eb36fd102d740c95, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 2129fc99b4de0ab49bcb2bcd3a09afa0, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 1a3f142f576d5eb40a5c75c4c76cf929, type: 3}
     doors:
     - {x: 0, y: -1}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 9099b7e4290471a41bf6b34c14c81a20, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 93a198623e9688d428b4fc673d8bc337, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
-  - prefab: {fileID: 101188119234473770, guid: 31b56e71cf9858f4b8a69486f824472b, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 97c93f69633feed4e99245b3a54a4d71, type: 3}
     doors:
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: 2725d4fb810214a4093013335e71bf44, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: a527443d069f1d3428ea82e3a381db8a, type: 3}
     doors:
     - {x: 0, y: 1}
-  - prefab: {fileID: 101188119234473770, guid: 429b3ef12a4c3544991f3c6292b8fabb, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: cee106f86cbf1b54ab2331b0e14611f6, type: 3}
     doors:
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: abfcfc94183e95b4f9e2965c616374df, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 85c27d2c28e8c504187331944bba5e8e, type: 3}
     doors:
     - {x: 0, y: -1}
-  - prefab: {fileID: 101188119234473770, guid: e50c3094b8b41f44fa4854951ebf0241, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 50cc9220525e4b445b0857d9758eeaac, type: 3}
     doors:
     - {x: 1, y: 0}
   enemyRoomPrefabs:
-  - prefab: {fileID: 101188119234473770, guid: 6ea7797bd265e2141aa7167b3a39ea22, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 5a7b56bb95b41e34caeca1d3120a5a23, type: 3}
     doors:
     - {x: 0, y: 1}
-  - prefab: {fileID: 101188119234473770, guid: e67c6aba85c0fdd4a9edcbc2e7bac1bc, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: ce74a1ba1a466074b9352fdbaf59a155, type: 3}
     doors:
     - {x: -1, y: 0}
-  - prefab: {fileID: 101188119234473770, guid: e1c02f3952726bf49b799a95567f741e, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: 4e11b61d927bdd94b91d248059e3961f, type: 3}
     doors:
     - {x: 0, y: -1}
-  - prefab: {fileID: 101188119234473770, guid: c8708530712c8c84cbdaed06247d4549, type: 3}
+  - prefab: {fileID: 101188119234473770, guid: cd76d7c957e8b7742a0e9d480a5fa932, type: 3}
     doors:
     - {x: 1, y: 0}
   placeholderRoom:
-    prefab: {fileID: 101188119234473770, guid: bdf7d7e1f89f4c546bb206072bcd6197, type: 3}
+    prefab: {fileID: 101188119234473770, guid: b750969d7153a52418b5c51493d2d870, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
     - {x: 1, y: 0}
     - {x: -1, y: 0}
   startingRoom:
-    prefab: {fileID: 101188119234473770, guid: 029e1e9812bb02e40ab969ab976ad164, type: 3}
+    prefab: {fileID: 101188119234473770, guid: 9721a025ed6a4b248ac2606c79cd6192, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
     - {x: 1, y: 0}
     - {x: -1, y: 0}
   fallbackRoom:
-    prefab: {fileID: 101188119234473770, guid: 7b4db76b42cd3fc4a83d551ceada6ca0, type: 3}
+    prefab: {fileID: 101188119234473770, guid: a16957080ce58fd408241b2baaef42d4, type: 3}
     doors:
     - {x: 0, y: 1}
     - {x: 0, y: -1}
     - {x: 1, y: 0}
     - {x: -1, y: 0}
-  numberOfRooms: 15
+  numberOfRooms: 25
   roomSize: {x: 16, y: 8}
-  player: {fileID: 0}
-  coinRoomCount: 1
-  itemRoomCount: 1
+  player: {fileID: 971641021}
+  coinRoomCount: 7
+  itemRoomCount: 5
 --- !u!1 &67181371
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,7 +970,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 14bced53126a43746919a14182f4659b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 54431088afd3bfd46b50ca897ad77ec1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

@@ -11,6 +11,8 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private string[] dialogueLines;
     [SerializeField] private float typingTime = 0.05f;
     [SerializeField] private PlayerController playerMovement;
+    [SerializeField] private GameObject[] gameObjectsToDisable; // Objetos que se desactivan tras hablar con el NPC (3 niveles en gris, deshabilitados)
+
 
     [SerializeField] private BoxCollider2D[] collidersToActivate; // Los 3 colisionadores que se activarán
 
@@ -29,6 +31,7 @@ public class DialogueSystem : MonoBehaviour
         if (npcHasInteracted)
         {
             ActivateColliders();
+            DisableGameObjects();
         }
         else
         {
@@ -109,7 +112,9 @@ public class DialogueSystem : MonoBehaviour
         {
             npcHasInteracted = true;
             ActivateColliders();
+            DisableGameObjects();
         }
+
     }
 
     private void ActivateColliders()
@@ -156,4 +161,15 @@ public class DialogueSystem : MonoBehaviour
             }
         }
     }
+    private void DisableGameObjects()
+    {
+        if (gameObjectsToDisable == null) return;
+
+        foreach (GameObject go in gameObjectsToDisable)
+        {
+            if (go != null)
+                go.SetActive(false);
+        }
+    }
+
 }
