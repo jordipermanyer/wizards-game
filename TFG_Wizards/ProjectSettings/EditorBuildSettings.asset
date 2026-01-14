@@ -21,9 +21,6 @@ EditorBuildSettings:
     path: Assets/Resources/Scenes/FinalBossDungeonScene.unity
     guid: d663f4b1864485e408647d179f60d511
   - enabled: 1
-    path: Assets/Resources/Scenes/GameOverScene.unity
-    guid: cc1676799141d0b49a2b4c2ccb3d6978
-  - enabled: 1
     path: Assets/Resources/Scenes/Level2DungeonScene.unity
     guid: 721f9181f23511049ba1b9bc1b2a1085
   - enabled: 1
@@ -39,6 +36,15 @@ EditorBuildSettings:
     path: Assets/Resources/Scenes/BossLvl3Scene.unity
     guid: 8fe21de7872e1a7438b555bbddae1bc3
   - enabled: 1
+    path: Assets/Resources/Scenes/GameOverScene.unity
+    guid: cc1676799141d0b49a2b4c2ccb3d6978
+  - enabled: 1
+    path: Assets/Resources/Scenes/PreWinScene.unity
+    guid: a84c9e156a2c6644b96bd2cde05599dd
+  - enabled: 1
+    path: Assets/Resources/Scenes/WinScene.unity
+    guid: 9e009fb952dc1214586ecc99787b5a26
+  - enabled: 0
     path: Assets/Resources/Scenes/Prueba.unity
     guid: ffc5960ac651ee8429365846e6fb1056
   m_configObjects: {}

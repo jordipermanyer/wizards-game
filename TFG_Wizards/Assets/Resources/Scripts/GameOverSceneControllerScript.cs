@@ -10,7 +10,6 @@ public class GameOverSceneControllerScript : MonoBehaviour
     [SerializeField] private Button quitButton; // Botón de salir
 
     [Header("Texts")]
-    [SerializeField] private TMP_Text winningText; // Texto mostrado al ganar
     [SerializeField] private TMP_Text deathText; // Texto mostrado al morir
 
     [Header("Game Over Settings")]
@@ -19,7 +18,7 @@ public class GameOverSceneControllerScript : MonoBehaviour
     private void Awake()
     {
         // Verificar que los botones y textos están asignados
-        if (mainMenuButton == null || quitButton == null || winningText == null || deathText == null)
+        if (mainMenuButton == null || quitButton == null || deathText == null)
         {
             Debug.LogError("One or more UI elements are not assigned in the Inspector!");
             return;
@@ -45,12 +44,10 @@ public class GameOverSceneControllerScript : MonoBehaviour
         // Mostrar el texto apropiado
         if (completedAllLevels)
         {
-            winningText.gameObject.SetActive(true);
             deathText.gameObject.SetActive(false);
         }
         else
         {
-            winningText.gameObject.SetActive(false);
             deathText.gameObject.SetActive(true);
         }
     }

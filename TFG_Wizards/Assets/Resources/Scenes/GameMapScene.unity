@@ -5238,34 +5238,23 @@ MonoBehaviour:
   interactText: {fileID: 113430453}
   dialogueText: {fileID: 911838440}
   dialogueLines:
-  - "bienvenido, viajero, a arcaneland. un mundo tejido con hilos de magia y dividido
-    en tres reinos: el frondoso reino de los bosques, las escarpadas monta\xF1as
-    y las misteriosas profundidades marinas. cada uno, gobernado por un rey que anhela
-    la supremac\xEDa sobre los dem\xE1s. pero hay m\xE1s de lo que parece, \xBFsabes?"
-  - "dicen las antiguas leyendas que un oscuro dios, al que llaman madgod, teje las
-    sombras de este mundo. ha corrompido a los tres reyes, convirti\xE9ndolos en
-    sus t\xEDteres. los habitantes de cada reino, cegados por la ambici\xF3n de sus
-    gobernantes, ignoran la verdadera amenaza que acecha en las sombras."
-  - "yo, un humilde superviviente del reino de las monta\xF1as, escap\xE9 de la opresi\xF3n
-    y me refugi\xE9 en este humilde hogar de madera a las afueras de cualquier reino.
-    ahora, vagando de un reino a otro como simple vendedor, he visto la miseria que
-    madgod ha sembrado. pero tambi\xE9n he visto destellos de esperanza."
-  - "en mi humilde morada, puedes intercambiar tus monedas por objetos de gran valor.
-    quiz\xE1s, entre mis pertenencias, encuentres algo que te ayude en tu camino.
-    recuerda, viajero, que la libertad de arcaneland est\xE1 en tus manos. solo t\xFA
-    puedes acabar con el reinado de madgod y liberar a los tres reinos de su oscura
-    influencia."
-  - "para derrotar a madgod, deber\xE1s adentrarte en las fortalezas de los tres
-    reyes y enfrentarte a ellos en combate. pero ten cuidado, las mazmorras est\xE1n
-    repletas de sus mercenarios, criaturas despiadadas que defender\xE1n sus dominios
-    hasta la muerte."
-  - "solo cuando hayas liberado a los tres reinos de la opresi\xF3n, se revelar\xE1
-    la ubicaci\xF3n exacta de madgod en tu mapa, marcada con una x. pero tienes que
-    saber que cuando haya liberado un reino ya no podr\xE1s volver a entrar."
-  - "mucha suerte en tu misi\xF3n, viajero. y recuerda, si la fortuna te abandona
-    y caes en combate, siempre podr\xE1s regresar a la torre de las esperanzas. sin
-    embargo, la resurrecci\xF3n tiene un precio: perder\xE1s todo tu progreso y comenzar\xE1s
-    de nuevo."
+  - "\xA1Bienvenido viajero! Has llegado hasta aqu\xED usando las teclas W, A, S
+    y D. Eso ya es un buen comienzo."
+  - 'Para atacar, utiliza las flechas del teclado. Arriba, abajo, izquierda y derecha. '
+  - "Pulsa ESPACIO para cambiar entre ataques. Algunos son m\xE1s poderosos, pero
+    consumen energ\xEDa."
+  - Con la tecla E puedes interactuar con personajes y objetos. Como conmigo.
+  - "Pulsa M para abrir el minimapa cuando lo consigas. Te ayudar\xE1 a orientarte
+    en las mazmorras."
+  - "Aqu\xED podr\xE1s usar el rat\xF3n para pulsar los botones de la interf\xEDcie,
+    yo no la veo, pero el jugador s\xED!"
+  - ... Y ahora sigamos con lo importante... Madgod ha secuestrado nuestros reinos!!!
+  - "\xBFNo sabes quien es?. Te contar\xE9. Arcaneland est\xE1 dividido en tres reinos.
+    Cada uno esconde a un rey corrompido por Madgod."
+  - "Libera los tres reinos y el mapa revelar\xE1 la ubicaci\xF3n del dios oscuro.
+    Ten cuidado con sus monstruos y sus secuaces. Intentaran eliminarte de cualquier
+    forma."
+  - "Buena suerte, viajero. El destino de Arcaneland est\xE1 en tus manos."
   typingTime: 0.05
   playerMovement: {fileID: 926546827}
   gameObjectsToDisable:

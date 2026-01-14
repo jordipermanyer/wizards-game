@@ -45,8 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6380a221562d9b4ba73935235147601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetDoor: {fileID: 0}
-  targetOffset: {x: 0, y: 0, z: 0}
 --- !u!61 &3077396143052681201
 BoxCollider2D:
   m_ObjectHideFlags: 0
