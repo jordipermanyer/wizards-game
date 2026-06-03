@@ -6399,8 +6399,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Arcaneland
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 69f587f2aad69724897782cd4755b057, type: 2}
-  m_sharedMaterial: {fileID: 4084325493875493238, guid: 69f587f2aad69724897782cd4755b057, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5f35ff886c1457c499a898882b964b52, type: 2}
+  m_sharedMaterial: {fileID: -5071964311724212052, guid: 5f35ff886c1457c499a898882b964b52, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6424,13 +6424,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 250
+  m_fontSize: 177.6
   m_fontSizeBase: 152.7
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 250
-  m_fontStyle: 6
+  m_fontStyle: 3
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
